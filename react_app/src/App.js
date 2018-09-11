@@ -11,7 +11,7 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <div className="wrapper">
+                <div id="wrapper">
                     <Route exact path="/" component={Index}/>
                     <Route exact path="/search" component={Search}/>
                 </div>

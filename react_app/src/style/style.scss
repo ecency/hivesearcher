@@ -32,25 +32,25 @@ body {
   align-items: center;
   background-color: $white-three;
   border-radius: 8px;
+  box-sizing: border-box;
   display: flex;
   height: 44px;
   padding-right: 10px;
-  box-sizing: border-box;
 
   .add-on {
-    display: flex;
     align-items: center;
+    color: $steel-grey;
+    display: flex;
+    flex-shrink: 0;
     justify-content: center;
     width: 40px;
-    color: $steel-grey;
-    flex-shrink: 0;
   }
 
   input[type=text] {
-    flex-grow: 1;
     background: transparent;
     border: 0;
     color: $steel-grey;
+    flex-grow: 1;
 
     &:focus {
       outline: 0;
@@ -70,50 +70,106 @@ body {
   width: 100%;
 }
 
-.wrapper {
-  align-items: center;
-  display: flex;
+#wrapper {
   height: 100%;
-  justify-content: center;
   width: 100%;
 }
 
 .index-page {
   align-items: center;
   display: flex;
-  flex-direction: column;
-  width: 90%;
-  max-width: 516px;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
 
-  .logo {
+  .index-page-content {
     align-items: center;
-    background-color: $white;
-    border: 3px solid $white-three;
-    border-radius: 50%;
     display: flex;
-    justify-content: center;
-    margin-bottom: 12px;
-    padding: 7px;
+    flex-direction: column;
+    max-width: 516px;
+    width: 90%;
 
-    img {
-      height: 54px;
-      width: 54px;
+    .logo {
+
+      align-items: center;
+      background-color: $white;
+      border: 3px solid $white-three;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+      padding: 7px;
+
+      img {
+        height: 54px;
+        width: 54px;
+      }
+    }
+
+    .brand {
+      color: $steel-grey;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 48px;
+
+      span {
+        color: $peacock-blue;
+      }
+    }
+
+    .search-area {
+      margin-bottom: 32px;
+      width: 100%;
     }
   }
+}
 
-  .brand {
-    color: $steel-grey;
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 48px;
+.search-page {
+  .search-page-content {
+    .header {
+      align-items: center;
+      display: flex;
+      height: 30px;
+      margin: 20px auto 0 auto;
+      width: 80%;
 
-    span {
-      color: $peacock-blue;
+      .logo {
+        align-items: center;
+        background-color: $white;
+        border: 3px solid $white-three;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        margin-right: 16px;
+        padding: 3px;
+
+        img {
+          height: 26px;
+          width: 26px;
+        }
+      }
+
+      .brand {
+        color: $steel-grey;
+        flex-shrink: 0;
+        font-size: 18px;
+        font-weight: 700;
+        margin-right: 16px;
+
+        span {
+          color: $peacock-blue;
+        }
+      }
+
+      .search-area {
+        flex-grow: 1;
+        margin-right: 12px;
+      }
+
+      .submit {
+        flex-shrink: 0;
+        margin-right: 16px;
+      }
     }
-  }
-
-  .search-area {
-    margin-bottom: 32px;
-    width: 100%;
   }
 }
