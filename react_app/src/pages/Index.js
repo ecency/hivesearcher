@@ -3,7 +3,6 @@ import logo from '../logo.png';
 import Button  from 'antd/lib/button';
 
 export default  class Index extends Component {
-
     componentDidMount() {
         document.querySelector('#txt-search').focus();
     }
@@ -33,7 +32,7 @@ export default  class Index extends Component {
                         <div className="add-on">
                             <i className="mi">search</i>
                         </div>
-                        <input type="text" id="txt-search" onKeyPress={(e) => {
+                        <input type="text" id="txt-search" maxLength={100} onKeyPress={(e) => {
                             if (e.key === 'Enter') {
                                 this.submit()
                             }

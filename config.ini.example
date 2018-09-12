@@ -1,0 +1,8 @@
+
+[FLASK]
+DEVELOPMENT = False
+DEBUG = False
+
+[ESEARCH_API]
+URL = https://api.search.esteem.app/search
+TOKEN = atokenhere
