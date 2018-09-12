@@ -6,6 +6,8 @@ from xonfig import get_option
 import requests
 from flask import request, jsonify, abort
 import json
+from flask_cors import CORS
+import time
 
 API_ENDPOINT = get_option('ESEARCH_API', 'ENDPOINT')
 API_TOKEN = get_option('ESEARCH_API', 'TOKEN')
@@ -23,6 +25,8 @@ def __flask_setup():
     app.config['DEVELOPMENT'] = get_option('FLASK', 'DEVELOPMENT')
     app.config['DEBUG'] = get_option('FLASK', 'DEBUG')
 
+    CORS(app)
+
     if not app.config['DEVELOPMENT']:
         csrf = CsrfProtect()
         csrf.init_app(app)
@@ -37,9 +41,12 @@ def __endpoint_setup():
         else:
             return send_from_directory('react_app/build', 'index.html')
 
-    @app.route('/api/search', methods=['POST'])
+    @app.route('/api/search', methods=['POST', 'OPTIONS'])
     def search():
         query = request.form.get('q')
+        if not query:
+            abort(400)
+
         scroll_id = request.form.get('si')
 
         headers = {'Content-Type': 'application/json', 'Authorization': API_TOKEN}
@@ -55,7 +62,7 @@ def __endpoint_setup():
 
         resp_data = resp.json()
 
-        return jsonify(resp_data)
+        return json.dumps(resp_data)
 
 
 __flask_setup()
