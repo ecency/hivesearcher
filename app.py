@@ -64,6 +64,11 @@ def __endpoint_setup():
 
         return json.dumps(resp_data)
 
+    @app.route('/api/count', methods=['GET'])
+    def count():
+        c = 61012419
+        return json.dumps(c)
+
 
 __flask_setup()
 __endpoint_setup()
