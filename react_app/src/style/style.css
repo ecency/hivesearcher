@@ -183,6 +183,21 @@ body {
     .home-page .index-page-content .search-area {
       margin-bottom: 32px;
       width: 100%; }
+    .home-page .index-page-content .form-submit {
+      margin-bottom: 90px; }
+    .home-page .index-page-content .indexed-count {
+      color: #788187;
+      font-size: 18px;
+      font-weight: 500;
+      visibility: hidden; }
+      .home-page .index-page-content .indexed-count span {
+        color: #00519c; }
+      .home-page .index-page-content .indexed-count.visible {
+        visibility: visible; }
+      .home-page .index-page-content .indexed-count.changed span {
+        animation-name: antFadeIn;
+        animation-duration: 1s;
+        animation-iteration-count: 1; }
 
 .search-page {
   height: 100%;

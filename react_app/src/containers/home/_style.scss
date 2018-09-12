@@ -43,5 +43,32 @@
       margin-bottom: 32px;
       width: 100%;
     }
+
+    .form-submit {
+      margin-bottom: 90px;
+    }
+
+    .indexed-count {
+      color: $steel-grey;
+      font-size: 18px;
+      font-weight: 500;
+      visibility: hidden;
+
+      span {
+        color: $peacock-blue;
+      }
+
+      &.visible {
+        visibility: visible;
+      }
+
+      &.changed {
+        span {
+          animation-name: antFadeIn;
+          animation-duration: 1s;
+          animation-iteration-count: 1;
+        }
+      }
+    }
   }
 }

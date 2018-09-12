@@ -1,22 +1,44 @@
 import React, {Component} from 'react';
-import logo from '../../logo.png';
 import Button  from 'antd/lib/button';
 import Icon from '../../components/icon'
+import logo from '../../logo.png';
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
+import {fetchCount} from '../../modules/count'
 
-export default class Home extends Component {
+class Home extends Component {
+
+    componentDidMount() {
+        const {fetchCount} = this.props;
+
+        fetchCount();
+
+        const intervalId = setInterval(() => {
+            fetchCount();
+        }, 3000);
+
+        this.setState({intervalId: intervalId});
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.intervalId);
+    }
+
     render() {
+        const {count, countChanged} = this.props;
+
         return (
             <div className="home-page">
                 <div className="index-page-content">
                     <div className="logo">
-                        <img src={logo} className="App-logo" alt="logo"/>
+                        <img src={logo} alt="eSteem Search"/>
                     </div>
                     <div className="brand">
                         <span>eSteem</span> Search
                     </div>
                     <div className="search-area">
                         <div className="add-on">
-                            <Icon icon="search" />
+                            <Icon icon="search"/>
                         </div>
                         <input type="text" id="txt-search" maxLength={100} onKeyPress={(e) => {
                             if (e.key === 'Enter') {
@@ -24,60 +46,31 @@ export default class Home extends Component {
                             }
                         }} placeholder="How to become a millionaire with Steem"/>
                     </div>
-                    <Button type="primary" onClick={e => this.submit()}>Search</Button>
+                    <div className="form-submit">
+                        <Button size="large" type="primary" onClick={e => this.submit()}>Search</Button>
+                    </div>
+
+                    <div className={`indexed-count ${count ? 'visible' : ''} ${countChanged ? 'changed' : ''}`}><span>{count.toLocaleString()}</span> documents indexed</div>
                 </div>
             </div>
         )
     }
 }
 
-/*
- import React, {Component} from 'react';
- import logo from '../logo.png';
- import Button  from 'antd/lib/button';
+const mapStateToProps = ({count}) => ({
+    count: count.val,
+    countChanged: count.changed
+});
 
- export default  class Index extends Component {
- componentDidMount() {
- document.querySelector('#txt-search').focus();
- }
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(
+        {
+            fetchCount
+        },
+        dispatch
+    );
 
- submit() {
- const q = document.querySelector('#txt-search').value.trim();
- if (q === '') {
- document.querySelector('#txt-search').focus();
- return;
- }
- const {history} = this.props;
- history.push(`/search?q=${q}`);
- }
-
- render() {
-
- return (
- <div className="index-page">
- <div className="index-page-content">
- <div className="logo">
- <img src={logo} className="App-logo" alt="logo"/>
- </div>
- <div className="brand">
- <span>eSteem</span> Search
- </div>
- <div className="search-area">
- <div className="add-on">
- <i className="mi">search</i>
- </div>
- <input type="text" id="txt-search" maxLength={100} onKeyPress={(e) => {
- if (e.key === 'Enter') {
- this.submit()
- }
- }} placeholder="How to become a millionaire with Steem"/>
- </div>
- <Button type="primary" onClick={e => this.submit()}>Search</Button>
- </div>
- </div>
- );
- }
- }
-
- */
-
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Home)
