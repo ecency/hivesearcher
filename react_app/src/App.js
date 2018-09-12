@@ -2,22 +2,22 @@ import React, {Component} from 'react';
 
 import './style/antd.css';
 import './style/style.css';
+import {connect} from 'react-redux';
 
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router';
 import Index from './pages/Index'
 import Search from './pages/Search'
+
 
 class App extends Component {
     render() {
         return (
-            <Router>
-                <div id="wrapper">
-                    <Route exact path="/" component={Index}/>
-                    <Route exact path="/search" component={Search}/>
-                </div>
-            </Router>
+            <Switch>
+                <Route exact path="/" component={Index}/>
+                <Route exact path="/search" component={Search}/>
+            </Switch>
         );
     }
 }
 
-export default App;
+export default connect()(App);
