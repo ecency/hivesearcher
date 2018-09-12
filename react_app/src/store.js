@@ -1,39 +1,30 @@
-import {createStore, applyMiddleware, compose} from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers/root';
-import {routerMiddleware, routerActions} from 'react-router-redux';
-import createHistory from 'history/createBrowserHistory';
+import {createStore, applyMiddleware, compose} from 'redux'
+import {connectRouter, routerMiddleware} from 'connected-react-router'
+import thunk from 'redux-thunk'
+import createHistory from 'history/createBrowserHistory'
+import rootReducer from './modules'
 
 export const history = createHistory();
 
-export const configureStore = (initialState = {}) => {
-    const middleware = [];
-    const enhancers = [];
+const initialState = {};
+const enhancers = [];
+const middleware = [thunk, routerMiddleware(history)];
 
-    middleware.push(thunk);
+if (process.env.NODE_ENV === 'development') {
+    const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
 
-    const router = routerMiddleware(history);
-    middleware.push(router);
+    if (typeof devToolsExtension === 'function') {
+        enhancers.push(devToolsExtension())
+    }
+}
 
-    // Redux DevTools Configuration
-    const actionCreators = {
-        ...routerActions
-    };
-    // If Redux DevTools Extension is installed use it, otherwise use Redux compose
-    const composeEnehancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-        ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-            // Options: http://extension.remotedev.io/docs/API/Arguments.html
-            actionCreators
-        })
-        : compose;
+const composedEnhancers = compose(
+    applyMiddleware(...middleware),
+    ...enhancers
+);
 
-
-    // Apply Middleware & Compose Enhancers
-    enhancers.push(applyMiddleware(...middleware));
-    const enhancer = composeEnehancers(...enhancers);
-
-    // Create Store
-    return createStore(rootReducer, initialState, enhancer);
-};
-
-
+export default createStore(
+    connectRouter(history)(rootReducer),
+    initialState,
+    composedEnhancers
+);

@@ -1,27 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin-ext");
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-.mi {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-  /* Support for IE. */
-  font-feature-settings: 'liga'; }
-
 html {
   /* Smooth font */
   font-size: 100%;
@@ -38,6 +16,42 @@ body {
   background: #fcfcfc;
   font-family: 'Roboto', sans-serif;
   font-size: 14px; }
+
+.search-area {
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: flex;
+  height: 44px;
+  padding-right: 10px; }
+  .search-area .add-on {
+    align-items: center;
+    color: #788187;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    width: 40px; }
+  .search-area input[type=text] {
+    background: transparent;
+    border: 0;
+    color: #788187;
+    flex-grow: 1; }
+    .search-area input[type=text]:focus {
+      outline: 0; }
+    .search-area input[type=text]::placeholder {
+      font-style: italic; }
+
+#root {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%; }
+
+#wrapper {
+  height: 100%;
+  width: 100%; }
 
 .linear-progress {
   height: 1px;
@@ -113,55 +127,41 @@ body {
   to {
     max-height: 20px;
     opacity: 1; } }
-.search-area {
-  align-items: center;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-sizing: border-box;
-  display: flex;
-  height: 44px;
-  padding-right: 10px; }
-  .search-area .add-on {
-    align-items: center;
-    color: #788187;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    width: 40px; }
-  .search-area input[type=text] {
-    background: transparent;
-    border: 0;
-    color: #788187;
-    flex-grow: 1; }
-    .search-area input[type=text]:focus {
-      outline: 0; }
-    .search-area input[type=text]::placeholder {
-      font-style: italic; }
+.mi {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga'; }
 
-#root {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%; }
-
-#wrapper {
-  height: 100%;
-  width: 100%; }
-
-.index-page {
+.home-page {
   align-items: center;
   display: flex;
   height: 100%;
   justify-content: center;
   width: 100%; }
-  .index-page .index-page-content {
+  .home-page .index-page-content {
     align-items: center;
     display: flex;
     flex-direction: column;
     max-width: 516px;
     width: 90%; }
-    .index-page .index-page-content .logo {
+    .home-page .index-page-content .logo {
       align-items: center;
       background-color: #fff;
       border: 3px solid #f5f5f5;
@@ -170,17 +170,17 @@ body {
       justify-content: center;
       margin-bottom: 12px;
       padding: 7px; }
-      .index-page .index-page-content .logo img {
+      .home-page .index-page-content .logo img {
         height: 54px;
         width: 54px; }
-    .index-page .index-page-content .brand {
+    .home-page .index-page-content .brand {
       color: #788187;
       font-size: 24px;
       font-weight: 700;
       margin-bottom: 48px; }
-      .index-page .index-page-content .brand span {
+      .home-page .index-page-content .brand span {
         color: #00519c; }
-    .index-page .index-page-content .search-area {
+    .home-page .index-page-content .search-area {
       margin-bottom: 32px;
       width: 100%; }
 

@@ -1,0 +1,47 @@
+.home-page {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+
+  .index-page-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    max-width: 516px;
+    width: 90%;
+
+    .logo {
+      align-items: center;
+      background-color: $white;
+      border: 3px solid $white-three;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+      padding: 7px;
+
+      img {
+        height: 54px;
+        width: 54px;
+      }
+    }
+
+    .brand {
+      color: $steel-grey;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 48px;
+
+      span {
+        color: $peacock-blue;
+      }
+    }
+
+    .search-area {
+      margin-bottom: 32px;
+      width: 100%;
+    }
+  }
+}
