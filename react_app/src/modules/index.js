@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux'
-import result from './result'
+import results from './results'
 import count from './count'
 
 export default combineReducers({
     count,
-    result
+    results
 })

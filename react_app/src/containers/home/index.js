@@ -11,7 +11,7 @@ class Home extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {countChanged: false};
+        this.state = {countChanged: false, intervalId: null, timeOutId: null};
     }
 
     componentDidMount() {
@@ -33,14 +33,28 @@ class Home extends Component {
         if (count !== oldCount) {
             this.setState({countChanged: true});
 
-            setTimeout(() => {
+            const timeOutId = setTimeout(() => {
                 this.setState({countChanged: false});
             }, 1000);
+
+            this.setState({timeOutId: timeOutId});
         }
     }
 
     componentWillUnmount() {
-        clearInterval(this.state.intervalId);
+        const {intervalId, timeOutId} = this.state;
+        clearInterval(intervalId);
+        clearTimeout(timeOutId);
+    }
+
+    submit() {
+        const q = document.querySelector('#txt-search').value.trim();
+        if (q === '') {
+            document.querySelector('#txt-search').focus();
+            return;
+        }
+        const {history} = this.props;
+        history.push(`/search?q=${q}`);
     }
 
     render() {

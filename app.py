@@ -62,7 +62,7 @@ def __endpoint_setup():
         if scroll_id:
             payload['scroll_id'] = scroll_id
 
-        resp = requests.post(API_ENDPOINT, data=json.dumps(payload), headers=headers, timeout=1)
+        resp = requests.post('{}/search'.format(API_URL), data=json.dumps(payload), headers=headers, timeout=1)
 
         if resp.status_code != 200:
             abort(500)
