@@ -6,3 +6,8 @@ DEBUG = False
 [ESEARCH_API]
 URL = https://api.search.esteem.app/search
 TOKEN = atokenhere
+
+[REDIS]
+HOST = 'localhost'
+PORT = 6379
+PASS = ''

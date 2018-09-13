@@ -5,15 +5,14 @@ export const FETCH_BEGIN = 'count/FETCH_BEGIN';
 export const FETCH_OK = 'count/FETCH_OK';
 export const FETCH_ERROR = 'count/FETCH_ERROR';
 
-const initialState = {val: 0, changed: false};
+const initialState = {val: 0};
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case FETCH_OK:
             return {
                 ...state,
-                val: action.payload.val,
-                changed: action.payload.changed
+                val: action.payload.val
             };
         default:
             return state;
@@ -21,11 +20,7 @@ export default (state = initialState, action) => {
 }
 
 export const fetchCount = () => {
-    return (dispatch, getState) => {
-
-        const state = getState();
-        const {count} = state;
-
+    return (dispatch) => {
 
         dispatch({
             type: FETCH_BEGIN
@@ -35,12 +30,10 @@ export const fetchCount = () => {
             method: 'get',
             url: `${API_URL}api/count`
         }).then(function (resp) {
-            const newVal = resp.data;
-            const changed = count.val !== newVal;
 
             dispatch({
                 type: FETCH_OK,
-                payload: {val: resp.data, changed: changed}
+                payload: {val: resp.data}
             });
         }).catch(function () {
             dispatch({

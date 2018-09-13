@@ -196,7 +196,7 @@ body {
         visibility: visible; }
       .home-page .index-page-content .indexed-count.changed span {
         animation-name: antFadeIn;
-        animation-duration: 1s;
+        animation-duration: 0.5s;
         animation-iteration-count: 1; }
 
 .search-page {

@@ -8,6 +8,12 @@ import {fetchCount} from '../../modules/count'
 
 class Home extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {countChanged: false};
+    }
+
     componentDidMount() {
         const {fetchCount} = this.props;
 
@@ -20,12 +26,26 @@ class Home extends Component {
         this.setState({intervalId: intervalId});
     }
 
+    componentDidUpdate(prevProps) {
+        const {count: oldCount} = prevProps;
+        const {count} = this.props;
+
+        if (count !== oldCount) {
+            this.setState({countChanged: true});
+
+            setTimeout(() => {
+                this.setState({countChanged: false});
+            }, 1000);
+        }
+    }
+
     componentWillUnmount() {
         clearInterval(this.state.intervalId);
     }
 
     render() {
-        const {count, countChanged} = this.props;
+        const {count} = this.props;
+        const {countChanged} = this.state;
 
         return (
             <div className="home-page">
@@ -50,7 +70,9 @@ class Home extends Component {
                         <Button size="large" type="primary" onClick={e => this.submit()}>Search</Button>
                     </div>
 
-                    <div className={`indexed-count ${count ? 'visible' : ''} ${countChanged ? 'changed' : ''}`}><span>{count.toLocaleString()}</span> documents indexed</div>
+                    <div className={`indexed-count ${count ? 'visible' : ''} ${countChanged ? 'changed' : ''}`}>
+                        <span>{count.toLocaleString()}</span> documents indexed
+                    </div>
                 </div>
             </div>
         )
@@ -58,8 +80,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = ({count}) => ({
-    count: count.val,
-    countChanged: count.changed
+    count: count.val
 });
 
 const mapDispatchToProps = dispatch =>
