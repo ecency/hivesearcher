@@ -15,7 +15,7 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {text: ''}
+        this.state = {searchText: ''}
     }
 
     componentDidMount() {
@@ -28,10 +28,10 @@ class Search extends Component {
             return;
         }
 
-        this.setState({text: qs.q});
+        this.setState({searchText: qs.q});
 
         const {fetchPosts} = this.props;
-        fetchPosts(qs.q);
+        fetchPosts(qs.q, 'newest');
     }
 
     componentDidUpdate(prevProps) {
@@ -40,7 +40,7 @@ class Search extends Component {
 
         if (prevLocation !== location) {
             const qs = parseQuery(location.search);
-            this.setState({text: qs.q});
+            this.setState({searchText: qs.q});
 
             const {fetchPosts} = this.props;
             fetchPosts(qs.q);
@@ -57,24 +57,24 @@ class Search extends Component {
         history.push(`/search?q=${q}`);
     }
 
-    onChange(e) {
+    searchInputChanged(e) {
         const newText = e.target.value;
-        this.setState({text: newText});
+        this.setState({searchText: newText});
     }
 
 
     render() {
-
-
         const {location, results} = this.props;
         const qs = parseQuery(location.search);
         const query = qs.q;
 
-        const result = results.get(query);
-        const posts = result.get('posts');
-        const loading = result.get('loading');
+        const posts = results.get(query).posts;
+        const entries = posts.get('entries');
+        const loading = posts.get('loading');
 
-        console.log(loading)
+
+
+        const {searchText} = this.state;
 
         return (
             <div className="search-page">
@@ -94,8 +94,8 @@ class Search extends Component {
                                 if (e.key === 'Enter') {
                                     this.submit()
                                 }
-                            }} value={this.state.text} onChange={(e) => {
-                                this.onChange(e)
+                            }} value={searchText} onChange={(e) => {
+                                this.searchInputChanged(e)
                             }}/>
                         </div>
                         <div className="submit">
@@ -106,6 +106,10 @@ class Search extends Component {
                     </div>
 
                     {loading ? <LinearProgress /> : '' }
+
+                    {entries.valueSeq().map((e)=>{
+                        return <h2 key={e.id}>{e.author}</h2>
+                    })}
 
 
                 </div>
