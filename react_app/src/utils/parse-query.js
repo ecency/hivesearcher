@@ -1,4 +1,4 @@
-export const parseQuery = (queryString) => {
+export default queryString => {
     const query = {};
     const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
     for (let i = 0; i < pairs.length; i++) {
@@ -7,3 +7,4 @@ export const parseQuery = (queryString) => {
     }
     return query;
 };
+

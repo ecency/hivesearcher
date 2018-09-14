@@ -19,6 +19,15 @@ body {
   background: $white-two;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
+  color: $charcoal-grey;
+}
+
+a {
+  color: $charcoal-grey;
+
+  &:hover {
+    color: $dark-sky-blue;
+  }
 }
 
 //@import "../components/LinearProgress";
@@ -72,6 +81,8 @@ body {
 
 @import "../components/linear-progress/style";
 @import "../components/icon/style";
+@import "../components/author-avatar/style";
+@import "../components/list-item/style";
 
 @import "../containers/home/style";
 @import "../containers/search/style";

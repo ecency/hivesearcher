@@ -5,8 +5,9 @@ import Icon from '../../components/icon'
 import logo from '../../logo.png';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {parseQuery} from '../../util'
+import parseQuery from '../../utils/parse-query'
 import {fetchPosts} from '../../modules/results'
+import ListItem from '../../components/list-item';
 
 import LinearProgress from '../../components/linear-progress'
 
@@ -107,8 +108,8 @@ class Search extends Component {
 
                     {loading ? <LinearProgress /> : '' }
 
-                    {entries.valueSeq().map((e)=>{
-                        return <h2 key={e.id}>{e.author}</h2>
+                    {entries.valueSeq().map((entry)=>{
+                        return <ListItem key={entry.id} entry={entry} />
                     })}
 
 

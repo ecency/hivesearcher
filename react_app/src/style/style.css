@@ -15,7 +15,13 @@ html {
 body {
   background: #fcfcfc;
   font-family: 'Roboto', sans-serif;
-  font-size: 14px; }
+  font-size: 14px;
+  color: #3c4449; }
+
+a {
+  color: #3c4449; }
+  a:hover {
+    color: #357ce6; }
 
 .search-area {
   align-items: center;
@@ -131,7 +137,7 @@ body {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;
+  font-size: 14px;
   /* Preferred icon size */
   display: inline-block;
   line-height: 1;
@@ -148,6 +154,129 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* Support for IE. */
   font-feature-settings: 'liga'; }
+
+.author-avatar {
+  border-radius: 50%;
+  background: #ccc;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: block;
+  height: 24px;
+  width: 24px; }
+
+.list-item {
+  border-bottom: 1px solid #e7e7e7;
+  margin-top: 20px;
+  padding-bottom: 16px;
+  padding-right: 38px;
+  border-bottom: 1px solid #e7e7e7; }
+  .list-item:last-of-type {
+    border-bottom-color: transparent; }
+  .list-item .item-header {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 24px;
+    margin-bottom: 10px;
+    overflow: hidden; }
+    .list-item .item-header .author-avatar {
+      margin-right: 12px; }
+    .list-item .item-header .author {
+      flex-shrink: 0;
+      font-weight: 700;
+      margin-right: 10px;
+      color: #3c4449; }
+      .list-item .item-header .author .author-reputation {
+        color: #788187;
+        font-weight: 500; }
+        .list-item .item-header .author .author-reputation::before {
+          content: '('; }
+        .list-item .item-header .author .author-reputation::after {
+          content: ')'; }
+    .list-item .item-header .category {
+      border-radius: 25px;
+      flex-shrink: 0;
+      font-size: 12px;
+      margin-right: 12px;
+      padding: 2px 8px;
+      transition: 0.5s;
+      background-color: #c1c5c7;
+      color: #fff; }
+      .list-item .item-header .category:hover {
+        background-color: #a6acaf; }
+    .list-item .item-header .read-mark {
+      background-color: #357ce6;
+      border-radius: 50%;
+      flex-shrink: 0;
+      height: 4px;
+      margin-right: 12px;
+      width: 4px; }
+    .list-item .item-header .date {
+      color: #788187;
+      flex-shrink: 0; }
+  .list-item .item-body:before, .list-item .item-body:after {
+    content: ' ';
+    display: table; }
+  .list-item .item-body:after {
+    clear: both; }
+  .list-item .item-body .item-image {
+    align-items: center;
+    border-radius: 4px;
+    display: flex;
+    float: left;
+    height: 77px;
+    justify-content: center;
+    margin-right: 17px;
+    overflow: hidden;
+    width: 130px; }
+    .list-item .item-body .item-image img {
+      border-radius: 4px;
+      height: auto;
+      max-width: 100%; }
+  .list-item .item-body .item-summary {
+    float: right;
+    width: calc(100% - 147px); }
+    .list-item .item-body .item-summary .item-title,
+    .list-item .item-body .item-summary .item-body {
+      display: block;
+      font-size: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%; }
+    .list-item .item-body .item-summary .item-title {
+      font-weight: 700;
+      margin-bottom: 9px; }
+    .list-item .item-body .item-summary .item-body {
+      margin-bottom: 13px; }
+  .list-item .item-body .item-controls {
+    align-items: center;
+    display: flex;
+    float: right;
+    width: calc(100% - 147px); }
+    .list-item .item-body .item-controls .post-total {
+      color: #788187;
+      margin-right: 25px; }
+      .list-item .item-body .item-controls .post-total.payout-declined {
+        color: #a1a7ab;
+        text-decoration: line-through; }
+    .list-item .item-body .item-controls .voters,
+    .list-item .item-body .item-controls .comments {
+      align-items: center;
+      color: #788187;
+      display: flex;
+      font-size: 14px;
+      margin-right: 25px; }
+      .list-item .item-body .item-controls .voters .mi,
+      .list-item .item-body .item-controls .comments .mi {
+        margin-right: 5px;
+        opacity: 0.5; }
+    .list-item .item-body .item-controls .app {
+      flex-grow: 1;
+      text-align: right;
+      color: #c1c5c7; }
 
 .home-page {
   align-items: center;

@@ -1,6 +1,6 @@
 import {Record, Map, OrderedMap} from 'immutable';
 import {LOCATION_CHANGE} from 'connected-react-router';
-import {parseQuery} from '../util';
+import parseQuery from '../utils/parse-query'
 import axios from 'axios';
 import {API_URL} from '../config';
 
