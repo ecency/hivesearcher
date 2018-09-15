@@ -48,6 +48,13 @@ class Search extends Component {
         }
     }
 
+    changeSort(sort) {
+        const {location, history} = this.props;
+        const qs = parseQuery(location.search);
+        const u = `?q=${qs.q}&sort=${sort}`;
+        history.push(u);
+    }
+
     submit() {
         const q = document.querySelector('#txt-search').value.trim();
         if (q === '') {
@@ -78,6 +85,9 @@ class Search extends Component {
 
         const {searchText} = this.state;
 
+        const sortItems = ['popularity', 'relevance', 'newest'].map((f)=>{
+             return <a key={f} onClick={() => {this.changeSort(f)}} className={`sort-opt ${sort === f ? 'selected' : ''}`}>{f}</a>
+        });
 
         return (
             <div className="search-page">
@@ -116,13 +126,9 @@ class Search extends Component {
                     <div className="result-info">{ hits.toLocaleString() } results in {took} sec</div>
                     }
 
-                    <div className="sort-box">
-
-                        <a className="sort-opt selected">Best</a>
-                        <a className="sort-opt">Relevance</a>
-                        <a className="sort-opt">Date</a>
-                    </div>
-
+                    {!loading && hits > 0 &&
+                    <div className="sort-box">{sortItems}</div>
+                    }
 
                     {entries.valueSeq().map((entry) => {
                         return <ListItem key={entry.id} entry={entry}/>
