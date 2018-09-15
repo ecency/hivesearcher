@@ -1,8 +1,8 @@
 .list-item {
   border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid $white-four;
   margin-top: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid $white-four;
 
   &:last-of-type {
     border-bottom-color: transparent;
@@ -22,11 +22,11 @@
     }
 
     .author {
+      color: $charcoal-grey;
       flex-shrink: 0;
       font-weight: 700;
-      margin-right: 10px;
 
-      color: $charcoal-grey;
+      margin-right: 10px;
 
       .author-reputation {
         color: $steel-grey;
@@ -43,14 +43,14 @@
     }
 
     .category {
+      background-color: darken($silver, 10);
       border-radius: 25px;
+      color: $white;
       flex-shrink: 0;
       font-size: 12px;
       margin-right: 12px;
       padding: 2px 8px;
       transition: 0.5s;
-      background-color: darken($silver, 10);
-      color: $white;
     }
 
     .read-mark {
@@ -73,17 +73,16 @@
 
     .item-image {
       align-items: center;
+      background: #f1f1f1;
       border-radius: 4px;
       display: flex;
       height: 180px;
       justify-content: center;
-      width: 100%;
-      overflow: hidden;
       margin-bottom: 10px;
-      background: #f1f1f1;
+      overflow: hidden;
+      width: 100%;
 
       img {
-        border-radius: 4px;
         height: auto;
         max-width: 100%;
       }
@@ -117,7 +116,7 @@
 
       .post-total {
         color: $steel-grey;
-        margin-right: 10px;
+        margin-right: 14px;
 
         &.payout-declined {
           color: lighten($steel-grey, 15);
@@ -131,7 +130,7 @@
         color: $steel-grey;
         display: flex;
         font-size: 14px;
-        margin-right: 10px;
+        margin-right: 14px;
 
         .mi {
           margin-right: 5px;
@@ -140,9 +139,9 @@
       }
 
       .app {
+        color: $silver;
         flex-grow: 1;
         text-align: right;
-        color: $silver;
       }
     }
 

@@ -7,7 +7,7 @@
     "n-documents-indexed": "<span class=\"count\">{n}</span> documents indexed"
   },
   "search": {
-    "result-info": "{hits} results in {took} sec",
+    "result-info": "<strong>{hits} results</strong> in {took} sec.",
     "sort-popularity": "Best",
     "sort-relevance": "Relevance",
     "sort-newest": "Date",

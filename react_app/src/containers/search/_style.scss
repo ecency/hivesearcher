@@ -10,7 +10,7 @@
     .header {
       align-items: center;
       display: flex;
-      margin: 0 auto 30px auto;
+      margin: 0 auto 20px auto;
       width: 100%;
 
       .logo {
@@ -83,6 +83,10 @@
           }
         }
       }
+
+      @media (min-width: $screen-md-min) {
+        margin-bottom: 40px;
+      }
     }
 
     .no-results {
@@ -91,26 +95,29 @@
       text-align: center;
     }
 
-    .result-info {
+    .result-details {
       color: $steel-grey;
-      margin-bottom: 12px;
-      text-align: right;
+      text-align: center;
+      margin-bottom: 30px;
+
+      @media (min-width: $screen-md-min) {
+        display: none;
+      }
     }
 
-    .sort-box {
+    .search-tool-box {
       border-bottom: 1px solid $white-four;
       height: 30px;
       margin-bottom: 20px;
+      display: flex;
 
       .sort-opt {
         color: $steel-grey;
         display: inline-block;
-        flex-shrink: 0;
-        font-size: 14px;
+        font-size: 16px;
         height: calc(100% + 1px);
-        margin-right: 12px;
-        padding: 0 10px 0 10px;
         text-align: center;
+        flex-grow: 1;
 
         &.selected, &:hover {
           border-bottom: 2px solid $dark-sky-blue;
@@ -119,9 +126,20 @@
         }
 
         @media (min-width: $screen-md-min) {
-          font-size: 16px;
+          flex-grow: 0;
           margin-right: 22px;
           padding: 0 20px 0 20px;
+        }
+      }
+
+      .result-details {
+        color: $steel-grey;
+        flex-grow: 1;
+        text-align: right;
+        display: none;
+
+        @media (min-width: $screen-md-min) {
+          display: inline-block;
         }
       }
     }

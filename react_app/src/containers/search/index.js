@@ -12,7 +12,7 @@ import ListItem from '../../components/list-item';
 
 import LinearProgress from '../../components/linear-progress'
 
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, FormattedHTMLMessage} from 'react-intl';
 
 class Search extends Component {
 
@@ -93,6 +93,12 @@ class Search extends Component {
             }} className={`sort-opt ${sort === f ? 'selected' : ''}`}><FormattedMessage id={`search.sort-${f}`}/></a>
         });
 
+        let resultDetails = '';
+        if (!loading && hits) {
+            resultDetails = (<FormattedHTMLMessage id="search.result-info"
+                                                   values={{hits: hits.toLocaleString(), took}}/>);
+        }
+
         return (
             <div className="search-page">
                 <div className="search-page-content">
@@ -122,18 +128,17 @@ class Search extends Component {
                         </div>
                     </div>
 
-                    {loading ? <LinearProgress /> : '' }
-
                     {!loading && hits === 0 ?
                         <div className="no-results"><FormattedMessage id="search.no-result"/></div> : '' }
 
                     {!loading && hits > 0 &&
-                    <div className="result-info"><FormattedMessage id="search.result-info"
-                                                                   values={{hits: hits.toLocaleString(), took}}/></div>
+                    <div className="result-details">{resultDetails}</div>
                     }
 
                     {!loading && hits > 0 &&
-                    <div className="sort-box">{sortItems}</div>
+                        <div className="search-tool-box">{sortItems}
+                            <div className="result-details">{resultDetails}</div>
+                        </div>
                     }
 
                     <div className="entry-list">
@@ -141,6 +146,8 @@ class Search extends Component {
                             return <ListItem key={entry.id} entry={entry}/>
                         })}
                     </div>
+
+                    {loading ? <LinearProgress /> : '' }
 
                 </div>
             </div>
