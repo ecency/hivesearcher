@@ -37,7 +37,8 @@ a {
     display: flex;
     flex-shrink: 0;
     justify-content: center;
-    width: 40px; }
+    width: 40px;
+    user-select: none; }
   .search-area input[type=text] {
     background: transparent;
     border: 0;
@@ -383,5 +384,9 @@ a {
             display: none; }
           .search-page .search-page-content .header .submit .label {
             display: inline-block; } }
+    .search-page .search-page-content .no-results {
+      text-align: center;
+      font-size: 18px;
+      color: #788187; }
 
 /*# sourceMappingURL=style.css.map */

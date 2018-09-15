@@ -8,6 +8,7 @@
   "dependencies": {
     "antd": "^3.9.2",
     "axios": "^0.18.0",
+    "blueimp-md5": "^2.10.0",
     "connected-react-router": "4.4.1",
     "he": "^1.1.1",
     "immutable": "^3.8.2",

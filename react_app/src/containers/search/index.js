@@ -6,7 +6,8 @@ import logo from '../../logo.png';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import parseQuery from '../../utils/parse-query'
-import {fetchPosts} from '../../modules/results'
+import {fetchResults} from '../../modules/results'
+import resultGroupKey from '../../utils/result-group-key.js'
 import ListItem from '../../components/list-item';
 
 import LinearProgress from '../../components/linear-progress'
@@ -20,7 +21,6 @@ class Search extends Component {
     }
 
     componentDidMount() {
-
         const {location, history} = this.props;
 
         const qs = parseQuery(location.search);
@@ -31,8 +31,8 @@ class Search extends Component {
 
         this.setState({searchText: qs.q});
 
-        const {fetchPosts} = this.props;
-        fetchPosts(qs.q, 'newest');
+        const {fetchResults} = this.props;
+        fetchResults(location.search);
     }
 
     componentDidUpdate(prevProps) {
@@ -43,8 +43,8 @@ class Search extends Component {
             const qs = parseQuery(location.search);
             this.setState({searchText: qs.q});
 
-            const {fetchPosts} = this.props;
-            fetchPosts(qs.q);
+            const {fetchResults} = this.props;
+            fetchResults(location.search);
         }
     }
 
@@ -66,14 +66,15 @@ class Search extends Component {
 
     render() {
         const {location, results} = this.props;
-        const qs = parseQuery(location.search);
-        const query = qs.q;
 
-        const posts = results.get(query).posts;
+        const groupKey = resultGroupKey(location.search);
+
+        const posts = results.get(groupKey);
         const entries = posts.get('entries');
         const loading = posts.get('loading');
+        const hits = posts.get('hits');
 
-
+        console.log(loading)
 
         const {searchText} = this.state;
 
@@ -108,10 +109,11 @@ class Search extends Component {
 
                     {loading ? <LinearProgress /> : '' }
 
-                    {entries.valueSeq().map((entry)=>{
-                        return <ListItem key={entry.id} entry={entry} />
-                    })}
+                    {!loading && hits === 0 ? <div className="no-results">Nothing Found</div> : '' }
 
+                    {entries.valueSeq().map((entry) => {
+                        return <ListItem key={entry.id} entry={entry}/>
+                    })}
 
                 </div>
             </div>
@@ -126,7 +128,7 @@ const mapStateToProps = ({results}) => ({
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            fetchPosts
+            fetchResults
         },
         dispatch
     );

@@ -1,6 +1,7 @@
 import {Record, Map, OrderedMap} from 'immutable';
 import {LOCATION_CHANGE} from 'connected-react-router';
-import parseQuery from '../utils/parse-query'
+import parseQuery from '../utils/parse-query';
+import resultGroupKey from '../utils/result-group-key.js'
 import axios from 'axios';
 import {API_URL} from '../config';
 
@@ -11,26 +12,13 @@ export const POSTS_INVALIDATE = 'result/POSTS_INVALIDATE';
 
 
 export const ResultGroupRecord = Record({
-    posts: Map({
-        hits: null,
-        took: null,
-        scrollId: null,
-        sort: null,
-        err: null,
-        loading: false,
-        hasMore: true,
-        entries: OrderedMap({})
-    }),
-    comments: Map({
-        hits: null,
-        took: null,
-        scrollId: null,
-        sort: null,
-        err: null,
-        loading: false,
-        hasMore: true,
-        entries: OrderedMap({})
-    }),
+    hits: null,
+    took: null,
+    scrollId: null,
+    err: null,
+    loading: true,
+    hasMore: true,
+    entries: OrderedMap({})
 });
 
 const initialState = Map();
@@ -40,39 +28,37 @@ export default (state = initialState, action) => {
         case LOCATION_CHANGE: {
             const {location} = action.payload;
             if (location.pathname === '/search') {
-                const qs = parseQuery(location.search);
-                const query = qs.q;
-                if (state.get(query) === undefined) {
-                    return state.set(query, new ResultGroupRecord());
+                const groupKey = resultGroupKey(location.search);
+                if (state.get(groupKey) === undefined) {
+                    return state.set(groupKey, new ResultGroupRecord());
                 }
             }
             return state;
         }
         case POSTS_FETCH_BEGIN: {
             const {payload} = action;
-            const {query} = payload;
+            const {groupKey} = payload;
             return state
-                .setIn([query, 'posts', 'err'], null)
-                .setIn([query, 'posts', 'loading'], true);
+                .setIn([groupKey, 'err'], null)
+                .setIn([groupKey, 'loading'], true);
         }
 
         case POSTS_FETCH_OK: {
-            const {query, sort, data} = action.payload;
+            const {groupKey, data} = action.payload;
             const {results, hits, took, scroll_id: scrollId} = data;
 
             let newState = state
-                .setIn([query, 'posts', 'hits'], hits)
-                .setIn([query, 'posts', 'took'], took)
-                .setIn([query, 'posts', 'scrollId'], scrollId)
-                .setIn([query, 'posts', 'sort'], sort)
-                .setIn([query, 'posts', 'err'], null)
-                .setIn([query, 'posts', 'loading'], false)
-                .setIn([query, 'posts', 'hasMore'], true);
+                .setIn([groupKey, 'hits'], hits)
+                .setIn([groupKey, 'took'], took)
+                .setIn([groupKey, 'scrollId'], scrollId ? scrollId : null)
+                .setIn([groupKey, 'err'], null)
+                .setIn([groupKey, 'loading'], false)
+                .setIn([groupKey, 'hasMore'], true);
 
             results.forEach(entry => {
-                if (!newState.hasIn([query, 'posts', 'entries', `${entry.id}`])) {
+                if (!newState.hasIn([groupKey, 'entries', `${entry.id}`])) {
                     newState = newState.setIn(
-                        [query, 'posts', 'entries', `${entry.id}`],
+                        [groupKey, 'entries', `${entry.id}`],
                         entry
                     );
                 }
@@ -87,17 +73,23 @@ export default (state = initialState, action) => {
     }
 }
 
-export const fetchPosts = (query, sort) => {
+export const fetchResults = (search) => {
     return dispatch => {
+
+        const qs = parseQuery(search);
+        const query = qs.q;
+        const sort = qs.sort || 'newest';
+        const groupKey = resultGroupKey(search);
 
         dispatch({
             type: POSTS_FETCH_BEGIN,
-            payload: {query}
+            payload: {groupKey}
         });
 
 
         const formData = new FormData();
         formData.set('q', query);
+
 
         axios({
             method: 'post',
@@ -111,7 +103,7 @@ export const fetchPosts = (query, sort) => {
 
             dispatch({
                 type: POSTS_FETCH_OK,
-                payload: {query, sort, data: resp.data}
+                payload: {groupKey, data: resp.data}
             });
 
         }).catch(function (resp) {
@@ -119,7 +111,15 @@ export const fetchPosts = (query, sort) => {
         }).then(() => {
 
         })
+    }
+};
 
 
+export const invalidateResults = () => {
+    return dispatch => {
+        dispatch({
+            type: POSTS_INVALIDATE,
+            payload: {}
+        });
     }
 };
