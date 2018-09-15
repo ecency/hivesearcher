@@ -166,13 +166,11 @@
       .item-controls {
         float: right;
         width: calc(100% - 147px);
-      }
-    }
 
-    .item-controls {
-      .post-total, .voters, .comments {
-        margin-right: 25px;
+        .post-total, .voters, .comments {
+          margin-right: 25px;
 
+        }
       }
     }
   }

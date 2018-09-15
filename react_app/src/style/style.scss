@@ -1,6 +1,4 @@
 @import "variables";
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin-ext');
-// @import "mi";
 
 html {
   /* Smooth font */
@@ -29,8 +27,6 @@ a {
     color: $dark-sky-blue;
   }
 }
-
-//@import "../components/LinearProgress";
 
 .search-area {
   align-items: center;

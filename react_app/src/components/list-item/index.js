@@ -52,16 +52,16 @@ class ListItem extends Component {
                         <a className="item-body" href={postLink} target="_blank">{body}</a>
                     </div>
                     <div className="item-controls">
-                        <a className={`post-total`}>
+                        <span className={`post-total`}>
                             $ <FormattedNumber value={payout}/>
-                        </a>
-                        <a className="voters">
+                        </span>
+                        <span className="voters">
                             <i className="mi">people</i> {entry.total_votes}
-                        </a>
-                        <a className="comments">
+                        </span>
+                        <span className="comments">
                             <i className="mi">comment</i> {entry.children}
-                        </a>
-                        <div className="app">{entry.app}</div>
+                        </span>
+                        <span className="app">{entry.app}</span>
                     </div>
                 </div>
             </div>
