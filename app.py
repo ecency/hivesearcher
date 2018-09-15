@@ -51,13 +51,15 @@ def __endpoint_setup():
     @app.route('/api/search', methods=['POST', 'OPTIONS'])
     def search():
         query = request.form.get('q')
-        if not query:
+        sort = request.form.get('sort')
+
+        if not query or not sort:
             abort(400)
 
         scroll_id = request.form.get('si')
 
         headers = {'Content-Type': 'application/json', 'Authorization': API_TOKEN}
-        payload = {'q': query}
+        payload = {'q': query, 'sort': sort}
 
         if scroll_id:
             payload['scroll_id'] = scroll_id

@@ -16,6 +16,7 @@ export const ResultGroupRecord = Record({
     took: null,
     scrollId: null,
     err: null,
+    sort: null,
     loading: true,
     hasMore: true,
     entries: OrderedMap({})
@@ -44,16 +45,18 @@ export default (state = initialState, action) => {
         }
 
         case POSTS_FETCH_OK: {
-            const {groupKey, data} = action.payload;
+            const {groupKey, sort, data} = action.payload;
             const {results, hits, took, scroll_id: scrollId} = data;
+
 
             let newState = state
                 .setIn([groupKey, 'hits'], hits)
                 .setIn([groupKey, 'took'], took)
                 .setIn([groupKey, 'scrollId'], scrollId ? scrollId : null)
                 .setIn([groupKey, 'err'], null)
+                .setIn([groupKey, 'sort'], sort)
                 .setIn([groupKey, 'loading'], false)
-                .setIn([groupKey, 'hasMore'], true);
+                .setIn([groupKey, 'hasMore'], (results.length === 20));
 
             results.forEach(entry => {
                 if (!newState.hasIn([groupKey, 'entries', `${entry.id}`])) {
@@ -73,23 +76,28 @@ export default (state = initialState, action) => {
     }
 }
 
-export const fetchResults = (search) => {
-    return dispatch => {
+export const fetchResults = (search, more) => {
+    return (dispatch, getState) => {
 
         const qs = parseQuery(search);
         const query = qs.q;
-        const sort = qs.sort || 'newest';
+        const sort = qs.sort || 'popularity';
         const groupKey = resultGroupKey(search);
+
+        const {results} = getState();
+
+        if (!more && results.getIn([groupKey, 'entries']).size) {
+            return;
+        }
 
         dispatch({
             type: POSTS_FETCH_BEGIN,
             payload: {groupKey}
         });
 
-
         const formData = new FormData();
         formData.set('q', query);
-
+        formData.set('sort', sort);
 
         axios({
             method: 'post',
@@ -103,7 +111,7 @@ export const fetchResults = (search) => {
 
             dispatch({
                 type: POSTS_FETCH_OK,
-                payload: {groupKey, data: resp.data}
+                payload: {groupKey, sort, data: resp.data}
             });
 
         }).catch(function (resp) {

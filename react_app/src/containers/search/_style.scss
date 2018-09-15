@@ -1,8 +1,8 @@
 .search-page {
   height: 100%;
-  width: 98%;
-  max-width: 900px;
   margin: 0 auto;
+  max-width: 900px;
+  width: 98%;
 
   .search-page-content {
     padding-top: 20px;
@@ -81,10 +81,39 @@
       }
     }
 
-    .no-results{
-      text-align: center;
+    .no-results {
+      color: $steel-grey;
       font-size: 18px;
-      color: $steel-grey
+      text-align: center;
+    }
+
+    .result-info {
+      color: $steel-grey;
+      margin-bottom: 12px;
+           text-align: right;
+    }
+
+    .sort-box {
+      border-bottom: 1px solid $white-four;
+      border-top: 1px solid $white-four;
+      margin-bottom: 20px;
+      padding: 10px 6px;
+
+      .sort-opt {
+        border-radius: 25px;
+        color: $silver;
+        flex-shrink: 0;
+
+        margin-right: 12px;
+        padding: 2px 8px;
+        transition: 0.5s;
+
+
+        &.selected, &:hover {
+          background-color: $dark-sky-blue;
+          color: $white;
+        }
+      }
     }
   }
 }

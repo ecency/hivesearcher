@@ -73,10 +73,11 @@ class Search extends Component {
         const entries = posts.get('entries');
         const loading = posts.get('loading');
         const hits = posts.get('hits');
-
-        console.log(loading)
+        const took = posts.get('took');
+        const sort = posts.get('sort');
 
         const {searchText} = this.state;
+
 
         return (
             <div className="search-page">
@@ -110,6 +111,18 @@ class Search extends Component {
                     {loading ? <LinearProgress /> : '' }
 
                     {!loading && hits === 0 ? <div className="no-results">Nothing Found</div> : '' }
+
+                    {!loading && hits > 0 &&
+                    <div className="result-info">{ hits.toLocaleString() } results in {took} sec</div>
+                    }
+
+                    <div className="sort-box">
+
+                        <a className="sort-opt selected">Best</a>
+                        <a className="sort-opt">Relevance</a>
+                        <a className="sort-opt">Date</a>
+                    </div>
+
 
                     {entries.valueSeq().map((entry) => {
                         return <ListItem key={entry.id} entry={entry}/>
