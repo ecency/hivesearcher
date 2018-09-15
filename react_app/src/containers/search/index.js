@@ -87,8 +87,10 @@ class Search extends Component {
 
         const {searchText} = this.state;
 
-        const sortItems = ['popularity', 'relevance', 'newest'].map((f)=>{
-             return <a key={f} onClick={() => {this.changeSort(f)}} className={`sort-opt ${sort === f ? 'selected' : ''}`}><FormattedMessage id={`search.sort-${f}`} /></a>
+        const sortItems = ['popularity', 'relevance', 'newest'].map((f) => {
+            return <a key={f} onClick={() => {
+                this.changeSort(f)
+            }} className={`sort-opt ${sort === f ? 'selected' : ''}`}><FormattedMessage id={`search.sort-${f}`}/></a>
         });
 
         return (
@@ -122,19 +124,23 @@ class Search extends Component {
 
                     {loading ? <LinearProgress /> : '' }
 
-                    {!loading && hits === 0 ? <div className="no-results"><FormattedMessage id="search.no-result" /></div> : '' }
+                    {!loading && hits === 0 ?
+                        <div className="no-results"><FormattedMessage id="search.no-result"/></div> : '' }
 
                     {!loading && hits > 0 &&
-                    <div className="result-info"> <FormattedMessage id="search.result-info" values={{hits: hits.toLocaleString(), took }} /></div>
+                    <div className="result-info"><FormattedMessage id="search.result-info"
+                                                                   values={{hits: hits.toLocaleString(), took}}/></div>
                     }
 
                     {!loading && hits > 0 &&
                     <div className="sort-box">{sortItems}</div>
                     }
 
-                    {entries.valueSeq().map((entry) => {
-                        return <ListItem key={entry.id} entry={entry}/>
-                    })}
+                    <div className="entry-list">
+                        {entries.valueSeq().map((entry) => {
+                            return <ListItem key={entry.id} entry={entry}/>
+                        })}
+                    </div>
 
                 </div>
             </div>

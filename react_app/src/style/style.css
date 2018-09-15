@@ -14,9 +14,9 @@ html {
 
 body {
   background: #fcfcfc;
+  color: #3c4449;
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  color: #3c4449; }
+  font-size: 14px; }
 
 a {
   color: #3c4449; }
@@ -36,10 +36,10 @@ a {
     color: #788187;
     display: flex;
     flex-shrink: 0;
+    font-size: 20px;
     justify-content: center;
     width: 40px;
-    user-select: none;
-    font-size: 20px; }
+    user-select: none; }
   .search-area input[type=text] {
     background: transparent;
     border: 0;
@@ -49,9 +49,13 @@ a {
     .search-area input[type=text]:focus {
       outline: 0; }
     .search-area input[type=text]::placeholder {
-      font-weight: 400;
       font-style: italic;
-      opacity: 0.5; }
+      font-weight: 400;
+      opacity: 0.3;
+      font-size: 13px; }
+      @media (min-width: 768px) {
+        .search-area input[type=text]::placeholder {
+          font-size: 14px; } }
 
 #root {
   height: 100%;
@@ -172,7 +176,6 @@ a {
   border-bottom: 1px solid #e7e7e7;
   margin-top: 20px;
   padding-bottom: 16px;
-  padding-right: 38px;
   border-bottom: 1px solid #e7e7e7; }
   .list-item:last-of-type {
     border-bottom-color: transparent; }
@@ -205,10 +208,8 @@ a {
       margin-right: 12px;
       padding: 2px 8px;
       transition: 0.5s;
-      background-color: #c1c5c7;
+      background-color: #a6acaf;
       color: #fff; }
-      .list-item .item-header .category:hover {
-        background-color: #a6acaf; }
     .list-item .item-header .read-mark {
       background-color: #357ce6;
       border-radius: 50%;
@@ -228,40 +229,35 @@ a {
     align-items: center;
     border-radius: 4px;
     display: flex;
-    float: left;
-    height: 77px;
+    height: 180px;
     justify-content: center;
-    margin-right: 17px;
+    width: 100%;
     overflow: hidden;
-    width: 130px; }
+    margin-bottom: 10px;
+    background: #f1f1f1; }
     .list-item .item-body .item-image img {
       border-radius: 4px;
       height: auto;
       max-width: 100%; }
-  .list-item .item-body .item-summary {
-    float: right;
-    width: calc(100% - 147px); }
-    .list-item .item-body .item-summary .item-title,
-    .list-item .item-body .item-summary .item-body {
-      display: block;
-      font-size: 16px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 100%; }
-    .list-item .item-body .item-summary .item-title {
-      font-weight: 700;
-      margin-bottom: 9px; }
-    .list-item .item-body .item-summary .item-body {
-      margin-bottom: 13px; }
+  .list-item .item-body .item-summary .item-title,
+  .list-item .item-body .item-summary .item-body {
+    display: block;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%; }
+  .list-item .item-body .item-summary .item-title {
+    font-weight: 700;
+    margin-bottom: 9px; }
+  .list-item .item-body .item-summary .item-body {
+    margin-bottom: 13px; }
   .list-item .item-body .item-controls {
     align-items: center;
-    display: flex;
-    float: right;
-    width: calc(100% - 147px); }
+    display: flex; }
     .list-item .item-body .item-controls .post-total {
       color: #788187;
-      margin-right: 25px; }
+      margin-right: 10px; }
       .list-item .item-body .item-controls .post-total.payout-declined {
         color: #a1a7ab;
         text-decoration: line-through; }
@@ -271,7 +267,7 @@ a {
       color: #788187;
       display: flex;
       font-size: 14px;
-      margin-right: 25px; }
+      margin-right: 10px; }
       .list-item .item-body .item-controls .voters .mi,
       .list-item .item-body .item-controls .comments .mi {
         margin-right: 5px;
@@ -280,6 +276,23 @@ a {
       flex-grow: 1;
       text-align: right;
       color: #c1c5c7; }
+  @media (min-width: 768px) {
+    .list-item {
+      padding-right: 38px; }
+      .list-item .item-body .item-image {
+        float: left;
+        width: 130px;
+        margin-right: 17px;
+        margin-bottom: 0;
+        height: 77px; }
+      .list-item .item-body .item-summary {
+        float: right;
+        width: calc(100% - 147px); }
+      .list-item .item-body .item-controls {
+        float: right;
+        width: calc(100% - 147px); }
+      .list-item .item-controls .post-total, .list-item .item-controls .voters, .list-item .item-controls .comments {
+        margin-right: 25px; } }
 
 .home-page {
   align-items: center;
@@ -381,6 +394,8 @@ a {
             margin-right: 12px; } }
       .search-page .search-page-content .header .submit {
         flex-shrink: 0; }
+        .search-page .search-page-content .header .submit .mi {
+          font-size: 18px; }
         .search-page .search-page-content .header .submit .label {
           display: none; }
         @media (min-width: 768px) {
@@ -398,18 +413,27 @@ a {
       text-align: right; }
     .search-page .search-page-content .sort-box {
       border-bottom: 1px solid #e7e7e7;
-      border-top: 1px solid #e7e7e7;
-      margin-bottom: 20px;
-      padding: 10px 6px; }
+      height: 30px;
+      margin-bottom: 20px; }
       .search-page .search-page-content .sort-box .sort-opt {
-        border-radius: 25px;
-        color: #c1c5c7;
+        color: #788187;
+        display: inline-block;
         flex-shrink: 0;
+        font-size: 14px;
+        height: calc(100% + 1px);
         margin-right: 12px;
-        padding: 2px 8px;
-        transition: 0.5s; }
+        padding: 0 10px 0 10px;
+        text-align: center; }
         .search-page .search-page-content .sort-box .sort-opt.selected, .search-page .search-page-content .sort-box .sort-opt:hover {
-          background-color: #357ce6;
-          color: #fff; }
+          border-bottom: 2px solid #357ce6;
+          color: #357ce6;
+          font-weight: 500; }
+        @media (min-width: 768px) {
+          .search-page .search-page-content .sort-box .sort-opt {
+            font-size: 16px;
+            margin-right: 22px;
+            padding: 0 20px 0 20px; } }
+    .search-page .search-page-content .entry-list {
+      padding: 0 10px; }
 
 /*# sourceMappingURL=style.css.map */

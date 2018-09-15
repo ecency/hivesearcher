@@ -2,7 +2,6 @@
   border-bottom: 1px solid #e7e7e7;
   margin-top: 20px;
   padding-bottom: 16px;
-  padding-right: 38px;
   border-bottom: 1px solid $white-four;
 
   &:last-of-type {
@@ -50,12 +49,8 @@
       margin-right: 12px;
       padding: 2px 8px;
       transition: 0.5s;
-      background-color: $silver;
+      background-color: darken($silver, 10);
       color: $white;
-
-      &:hover {
-        background-color: darken($silver, 10);
-      }
     }
 
     .read-mark {
@@ -80,12 +75,12 @@
       align-items: center;
       border-radius: 4px;
       display: flex;
-      float: left;
-      height: 77px;
+      height: 180px;
       justify-content: center;
-      margin-right: 17px;
+      width: 100%;
       overflow: hidden;
-      width: 130px;
+      margin-bottom: 10px;
+      background: #f1f1f1;
 
       img {
         border-radius: 4px;
@@ -95,8 +90,6 @@
     }
 
     .item-summary {
-      float: right;
-      width: calc(100% - 147px);
 
       .item-title,
       .item-body {
@@ -121,12 +114,10 @@
     .item-controls {
       align-items: center;
       display: flex;
-      float: right;
-      width: calc(100% - 147px);
 
       .post-total {
         color: $steel-grey;
-        margin-right: 25px;
+        margin-right: 10px;
 
         &.payout-declined {
           color: lighten($steel-grey, 15);
@@ -140,7 +131,7 @@
         color: $steel-grey;
         display: flex;
         font-size: 14px;
-        margin-right: 25px;
+        margin-right: 10px;
 
         .mi {
           margin-right: 5px;
@@ -152,6 +143,37 @@
         flex-grow: 1;
         text-align: right;
         color: $silver;
+      }
+    }
+
+  }
+
+  @media (min-width: $screen-md-min) {
+    padding-right: 38px;
+    .item-body {
+      .item-image {
+        float: left;
+        width: 130px;
+        margin-right: 17px;
+        margin-bottom: 0;
+        height: 77px;
+      }
+
+      .item-summary {
+        float: right;
+        width: calc(100% - 147px);
+      }
+
+      .item-controls {
+        float: right;
+        width: calc(100% - 147px);
+      }
+    }
+
+    .item-controls {
+      .post-total, .voters, .comments {
+        margin-right: 25px;
+
       }
     }
   }

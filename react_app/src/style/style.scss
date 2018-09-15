@@ -17,9 +17,9 @@ html {
 
 body {
   background: $white-two;
+  color: $charcoal-grey;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
-  color: $charcoal-grey;
 }
 
 a {
@@ -46,10 +46,10 @@ a {
     color: $steel-grey;
     display: flex;
     flex-shrink: 0;
+    font-size: 20px;
     justify-content: center;
     width: 40px;
     user-select: none;
-    font-size: 20px;
   }
 
   input[type=text] {
@@ -64,9 +64,13 @@ a {
     }
 
     &::placeholder {
-      font-weight: 400;
       font-style: italic;
-      opacity: 0.5;
+      font-weight: 400;
+      opacity: 0.3;
+      font-size: 13px;
+      @media (min-width: $screen-md-min) {
+        font-size: 14px;
+      }
     }
   }
 }

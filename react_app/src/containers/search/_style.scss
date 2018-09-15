@@ -65,6 +65,10 @@
       .submit {
         flex-shrink: 0;
 
+        .mi {
+          font-size: 18px;
+        }
+
         .label {
           display: none;
         }
@@ -95,24 +99,35 @@
 
     .sort-box {
       border-bottom: 1px solid $white-four;
-      border-top: 1px solid $white-four;
+      height: 30px;
       margin-bottom: 20px;
-      padding: 10px 6px;
 
       .sort-opt {
-        border-radius: 25px;
-        color: $silver;
+        color: $steel-grey;
+        display: inline-block;
         flex-shrink: 0;
-
+        font-size: 14px;
+        height: calc(100% + 1px);
         margin-right: 12px;
-        padding: 2px 8px;
-        transition: 0.5s;
+        padding: 0 10px 0 10px;
+        text-align: center;
 
         &.selected, &:hover {
-          background-color: $dark-sky-blue;
-          color: $white;
+          border-bottom: 2px solid $dark-sky-blue;
+          color: $dark-sky-blue;
+          font-weight: 500;
+        }
+
+        @media (min-width: $screen-md-min) {
+          font-size: 16px;
+          margin-right: 22px;
+          padding: 0 20px 0 20px;
         }
       }
+    }
+
+    .entry-list {
+      padding: 0 10px;
     }
   }
 }
