@@ -12,7 +12,7 @@ import ListItem from '../../components/list-item';
 
 import LinearProgress from '../../components/linear-progress'
 
-import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 
 class Search extends Component {
 
@@ -122,7 +122,7 @@ class Search extends Component {
 
                     {loading ? <LinearProgress /> : '' }
 
-                    {!loading && hits === 0 ? <div className="no-results">Nothing Found</div> : '' }
+                    {!loading && hits === 0 ? <div className="no-results"><FormattedMessage id="search.no-result" /></div> : '' }
 
                     {!loading && hits > 0 &&
                     <div className="result-info"> <FormattedMessage id="search.result-info" values={{hits: hits.toLocaleString(), took }} /></div>

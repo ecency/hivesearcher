@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
-import ReactHtmlParser, {processNodes, convertNodeToElement, htmlparser2} from 'react-html-parser';
+import React, {Component} from "react";
+import ReactHtmlParser from "react-html-parser";
 
-import PropTypes from 'prop-types';
-import {FormattedRelative} from 'react-intl';
-import AuthorAvatar from '../author-avatar';
-import postSummary from '../../utils/post-summary'
-import proxifyImageSrc from '../../utils/proxify-image-src';
-import noImg from '../../img/noimage.png';
-import fallBackImg from '../../img/fallback.png';
+import PropTypes from "prop-types";
+import {FormattedNumber, FormattedRelative} from "react-intl";
+import AuthorAvatar from "../author-avatar";
+import postSummary from "../../utils/post-summary";
+import proxifyImageSrc from "../../utils/proxify-image-src";
+import linkify from '../../utils/linkify';
+import noImg from "../../img/noimage.png";
+import fallBackImg from "../../img/fallback.png";
 
 class ListItem extends Component {
 
@@ -17,12 +18,11 @@ class ListItem extends Component {
         const img = entry.img_url ? proxifyImageSrc(entry.img_url) : noImg;
         const title = entry.title_marked ? ReactHtmlParser(entry.title_marked) : entry.title;
         const body = entry.body_marked ? ReactHtmlParser(entry.body_marked) : postSummary(entry.body);
-        const payout = parseFloat(entry.payout).toFixed(2);
-        const postLink = `https://steemit.com/@${entry.author}/${entry.permlink}`;
+        const payout = parseFloat(entry.payout);
+        const postLink = linkify(entry.author, entry.permlink);
 
         return (
             <div className="list-item">
-
                 <div className="item-header">
                     <div className="author-avatar">
                         <AuthorAvatar user={entry.author} size="small"/>
@@ -37,7 +37,6 @@ class ListItem extends Component {
                         <FormattedRelative value={entry.created_at}/>
                       </span>
                 </div>
-
                 <div className="item-body">
                     <a className="item-image" href={postLink} target="_blank">
                         <img
@@ -54,7 +53,7 @@ class ListItem extends Component {
                     </div>
                     <div className="item-controls">
                         <a className={`post-total`}>
-                            $ {payout}
+                            $ <FormattedNumber value={payout}/>
                         </a>
                         <a className="voters">
                             <i className="mi">people</i> {entry.total_votes}

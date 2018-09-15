@@ -38,16 +38,20 @@ a {
     flex-shrink: 0;
     justify-content: center;
     width: 40px;
-    user-select: none; }
+    user-select: none;
+    font-size: 20px; }
   .search-area input[type=text] {
     background: transparent;
     border: 0;
     color: #788187;
-    flex-grow: 1; }
+    flex-grow: 1;
+    font-weight: 700; }
     .search-area input[type=text]:focus {
       outline: 0; }
     .search-area input[type=text]::placeholder {
-      font-style: italic; }
+      font-weight: 400;
+      font-style: italic;
+      opacity: 0.5; }
 
 #root {
   height: 100%;
@@ -138,8 +142,6 @@ a {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 14px;
-  /* Preferred icon size */
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -306,9 +308,10 @@ a {
     .home-page .index-page-content .brand {
       color: #788187;
       font-size: 24px;
-      font-weight: 700;
+      font-weight: 400;
       margin-bottom: 48px; }
       .home-page .index-page-content .brand span {
+        font-weight: 700;
         color: #00519c; }
     .home-page .index-page-content .search-area {
       margin-bottom: 32px;
@@ -361,10 +364,11 @@ a {
         display: none;
         flex-shrink: 0;
         font-size: 18px;
-        font-weight: 700;
+        font-weight: 400;
         margin-right: 6px; }
         .search-page .search-page-content .header .brand span {
-          color: #00519c; }
+          color: #00519c;
+          font-weight: 700; }
         @media (min-width: 768px) {
           .search-page .search-page-content .header .brand {
             display: block;

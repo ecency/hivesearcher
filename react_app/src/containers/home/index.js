@@ -19,6 +19,9 @@ class Home extends Component {
     }
 
     componentDidMount() {
+
+        document.querySelector('#txt-search').focus();
+
         const {fetchCount} = this.props;
 
         fetchCount();

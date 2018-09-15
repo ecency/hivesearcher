@@ -31,10 +31,11 @@
     .brand {
       color: $steel-grey;
       font-size: 24px;
-      font-weight: 700;
+      font-weight: 400;
       margin-bottom: 48px;
 
       span {
+        font-weight: 700;
         color: $peacock-blue;
       }
     }

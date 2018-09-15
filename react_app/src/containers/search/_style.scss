@@ -39,12 +39,12 @@
         display: none;
         flex-shrink: 0;
         font-size: 18px;
-        font-weight: 700;
-
+        font-weight: 400;
         margin-right: 6px;
 
         span {
           color: $peacock-blue;
+          font-weight: 700;
         }
 
         @media (min-width: $screen-md-min) {
@@ -90,7 +90,7 @@
     .result-info {
       color: $steel-grey;
       margin-bottom: 12px;
-           text-align: right;
+      text-align: right;
     }
 
     .sort-box {
@@ -107,7 +107,6 @@
         margin-right: 12px;
         padding: 2px 8px;
         transition: 0.5s;
-
 
         &.selected, &:hover {
           background-color: $dark-sky-blue;

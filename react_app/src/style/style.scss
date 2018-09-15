@@ -49,6 +49,7 @@ a {
     justify-content: center;
     width: 40px;
     user-select: none;
+    font-size: 20px;
   }
 
   input[type=text] {
@@ -56,13 +57,16 @@ a {
     border: 0;
     color: $steel-grey;
     flex-grow: 1;
+    font-weight: 700;
 
     &:focus {
       outline: 0;
     }
 
     &::placeholder {
+      font-weight: 400;
       font-style: italic;
+      opacity: 0.5;
     }
   }
 }

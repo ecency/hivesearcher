@@ -10,6 +10,7 @@
     "result-info": "{hits} results in {took} sec",
     "sort-popularity": "Best",
     "sort-relevance": "Relevance",
-    "sort-newest": "Date"
+    "sort-newest": "Date",
+    "no-result": "Nothing Found"
   }
 }
