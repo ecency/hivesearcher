@@ -54,7 +54,7 @@
       font-weight: 500;
       visibility: hidden;
 
-      span {
+      .count {
         color: $peacock-blue;
       }
 
@@ -63,7 +63,7 @@
       }
 
       &.changed {
-        span {
+        .count {
           animation-name: antFadeIn;
           animation-duration: 0.5s;
           animation-iteration-count: 1;

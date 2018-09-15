@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import Button  from 'antd/lib/button';
-import Icon from '../../components/icon'
+import Icon from '../../components/icon';
 import logo from '../../logo.png';
+
+import {fetchCount} from '../../modules/count'
+
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {fetchCount} from '../../modules/count'
+
+import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl';
 
 class Home extends Component {
 
@@ -58,7 +62,7 @@ class Home extends Component {
     }
 
     render() {
-        const {count} = this.props;
+        const {count, intl} = this.props;
         const {countChanged} = this.state;
 
         return (
@@ -78,14 +82,14 @@ class Home extends Component {
                             if (e.key === 'Enter') {
                                 this.submit()
                             }
-                        }} placeholder="How to become a millionaire with Steem"/>
+                        }} placeholder={intl.formatMessage({id: "home.search-placeholder"})}/>
                     </div>
                     <div className="form-submit">
-                        <Button size="large" type="primary" onClick={e => this.submit()}>Search</Button>
+                        <Button size="large" type="primary" onClick={e => this.submit()}><FormattedMessage
+                            id="g.search"/></Button>
                     </div>
-
                     <div className={`indexed-count ${count ? 'visible' : ''} ${countChanged ? 'changed' : ''}`}>
-                        <span>{count.toLocaleString()}</span> documents indexed
+                        <FormattedHTMLMessage id="home.n-documents-indexed" values={{n: count.toLocaleString()}}/>
                     </div>
                 </div>
             </div>
@@ -108,4 +112,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Home)
+)(injectIntl(Home))

@@ -12,6 +12,8 @@ import ListItem from '../../components/list-item';
 
 import LinearProgress from '../../components/linear-progress'
 
+import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl';
+
 class Search extends Component {
 
     constructor(props) {
@@ -86,7 +88,7 @@ class Search extends Component {
         const {searchText} = this.state;
 
         const sortItems = ['popularity', 'relevance', 'newest'].map((f)=>{
-             return <a key={f} onClick={() => {this.changeSort(f)}} className={`sort-opt ${sort === f ? 'selected' : ''}`}>{f}</a>
+             return <a key={f} onClick={() => {this.changeSort(f)}} className={`sort-opt ${sort === f ? 'selected' : ''}`}><FormattedMessage id={`search.sort-${f}`} /></a>
         });
 
         return (
@@ -113,7 +115,7 @@ class Search extends Component {
                         </div>
                         <div className="submit">
                             <Button type="primary" disabled={loading} onClick={e => this.submit()}><i className="mi">search</i><strong
-                                className="label">Search</strong>
+                                className="label"><FormattedMessage id="g.search"/></strong>
                             </Button>
                         </div>
                     </div>
@@ -123,7 +125,7 @@ class Search extends Component {
                     {!loading && hits === 0 ? <div className="no-results">Nothing Found</div> : '' }
 
                     {!loading && hits > 0 &&
-                    <div className="result-info">{ hits.toLocaleString() } results in {took} sec</div>
+                    <div className="result-info"> <FormattedMessage id="search.result-info" values={{hits: hits.toLocaleString(), took }} /></div>
                     }
 
                     {!loading && hits > 0 &&

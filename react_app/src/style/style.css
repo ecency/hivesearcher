@@ -320,11 +320,11 @@ a {
       font-size: 18px;
       font-weight: 500;
       visibility: hidden; }
-      .home-page .index-page-content .indexed-count span {
+      .home-page .index-page-content .indexed-count .count {
         color: #00519c; }
       .home-page .index-page-content .indexed-count.visible {
         visibility: visible; }
-      .home-page .index-page-content .indexed-count.changed span {
+      .home-page .index-page-content .indexed-count.changed .count {
         animation-name: antFadeIn;
         animation-duration: 0.5s;
         animation-iteration-count: 1; }

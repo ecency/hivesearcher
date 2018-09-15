@@ -1,0 +1,15 @@
+{
+  "g": {
+    "search": "Search"
+  },
+  "home": {
+    "search-placeholder": "How to become a millionaire with Steem",
+    "n-documents-indexed": "<span class=\"count\">{n}</span> documents indexed"
+  },
+  "search": {
+    "result-info": "{hits} results in {took} sec",
+    "sort-popularity": "Best",
+    "sort-relevance": "Relevance",
+    "sort-newest": "Date"
+  }
+}
