@@ -1,0 +1,8 @@
+flask
+flask_wtf
+xonfig
+flask_cors
+redis
+json
+time
+requests
