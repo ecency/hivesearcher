@@ -1,9 +1,9 @@
 import {Record, Map, OrderedMap} from 'immutable';
-import {LOCATION_CHANGE} from 'connected-react-router';
 import parseQuery from '../utils/parse-query';
 import resultGroupKey from '../utils/result-group-key.js'
 import axios from 'axios';
 import {API_URL} from '../config';
+import {SORT_CHOICES, PAGE_SIZE} from '../constants';
 
 export const POSTS_FETCH_BEGIN = 'results/FETCH_BEGIN';
 export const POSTS_FETCH_OK = 'results/FETCH_OK';
@@ -14,54 +14,62 @@ export const POSTS_INVALIDATE = 'result/POSTS_INVALIDATE';
 export const ResultGroupRecord = Record({
     hits: null,
     took: null,
-    scrollId: null,
-    err: null,
-    sort: null,
-    loading: true,
-    hasMore: true,
-    entries: OrderedMap({})
+    entries: Map({
+        popularity: Map({
+            scrollId: null,
+            hasMore: true,
+            loading: true,
+            list: OrderedMap({})
+        }),
+        relevance: Map({
+            scrollId: null,
+            hasMore: true,
+            loading: true,
+            list: OrderedMap({})
+        }),
+        newest: Map({
+            scrollId: null,
+            hasMore: true,
+            loading: true,
+            list: OrderedMap({})
+        })
+    })
 });
+
 
 const initialState = Map();
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case LOCATION_CHANGE: {
-            const {location} = action.payload;
-            if (location.pathname === '/search') {
-                const groupKey = resultGroupKey(location.search);
-                if (state.get(groupKey) === undefined) {
-                    return state.set(groupKey, new ResultGroupRecord());
-                }
-            }
-            return state;
-        }
         case POSTS_FETCH_BEGIN: {
             const {payload} = action;
-            const {groupKey} = payload;
-            return state
-                .setIn([groupKey, 'err'], null)
-                .setIn([groupKey, 'loading'], true);
+            const {groupKey, sort} = payload;
+
+            if (state.get(groupKey) === undefined) {
+                return state.set(groupKey, new ResultGroupRecord());
+            }
+
+            return state.setIn([groupKey, 'entries', sort, 'loading'], true);
         }
 
         case POSTS_FETCH_OK: {
             const {groupKey, sort, data} = action.payload;
             const {results, hits, took, scroll_id: scrollId} = data;
 
+            const realHits = state.getIn([groupKey, 'hits']) || hits;
+            const realTook = state.getIn([groupKey, 'took']) || took;
 
             let newState = state
-                .setIn([groupKey, 'hits'], hits)
-                .setIn([groupKey, 'took'], took)
-                .setIn([groupKey, 'scrollId'], scrollId ? scrollId : null)
-                .setIn([groupKey, 'err'], null)
-                .setIn([groupKey, 'sort'], sort)
-                .setIn([groupKey, 'loading'], false)
-                .setIn([groupKey, 'hasMore'], (results.length === 20));
+                .setIn([groupKey, 'hits'], realHits)
+                .setIn([groupKey, 'took'], realTook)
+                .setIn([groupKey, 'entries', sort, 'loading'], false)
+                .setIn([groupKey, 'entries', sort, 'scrollId'], scrollId ? scrollId : null)
+                .setIn([groupKey, 'entries', sort, 'hasMore'], (results.length === PAGE_SIZE));
 
             results.forEach(entry => {
-                if (!newState.hasIn([groupKey, 'entries', `${entry.id}`])) {
+                if (!newState.hasIn([groupKey, 'entries', sort, 'list', `${entry.id}`])) {
                     newState = newState.setIn(
-                        [groupKey, 'entries', `${entry.id}`],
+                        [groupKey, 'entries', sort, 'list', `${entry.id}`],
                         entry
                     );
                 }
@@ -69,30 +77,26 @@ export default (state = initialState, action) => {
 
             return newState;
         }
-
-
         default:
             return state;
     }
 }
 
-export const fetchResults = (search, more) => {
+export const fetchResults = (query, sort, fetchMore) => {
     return (dispatch, getState) => {
 
-        const qs = parseQuery(search);
-        const query = qs.q;
-        const sort = qs.sort || 'popularity';
-        const groupKey = resultGroupKey(search);
+        const groupKey = resultGroupKey(query);
 
         const {results} = getState();
 
-        if (!more && results.getIn([groupKey, 'entries']).size) {
+
+        if (!fetchMore && results.get(groupKey) && results.getIn([groupKey, 'entries', sort, 'list']).size > 0) {
             return;
         }
 
         dispatch({
             type: POSTS_FETCH_BEGIN,
-            payload: {groupKey}
+            payload: {groupKey, sort}
         });
 
         const formData = new FormData();

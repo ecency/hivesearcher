@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Button  from 'antd/lib/button';
-import Icon from '../../components/icon'
 import logo from '../../logo.png';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
@@ -9,6 +8,7 @@ import parseQuery from '../../utils/parse-query'
 import {fetchResults} from '../../modules/results'
 import resultGroupKey from '../../utils/result-group-key.js'
 import ListItem from '../../components/list-item';
+import {SORT_CHOICES, DEFAULT_SORT} from '../../constants';
 
 import LinearProgress from '../../components/linear-progress'
 
@@ -19,7 +19,7 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {searchText: ''}
+        this.state = {searchText: '', query: '', sort: ''}
     }
 
     componentDidMount() {
@@ -31,10 +31,18 @@ class Search extends Component {
             return;
         }
 
-        this.setState({searchText: qs.q});
+        if (qs.sort && !SORT_CHOICES.includes(qs.sort)) {
+            history.push(`/`);
+            return;
+        }
+
+        const query = qs.q;
+        const sort = qs.sort || DEFAULT_SORT;
+
+        this.setState({searchText: query, query, sort});
 
         const {fetchResults} = this.props;
-        fetchResults(location.search);
+        fetchResults(query, sort);
     }
 
     componentDidUpdate(prevProps) {
@@ -43,10 +51,13 @@ class Search extends Component {
 
         if (prevLocation !== location) {
             const qs = parseQuery(location.search);
-            this.setState({searchText: qs.q});
+            const query = qs.q;
+            const sort = qs.sort || DEFAULT_SORT;
+
+            this.setState({searchText: query, query, sort});
 
             const {fetchResults} = this.props;
-            fetchResults(location.search);
+            fetchResults(query, sort);
         }
     }
 
@@ -76,28 +87,77 @@ class Search extends Component {
     render() {
         const {location, results} = this.props;
 
-        const groupKey = resultGroupKey(location.search);
+        const {searchText, query, sort} = this.state;
 
-        const posts = results.get(groupKey);
-        const entries = posts.get('entries');
-        const loading = posts.get('loading');
-        const hits = posts.get('hits');
-        const took = posts.get('took');
-        const sort = posts.get('sort');
+        const groupKey = resultGroupKey(query);
 
-        const {searchText} = this.state;
+        const group = results.get(groupKey);
 
-        const sortItems = ['popularity', 'relevance', 'newest'].map((f) => {
-            return <a key={f} onClick={() => {
-                this.changeSort(f)
-            }} className={`sort-opt ${sort === f ? 'selected' : ''}`}><FormattedMessage id={`search.sort-${f}`}/></a>
-        });
+        let loading = false;
+        let html1 = [];
+        let html2 = '';
 
-        let resultDetails = '';
-        if (!loading && hits) {
-            resultDetails = (<FormattedHTMLMessage id="search.result-info"
-                                                   values={{hits: hits.toLocaleString(), took}}/>);
+        if (group) {
+            const hits = group.get('hits');
+            const took = group.get('took');
+
+            const entry = group.get('entries').get(sort);
+            const entries = entry.get('list');
+            const loading = entry.get('loading');
+
+            // const sort = posts.get('sort');
+
+            if (hits === 0) {
+                html1.push(<div key="empty" className="no-results"><FormattedMessage id="search.no-result"/></div>)
+            }
+
+
+            if (hits > 0) {
+                const resultDetails = (
+                    <FormattedHTMLMessage id="search.result-info" values={{hits: hits.toLocaleString(), took}}/>);
+
+                html1.push(<div key="info-1" className="result-details">{resultDetails}</div>);
+
+                const sortItems = SORT_CHOICES.map((f) => {
+                    return <a key={f} onClick={() => {
+                        this.changeSort(f)
+                    }} className={`sort-opt ${sort === f ? 'selected' : ''}`}><FormattedMessage
+                        id={`search.sort-${f}`}/></a>
+                });
+
+                html1.push(<div key="tool-box" className="search-tool-box">{sortItems}
+                    <div className="result-details">{resultDetails}</div>
+                </div>);
+
+                html1.push(<div key="entries" className="entry-list">
+                    {entries.valueSeq().map((entry) => {
+                        return <ListItem key={entry.id} entry={entry}/>
+                    })}
+                </div>);
+
+            }
+
+            if (loading) {
+                html1.push(<LinearProgress key="loading"/>);
+            }
+
+
         }
+
+
+        /*
+         const sortItems = SORT_CHOICES.map((f) => {
+         return <a key={f} onClick={() => {
+         this.changeSort(f)
+         }} className={`sort-opt ${sort === f ? 'selected' : ''}`}><FormattedMessage id={`search.sort-${f}`}/></a>
+         });
+
+         let resultDetails = '';
+         if (!loading && hits) {
+         resultDetails = (<FormattedHTMLMessage id="search.result-info"
+         values={{hits: hits.toLocaleString(), took}}/>);
+         }
+         */
 
         return (
             <div className="search-page">
@@ -128,26 +188,7 @@ class Search extends Component {
                         </div>
                     </div>
 
-                    {!loading && hits === 0 ?
-                        <div className="no-results"><FormattedMessage id="search.no-result"/></div> : '' }
-
-                    {!loading && hits > 0 &&
-                    <div className="result-details">{resultDetails}</div>
-                    }
-
-                    {!loading && hits > 0 &&
-                        <div className="search-tool-box">{sortItems}
-                            <div className="result-details">{resultDetails}</div>
-                        </div>
-                    }
-
-                    <div className="entry-list">
-                        {entries.valueSeq().map((entry) => {
-                            return <ListItem key={entry.id} entry={entry}/>
-                        })}
-                    </div>
-
-                    {loading ? <LinearProgress /> : '' }
+                    {html1}
 
                 </div>
             </div>
