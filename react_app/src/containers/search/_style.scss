@@ -160,8 +160,9 @@
       padding: 0 10px 0 10px;
 
       .page-num {
-        position: relative;
         margin: 0;
+        opacity: 0.5;
+        position: relative;
 
         .num {
           align-items: center;
