@@ -97,8 +97,8 @@
 
     .result-details {
       color: $steel-grey;
-      text-align: center;
       margin-bottom: 30px;
+      text-align: center;
 
       @media (min-width: $screen-md-min) {
         display: none;
@@ -107,17 +107,17 @@
 
     .search-tool-box {
       border-bottom: 1px solid $white-four;
+      display: flex;
       height: 30px;
       margin-bottom: 20px;
-      display: flex;
 
       .sort-opt {
         color: $steel-grey;
         display: inline-block;
+        flex-grow: 1;
         font-size: 16px;
         height: calc(100% + 1px);
         text-align: center;
-        flex-grow: 1;
 
         &.selected, &:hover {
           border-bottom: 2px solid $dark-sky-blue;
@@ -134,9 +134,9 @@
 
       .result-details {
         color: $steel-grey;
+        display: none;
         flex-grow: 1;
         text-align: right;
-        display: none;
 
         @media (min-width: $screen-md-min) {
           display: inline-block;
@@ -144,9 +144,9 @@
       }
 
       &.loading {
-        margin-bottom: 0;
         border-bottom: 0;
         height: 29px;
+        margin-bottom: 0;
 
         .sort-opt {
           &.selected, &:hover {
@@ -157,7 +157,38 @@
     }
 
     .entry-list {
-      padding: 0 10px 20px 10px;
+      padding: 0 10px 0 10px;
+
+      .page-num {
+        position: relative;
+        margin: 0;
+
+        .num {
+          align-items: center;
+          background: $dark-sky-blue;
+          border-radius: 50%;
+          color: $white;
+          display: flex;
+          font-size: 20px;
+          font-weight: 500;
+          height: 50px;
+          justify-content: center;
+          margin: auto;
+          position: relative;
+          width: 50px;
+          z-index: 2;
+        }
+
+        .line {
+          background: $dark-sky-blue;
+          display: block;
+          height: 1px;
+          left: 0;
+          position: absolute;
+          top: calc(50% - 1px);
+          width: 100%;
+        }
+      }
     }
   }
 }

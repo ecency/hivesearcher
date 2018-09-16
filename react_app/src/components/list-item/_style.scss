@@ -4,8 +4,9 @@
   margin-top: 20px;
   padding-bottom: 16px;
 
-  &:last-of-type {
+  &:nth-of-type(20n) {
     border-bottom-color: transparent;
+
   }
 
   .item-header {

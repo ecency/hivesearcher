@@ -8,7 +8,7 @@ import parseQuery from '../../utils/parse-query'
 import {fetchResults} from '../../modules/results'
 import resultGroupKey from '../../utils/result-group-key.js'
 import ListItem from '../../components/list-item';
-import {SORT_CHOICES, DEFAULT_SORT} from '../../constants';
+import {SORT_CHOICES, DEFAULT_SORT, PAGE_SIZE} from '../../constants';
 
 import LinearProgress from '../../components/linear-progress'
 
@@ -45,11 +45,10 @@ class Search extends Component {
         const {fetchResults} = this.props;
         fetchResults(query, sort);
 
-
-        this.scrollEl = document.querySelector('.search-page');
+        this.scrollEl = document.querySelector('#container');
         if (this.scrollEl) {
-            this.scrollEl.addEventListener('scroll', (e) => {
-                this.detectScroll()
+            this.scrollEl.addEventListener('scroll', () => {
+                this.detectScroll();
             });
         }
     }
@@ -80,8 +79,6 @@ class Search extends Component {
     }
 
     bottomReached() {
-
-
         const {query, sort} = this.state;
 
         const groupKey = resultGroupKey(query);
@@ -93,9 +90,7 @@ class Search extends Component {
 
         if (!loading && hasMore) {
             fetchResults(query, sort, scrollId);
-            console.log("bottomReached")
         }
-
     }
 
     changeSort(sort) {
@@ -165,11 +160,26 @@ class Search extends Component {
                     <div className="result-details">{resultDetails}</div>
                 </div>);
 
-                html1.push(<div key="entries" className="entry-list">
-                    {entries.valueSeq().map((entry) => {
-                        return <ListItem key={entry.id} entry={entry}/>
-                    })}
-                </div>);
+                const items = entries.valueSeq().map((entry, i) => {
+                    return <ListItem key={entry.id} entry={entry}/>
+                }).toArray();
+
+                // Insert page numbers
+                const pageNumCount = items.length / PAGE_SIZE;
+                if (pageNumCount > 1) {
+                    const range = [... new Array(pageNumCount).keys()];
+                    range.shift();
+                    const pagePositions = range.map((x) => {
+                        return x * PAGE_SIZE;
+                    });
+
+                    pagePositions.map((p, i) => {
+                        items.splice((p + i), 0, <p className="page-num" key={`page-num-${p}`}><span className="line"/> <span className="num">{i + 2}</span></p>);
+                    });
+                }
+
+
+                html1.push(<div key="entries" className="entry-list">{items}</div>);
 
             }
 
