@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parse Query (1) Empty string 1`] = `Object {}`;
+
+exports[`Parse Query (2) With single parameter  1`] = `
+Object {
+  "q": "foo",
+}
+`;
+
+exports[`Parse Query (3) With multiple parameter  1`] = `
+Object {
+  "q": "foo",
+  "sort": "best",
+}
+`;
