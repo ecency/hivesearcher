@@ -7,7 +7,6 @@ import requests
 from flask import request, jsonify, abort
 import json
 from flask_cors import CORS
-import time
 import redis
 
 REDIS_HOST = get_option('REDIS', 'HOST')
@@ -18,7 +17,6 @@ r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASS, dec
 
 API_URL = get_option('ESEARCH_API', 'URL')
 API_TOKEN = get_option('ESEARCH_API', 'TOKEN')
-PAGE_SIZE = 10
 
 app = None
 
@@ -76,7 +74,7 @@ def __endpoint_setup():
     @app.route('/api/count', methods=['GET'])
     def count():
         c = int(r.get('doc_count'))
-        return json.dumps(c)
+        return jsonify(c)
 
 
 __flask_setup()
