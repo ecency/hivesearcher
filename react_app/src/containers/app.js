@@ -7,7 +7,6 @@ import {version} from "../../package.json";
 
 import Home from "./home";
 import Search from "./search";
-import About from "./about";
 
 import en from "react-intl/locale-data/en";
 
@@ -23,7 +22,6 @@ export default class App extends Component {
                     <div id="container">
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/search" component={Search}/>
-                        <Route exact path="/about" component={About}/>
                     </div>
                     <div className="main-footer">
                         <a className="footer-brand" href="https://esteem.app/" target="_blank">eSteem</a>
