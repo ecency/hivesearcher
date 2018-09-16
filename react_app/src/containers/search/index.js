@@ -19,7 +19,8 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {searchText: '', query: '', sort: ''}
+        this.state = {searchText: '', query: '', sort: ''};
+        // this.detectScroll = this.detectScroll.bind(this);
     }
 
     componentDidMount() {
@@ -43,6 +44,14 @@ class Search extends Component {
 
         const {fetchResults} = this.props;
         fetchResults(query, sort);
+
+
+        this.scrollEl = document.querySelector('.search-page');
+        if (this.scrollEl) {
+            this.scrollEl.addEventListener('scroll', (e) => {
+                this.detectScroll()
+            });
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -59,6 +68,34 @@ class Search extends Component {
             const {fetchResults} = this.props;
             fetchResults(query, sort);
         }
+    }
+
+    detectScroll() {
+        if (
+            this.scrollEl.scrollTop + this.scrollEl.offsetHeight + 100 >=
+            this.scrollEl.scrollHeight
+        ) {
+            this.bottomReached();
+        }
+    }
+
+    bottomReached() {
+
+
+        const {query, sort} = this.state;
+
+        const groupKey = resultGroupKey(query);
+        const {fetchResults, results} = this.props;
+        const entry = results.get(groupKey).get('entries').get(sort);
+        const scrollId = entry.get('scrollId');
+        const hasMore = entry.get('hasMore');
+        const loading = entry.get('loading');
+
+        if (!loading && hasMore) {
+            fetchResults(query, sort, scrollId);
+            console.log("bottomReached")
+        }
+
     }
 
     changeSort(sort) {
@@ -103,14 +140,13 @@ class Search extends Component {
 
             const entry = group.get('entries').get(sort);
             const entries = entry.get('list');
-            const loading = entry.get('loading');
+            loading = entry.get('loading');
 
             // const sort = posts.get('sort');
 
             if (hits === 0) {
                 html1.push(<div key="empty" className="no-results"><FormattedMessage id="search.no-result"/></div>)
             }
-
 
             if (hits > 0) {
                 const resultDetails = (
@@ -125,7 +161,7 @@ class Search extends Component {
                         id={`search.sort-${f}`}/></a>
                 });
 
-                html1.push(<div key="tool-box" className="search-tool-box">{sortItems}
+                html1.push(<div key="tool-box" className={`search-tool-box ${loading ? 'loading' : ''}`}>{sortItems}
                     <div className="result-details">{resultDetails}</div>
                 </div>);
 
@@ -140,24 +176,7 @@ class Search extends Component {
             if (loading) {
                 html1.push(<LinearProgress key="loading"/>);
             }
-
-
         }
-
-
-        /*
-         const sortItems = SORT_CHOICES.map((f) => {
-         return <a key={f} onClick={() => {
-         this.changeSort(f)
-         }} className={`sort-opt ${sort === f ? 'selected' : ''}`}><FormattedMessage id={`search.sort-${f}`}/></a>
-         });
-
-         let resultDetails = '';
-         if (!loading && hits) {
-         resultDetails = (<FormattedHTMLMessage id="search.result-info"
-         values={{hits: hits.toLocaleString(), took}}/>);
-         }
-         */
 
         return (
             <div className="search-page">

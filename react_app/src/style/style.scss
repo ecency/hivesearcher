@@ -20,6 +20,16 @@ body {
   font-size: 14px;
 }
 
+body {
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+
+  top: 0;
+  width: 100%;
+}
+
 a {
   color: $charcoal-grey;
 
@@ -60,10 +70,10 @@ a {
     }
 
     &::placeholder {
+      font-size: 13px;
       font-style: italic;
       font-weight: 400;
       opacity: 0.3;
-      font-size: 13px;
       @media (min-width: $screen-md-min) {
         font-size: 14px;
       }
@@ -79,9 +89,38 @@ a {
   width: 100%;
 }
 
-#wrapper {
-  height: 100%;
+#container {
+  height: calc(100% - 30px);
+  overflow: auto;
   width: 100%;
+}
+
+.main-footer {
+  align-items: center;
+  background: $white-three;
+  box-sizing: border-box;
+  display: flex;
+  height: 30px;
+  justify-content: space-between;
+  padding: 4px 10px;
+
+  .footer-brand {
+    float: left;
+    display: block;
+    color: $peacock-blue;
+    font-weight: 500;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .ver {
+    color: $steel-grey;
+    float: right;
+    display: block;
+  }
 }
 
 @import "../components/linear-progress/style";

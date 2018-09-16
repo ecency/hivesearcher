@@ -142,10 +142,22 @@
           display: inline-block;
         }
       }
+
+      &.loading {
+        margin-bottom: 0;
+        border-bottom: 0;
+        height: 29px;
+
+        .sort-opt {
+          &.selected, &:hover {
+            border-bottom-color: transparent;
+          }
+        }
+      }
     }
 
     .entry-list {
-      padding: 0 10px;
+      padding: 0 10px 20px 10px;
     }
   }
 }

@@ -51,7 +51,7 @@ def __endpoint_setup():
     @app.route('/api/search', methods=['POST', 'OPTIONS'])
     def search():
         query = request.form.get('q')
-        sort = request.form.get('sort')
+        sort = request.form.get('so')
 
         if not query or not sort:
             abort(400)

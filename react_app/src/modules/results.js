@@ -82,15 +82,14 @@ export default (state = initialState, action) => {
     }
 }
 
-export const fetchResults = (query, sort, fetchMore) => {
+export const fetchResults = (query, sort, scrollId) => {
     return (dispatch, getState) => {
 
         const groupKey = resultGroupKey(query);
 
         const {results} = getState();
 
-
-        if (!fetchMore && results.get(groupKey) && results.getIn([groupKey, 'entries', sort, 'list']).size > 0) {
+        if (!scrollId && results.get(groupKey) && results.getIn([groupKey, 'entries', sort, 'list']).size > 0) {
             return;
         }
 
@@ -101,7 +100,10 @@ export const fetchResults = (query, sort, fetchMore) => {
 
         const formData = new FormData();
         formData.set('q', query);
-        formData.set('sort', sort);
+        formData.set('so', sort);
+        if (scrollId) {
+            formData.set('si', scrollId);
+        }
 
         axios({
             method: 'post',
