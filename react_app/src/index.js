@@ -5,10 +5,9 @@ import {ConnectedRouter} from 'connected-react-router'
 import store, {history} from './store'
 import App from './containers/app'
 
-
 import 'typeface-roboto';
-import './style/antd.css';
-import './style/style.css';
+import './style/antd.less';
+import './style/style.scss';
 
 render(
     <Provider store={store}>
