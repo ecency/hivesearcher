@@ -5,3 +5,4 @@ venv
 *.egg-info
 
 config.development.ini
+config.ini
