@@ -1,17 +1,18 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import Button  from 'antd/lib/button';
-import logo from '../../logo.png';
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux'
-import parseQuery from '../../utils/parse-query'
-import {fetchResults} from '../../modules/results'
-import ListItem from '../../components/list-item';
-import {SORT_CHOICES, DEFAULT_SORT, PAGE_SIZE} from '../../constants';
+import React, {Component} from "react";
+import {Link} from "react-router-dom";
+import Button from "antd/lib/button";
+import message from "antd/lib/message";
+import logo from "../../logo.png";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import parseQuery from "../../utils/parse-query";
+import {fetchResults, invalidateGroup} from "../../modules/results";
+import ListItem from "../../components/list-item";
+import LinearProgress from "../../components/linear-progress";
 
-import LinearProgress from '../../components/linear-progress'
+import {DEFAULT_SORT, SORT_CHOICES} from "../../constants";
 
-import {FormattedMessage, FormattedHTMLMessage} from 'react-intl';
+import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
 
 class Search extends Component {
 
@@ -36,14 +37,10 @@ class Search extends Component {
             return;
         }
 
-        this.setState({query, sort, page: parseInt(page)});
+        this.setState({query, sort, page});
 
         const {fetchResults} = this.props;
         fetchResults(query, sort, page);
-    }
-
-    shouldComponentUpdate() {
-        return true;
     }
 
     componentDidUpdate(prevProps) {
@@ -51,12 +48,18 @@ class Search extends Component {
         const {location} = this.props;
 
         if (prevLocation !== location) {
-
             const {q: query, s: sort = DEFAULT_SORT, p: page = 1} = parseQuery(location.search);
-            this.setState({query, sort, page: parseInt(page)});
+            this.setState({query, sort, page});
 
             const {fetchResults} = this.props;
             fetchResults(query, sort, page);
+        }
+
+        const {results, intl} = this.props;
+        const {query} = this.state;
+        const group = results.get(query);
+        if (group && group.get('err')) {
+            message.error(intl.formatMessage({id: "g.error-occurred"}));
         }
     }
 
@@ -82,7 +85,14 @@ class Search extends Component {
             document.querySelector('#txt-search').focus();
             return;
         }
-        const {history} = this.props;
+
+        const {invalidateGroup, history} = this.props;
+
+        const {query} = this.state;
+        if (query === q) {
+            invalidateGroup(query);
+        }
+
         history.push(`/search?q=${q}`);
     }
 
@@ -90,8 +100,8 @@ class Search extends Component {
         const {results} = this.props;
 
         const {query, sort, page} = this.state;
-
         const group = results.get(query);
+
         let loading = false;
         let html = [];
 
@@ -100,6 +110,7 @@ class Search extends Component {
             const took = group.get('took');
             const pages = group.get('pages');
             const scope = group.getIn(['scopes', `${sort}-${page}`]);
+
             loading = scope.get('loading');
             const list = scope.get('list');
 
@@ -124,27 +135,33 @@ class Search extends Component {
                     <div className="result-details">{resultDetails}</div>
                 </div>);
 
+                if (loading) {
+                    html.push(<LinearProgress key="loading"/>);
+                }
 
-                const items = list.map((entry, i) => {
+                const items = list.map((entry) => {
                     return <ListItem key={entry.id} entry={entry}/>
                 });
 
                 html.push(<div key="entries" className="entry-list">{items}</div>);
 
-                const pageItems = [...new Array(pages).keys()].map((a) => {
-                    const p = (a + 1);
-                    return <a onClick={(e) => {
-                        this.changePage(p)
-                    }} className={`item ${p === page ? 'active' : ''}`} key={`page-${a}`}>{p}</a>
-                });
+                if (!loading) {
+                    const pageItems = [...new Array(pages).keys()].map((a) => {
+                        const p = (a + 1);
+                        return <a onClick={() => {
+                            this.changePage(p)
+                        }} className={`item ${p === parseInt(page, 10) ? 'active' : ''}`} key={`page-${a}`}>{p}</a>
+                    });
 
-                html.push(<div className="pagination" key="pagination">{pageItems}</div>);
-            }
-
-            if (loading) {
-                html.push(<LinearProgress key="loading"/>);
+                    html.push(<div className="pagination" key="pagination">{pageItems}</div>);
+                }
+            } else {
+                if (loading) {
+                    html.push(<LinearProgress key="loading"/>);
+                }
             }
         }
+
 
         return (
             <div className="search-page">
@@ -186,7 +203,8 @@ const mapStateToProps = ({results}) => ({
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            fetchResults
+            fetchResults,
+            invalidateGroup
         },
         dispatch
     );
@@ -194,4 +212,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Search)
+)(injectIntl(Search))

@@ -3,6 +3,7 @@ import axios from "axios";
 import {API_URL} from "../config";
 import {MAX_PAGES} from "../constants";
 
+
 export const POSTS_FETCH_BEGIN = 'results/FETCH_BEGIN';
 export const POSTS_FETCH_OK = 'results/FETCH_OK';
 export const POSTS_FETCH_ERROR = 'result/POSTS_FETCH_ERROR';
@@ -17,6 +18,7 @@ export const FilterPageRecord = Record({
 export const ResultGroupRecord = Record({
     hits: null,
     took: null,
+    err: false,
     scopes: Map({}),
     pages: 0,
 });
@@ -35,9 +37,20 @@ export default (state = initialState, action) => {
                 return newState
             }
 
-            return state.setIn([query, 'scopes', `${sort}-${page}`], FilterPageRecord());
+            return state.setIn([query, 'err'], false).setIn([query, 'scopes', `${sort}-${page}`], FilterPageRecord());
         }
+        case POSTS_FETCH_ERROR: {
+            const {payload} = action;
+            const {query, sort, page} = payload;
 
+            return state.setIn([query, 'err'], true).setIn([query, 'scopes', `${sort}-${page}`, 'loading'], false);
+        }
+        case POSTS_INVALIDATE: {
+            const {payload} = action;
+            const {query} = payload;
+
+            return state.delete(query)
+        }
         case POSTS_FETCH_OK: {
             const {query, sort, page, data} = action.payload;
             const {results, hits, took, pages} = data;
@@ -71,10 +84,7 @@ export const fetchResults = (query, sort, page = 1) => {
             }
         }
 
-        dispatch({
-            type: POSTS_FETCH_BEGIN,
-            payload: {query, sort, page}
-        });
+        dispatch(fetchBegin(query, sort, page));
 
         const formData = new FormData();
         formData.set('q', query);
@@ -89,26 +99,38 @@ export const fetchResults = (query, sort, page = 1) => {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json'
             }
-        }).then(function (resp) {
-            dispatch({
-                type: POSTS_FETCH_OK,
-                payload: {query, sort, page, data: resp.data}
-            });
-
-        }).catch(function (resp) {
-
-        }).then(() => {
-
-        })
-    }
-};
-
-
-export const invalidateResults = () => {
-    return dispatch => {
-        dispatch({
-            type: POSTS_INVALIDATE,
-            payload: {}
+        }).then((resp) => {
+            dispatch(fetchOk(query, sort, page, resp.data));
+        }).catch(() => {
+            dispatch(fetchError(query, sort, page));
         });
     }
 };
+
+
+export const invalidateGroup = (query) => {
+    return dispatch => {
+        dispatch(invalidate(query));
+    }
+};
+
+/* Action creators */
+const fetchBegin = (query, sort, page) => ({
+    type: POSTS_FETCH_BEGIN,
+    payload: {query, sort, page}
+});
+
+const fetchOk = (query, sort, page, data) => ({
+    type: POSTS_FETCH_OK,
+    payload: {query, sort, page, data}
+});
+
+const fetchError = (query, sort, page) => ({
+    type: POSTS_FETCH_ERROR,
+    payload: {query, sort, page}
+});
+
+const invalidate = (query) => ({
+    type: POSTS_INVALIDATE,
+    payload: {query}
+});

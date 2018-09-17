@@ -24,7 +24,7 @@ export default class App extends Component {
                         <Route exact path="/search" component={Search}/>
                     </div>
                     <div className="main-footer">
-                        <a className="footer-brand" href="https://esteem.app/" target="_blank">eSteem</a>
+                        <a className="footer-brand" href="https://esteem.app/" rel="noopener noreferrer" target="_blank">eSteem</a>
                         <span className="ver">v{version}</span>
                     </div>
                 </Fragment>

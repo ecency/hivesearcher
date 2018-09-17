@@ -1,6 +1,7 @@
 {
   "g": {
-    "search": "Search"
+    "search": "Search",
+    "error-occurred": "An error has occurred"
   },
   "home": {
     "search-placeholder": "How to become a millionaire with Steem",
