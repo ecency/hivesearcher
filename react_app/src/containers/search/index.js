@@ -139,7 +139,6 @@ class Search extends Component {
                 });
 
                 html.push(<div className="pagination" key="pagination">{pageItems}</div>);
-
             }
 
             if (loading) {

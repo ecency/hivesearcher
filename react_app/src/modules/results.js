@@ -1,10 +1,7 @@
-import {Record, Map, OrderedMap, List} from 'immutable';
-import parseQuery from '../utils/parse-query';
-import resultGroupKey from '../utils/result-group-key.js'
-import axios from 'axios';
-import {API_URL} from '../config';
-import {SORT_CHOICES, PAGE_SIZE, MAX_PAGES} from '../constants';
-import md5 from 'blueimp-md5'
+import {Map, Record} from "immutable";
+import axios from "axios";
+import {API_URL} from "../config";
+import {MAX_PAGES} from "../constants";
 
 export const POSTS_FETCH_BEGIN = 'results/FETCH_BEGIN';
 export const POSTS_FETCH_OK = 'results/FETCH_OK';
@@ -20,8 +17,8 @@ export const FilterPageRecord = Record({
 export const ResultGroupRecord = Record({
     hits: null,
     took: null,
-    scopes: Map({}), // queryHash-filter-page
-    pages: 0, // queryHash-filter
+    scopes: Map({}),
+    pages: 0,
 });
 
 const initialState = Map();
@@ -45,39 +42,16 @@ export default (state = initialState, action) => {
             const {query, sort, page, data} = action.payload;
             const {results, hits, took, pages} = data;
 
+            // Dont change "took" and "hits" when filters changed
+            const realHits = state.getIn([query, 'hits']) || hits;
+            const realTook = state.getIn([query, 'took']) || took;
+
             return state
-                .setIn([query, 'hits'], hits)
-                .setIn([query, 'took'], took)
+                .setIn([query, 'hits'], realHits)
+                .setIn([query, 'took'], realTook)
                 .setIn([query, 'pages'], (pages <= MAX_PAGES ? pages : MAX_PAGES))
                 .setIn([query, 'scopes', `${sort}-${page}`, 'loading'], false)
                 .setIn([query, 'scopes', `${sort}-${page}`, 'list'], results);
-
-
-            /*
-             if (pages > MAX_PAGES) pages = MAX_PAGES;
-
-
-             const realHits = state.getIn([groupKey, 'hits']) || hits;
-             const realTook = state.getIn([groupKey, 'took']) || took;
-
-             let newState = state
-             .setIn([groupKey, 'hits'], realHits)
-             .setIn([groupKey, 'took'], realTook)
-             .setIn([groupKey, 'entries', sort, 'pages'], pages)
-             .setIn([groupKey, 'entries', sort, 'loading'], false)
-             .setIn([groupKey, 'entries', sort, 'scrollId'], scrollId ? scrollId : null)
-             .setIn([groupKey, 'entries', sort, 'hasMore'], (results.length === PAGE_SIZE));
-
-             results.forEach(entry => {
-             if (!newState.hasIn([groupKey, 'entries', sort, 'list', `${entry.id}`])) {
-             newState = newState.setIn(
-             [groupKey, 'entries', sort, 'list', `${entry.id}`],
-             entry
-             );
-             }
-             });
-
-             return newState;*/
         }
         default:
             return state;
@@ -87,15 +61,15 @@ export default (state = initialState, action) => {
 export const fetchResults = (query, sort, page = 1) => {
     return (dispatch, getState) => {
 
-        const groupKey = resultGroupKey(query);
+        const {results} = getState();
 
-
-        /*
-         const {results} = getState();
-
-         if (!scrollId && results.get(groupKey) && results.getIn([groupKey, 'entries', sort, 'list']).size > 0) {
-         return;
-         }*/
+        const group = results.get(query);
+        if (group) {
+            const scope = group.getIn(['scopes', `${sort}-${page}`]);
+            if (scope && scope.get('list').length > 0) {
+                return;
+            }
+        }
 
         dispatch({
             type: POSTS_FETCH_BEGIN,
