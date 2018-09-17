@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Marked Html (1) Remove all html but not <mark> 1`] = `"lorem ipsum dolor sit <mark>amet</mark>"`;
+
+exports[`Marked Html (2) Should trim and remove multiple spaces 1`] = `"Etiam iaculis quis diam nec elementum. Nulla vel facilisis massa. Sed eu."`;
+
+exports[`Marked Html (3) Should truncate 1`] = `"Etiam iacu"`;
+
+exports[`Marked Html (4) Should remove markdown 1`] = `"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque hendrerit vulputate ligula, id interdum metus volutpat id. Vivamus eget congue nisi, at mollis ante."`;

@@ -12,43 +12,6 @@ export const POSTS_FETCH_ERROR = 'result/POSTS_FETCH_ERROR';
 export const POSTS_INVALIDATE = 'result/POSTS_INVALIDATE';
 
 
-export const makeQueryHash = (s) => {
-    return md5(`${s}`);
-};
-
-export const makeDataPath = (queryHash, filter, page) => {
-    return md5(`${queryHash}-${filter}-${page}`);
-};
-
-
-/*
- export const ResultGroupRecord = Record({
- hits: null,
- took: null,
- filters: Map({
- popularity: Map({
- pageCount: null,
- pages: Map({
- page1: Map({
- loading: true,
- data: List
- })
- })
- }),
- relevance: Map({
- pages: null,
- loading: true,
- list: OrderedMap({})
- }),
- newest: Map({
- pages: null,
- loading: true,
- list: OrderedMap({})
- })
- })
- });
- */
-
 export const FilterPageRecord = Record({
     loading: true,
     list: []

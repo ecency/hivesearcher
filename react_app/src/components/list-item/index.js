@@ -4,20 +4,22 @@ import ReactHtmlParser from "react-html-parser";
 import PropTypes from "prop-types";
 import {FormattedNumber, FormattedRelative} from "react-intl";
 import AuthorAvatar from "../author-avatar";
-import postSummary from "../../utils/post-summary";
 import proxifyImageSrc from "../../utils/proxify-image-src";
-import linkify from '../../utils/linkify';
+import linkify from "../../utils/linkify";
 import noImg from "../../img/noimage.png";
 import fallBackImg from "../../img/fallback.png";
+import markedHtml from "../../utils/marked-html";
 
 class ListItem extends Component {
 
     render() {
+
         const {entry} = this.props;
+
         const authorRep = parseFloat(entry.author_rep).toFixed(0);
         const img = entry.img_url ? proxifyImageSrc(entry.img_url) : noImg;
-        const title = entry.title; // entry.title_marked ? ReactHtmlParser(entry.title_marked) : entry.title;
-        const body = entry.body; // entry.body_marked ? ReactHtmlParser(entry.body_marked) : postSummary(entry.body);
+        const title = entry.title_marked ? ReactHtmlParser(markedHtml(entry.title_marked)) : markedHtml(entry.title);
+        const body = entry.body_marked ? ReactHtmlParser(markedHtml(entry.body_marked)) : markedHtml(entry.body);
         const payout = parseFloat(entry.payout);
         const postLink = linkify(entry.author, entry.permlink);
 
