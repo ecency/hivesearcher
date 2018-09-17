@@ -16,8 +16,8 @@ class ListItem extends Component {
         const {entry} = this.props;
         const authorRep = parseFloat(entry.author_rep).toFixed(0);
         const img = entry.img_url ? proxifyImageSrc(entry.img_url) : noImg;
-        const title = entry.title_marked ? ReactHtmlParser(entry.title_marked) : entry.title;
-        const body = entry.body_marked ? ReactHtmlParser(entry.body_marked) : postSummary(entry.body);
+        const title = entry.title; // entry.title_marked ? ReactHtmlParser(entry.title_marked) : entry.title;
+        const body = entry.body; // entry.body_marked ? ReactHtmlParser(entry.body_marked) : postSummary(entry.body);
         const payout = parseFloat(entry.payout);
         const postLink = linkify(entry.author, entry.permlink);
 

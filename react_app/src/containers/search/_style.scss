@@ -193,3 +193,33 @@
     }
   }
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+
+  .item {
+    align-items: center;
+    background: $dark-sky-blue;
+    border-radius: 25px;
+    color: $white;
+    display: flex;
+    height: 26px;
+    justify-content: center;
+    margin: 0 2px;
+    width: 26px;
+
+    @media (min-width: $screen-md-min) {
+      height: 30px;
+      width: 30px;
+          margin: 0 4px;
+    }
+
+    &.active {
+      background: $white-four;
+      color: $steel-grey;
+      pointer-events: none;
+    }
+  }
+}

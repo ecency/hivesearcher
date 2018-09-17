@@ -19,38 +19,40 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {searchText: '', query: '', sort: ''};
-        // this.detectScroll = this.detectScroll.bind(this);
+        this.state = {query: '', sort: '', page: 1};
     }
 
     componentDidMount() {
         const {location, history} = this.props;
 
-        const qs = parseQuery(location.search);
-        if (qs.q === undefined || qs.q.trim() === '') {
+        const {q: query, s: sort = DEFAULT_SORT, p: page = 1} = parseQuery(location.search);
+
+        if (query === undefined || query.trim() === '') {
             history.push(`/`);
             return;
         }
 
-        if (qs.sort && !SORT_CHOICES.includes(qs.sort)) {
+        if (sort && !SORT_CHOICES.includes(sort)) {
             history.push(`/`);
             return;
         }
 
-        const query = qs.q;
-        const sort = qs.sort || DEFAULT_SORT;
-
-        this.setState({searchText: query, query, sort});
+        this.setState({query, sort, page: parseInt(page)});
 
         const {fetchResults} = this.props;
-        fetchResults(query, sort);
+        fetchResults(query, sort, page);
 
-        this.scrollEl = document.querySelector('#container');
-        if (this.scrollEl) {
-            this.scrollEl.addEventListener('scroll', () => {
-                this.detectScroll();
-            });
-        }
+        /*
+         this.scrollEl = document.querySelector('#container');
+         if (this.scrollEl) {
+         this.scrollEl.addEventListener('scroll', () => {
+         this.detectScroll();
+         });
+         }*/
+    }
+
+    shouldComponentUpdate() {
+        return true;
     }
 
     componentDidUpdate(prevProps) {
@@ -58,45 +60,52 @@ class Search extends Component {
         const {location} = this.props;
 
         if (prevLocation !== location) {
-            const qs = parseQuery(location.search);
-            const query = qs.q;
-            const sort = qs.sort || DEFAULT_SORT;
 
-            this.setState({searchText: query, query, sort});
+            const {q: query, s: sort = DEFAULT_SORT, p: page = 1} = parseQuery(location.search);
+            this.setState({query, sort, page: parseInt(page)});
 
             const {fetchResults} = this.props;
-            fetchResults(query, sort);
+            fetchResults(query, sort, page);
         }
     }
 
-    detectScroll() {
-        if (
-            this.scrollEl.scrollTop + this.scrollEl.offsetHeight + 100 >=
-            this.scrollEl.scrollHeight
-        ) {
-            this.bottomReached();
-        }
-    }
+    /*
+     detectScroll() {
+     if (
+     this.scrollEl.scrollTop + this.scrollEl.offsetHeight + 100 >=
+     this.scrollEl.scrollHeight
+     ) {
+     this.bottomReached();
+     }
+     }
 
-    bottomReached() {
-        const {query, sort} = this.state;
+     bottomReached() {
+     const {query, sort} = this.state;
 
-        const groupKey = resultGroupKey(query);
-        const {fetchResults, results} = this.props;
-        const entry = results.get(groupKey).get('entries').get(sort);
-        const scrollId = entry.get('scrollId');
-        const hasMore = entry.get('hasMore');
-        const loading = entry.get('loading');
+     const groupKey = resultGroupKey(query);
+     const {fetchResults, results} = this.props;
+     const entry = results.get(groupKey).get('entries').get(sort);
+     const scrollId = entry.get('scrollId');
+     const hasMore = entry.get('hasMore');
+     const loading = entry.get('loading');
 
-        if (!loading && hasMore) {
-            fetchResults(query, sort, scrollId);
-        }
-    }
+     if (!loading && hasMore) {
+     fetchResults(query, sort, scrollId);
+     }
+     }
+     */
 
     changeSort(sort) {
         const {location, history} = this.props;
         const qs = parseQuery(location.search);
-        const u = `?q=${qs.q}&sort=${sort}`;
+        const u = `?q=${qs.q}&s=${sort}`;
+        history.push(u);
+    }
+
+    changePage(page) {
+        const {location, history} = this.props;
+        const qs = parseQuery(location.search);
+        const u = `?q=${qs.q}&s=${qs.s}&p=${page}`;
         history.push(u);
     }
 
@@ -110,44 +119,41 @@ class Search extends Component {
         history.push(`/search?q=${q}`);
     }
 
-    searchInputChanged(e) {
-        const newText = e.target.value;
-        this.setState({searchText: newText});
-    }
-
+    /*
+     searchInputChanged(e) {
+     const newText = e.target.value;
+     this.setState({searchText: newText});
+     }
+     */
 
     render() {
         const {location, results} = this.props;
 
-        const {searchText, query, sort} = this.state;
+        const {query, sort, page} = this.state;
 
-        const groupKey = resultGroupKey(query);
+        console.log(this.state)
 
-        const group = results.get(groupKey);
-
+        const group = results.get(query);
         let loading = false;
-        let html1 = [];
-        let html2 = '';
+        let html = [];
 
         if (group) {
             const hits = group.get('hits');
             const took = group.get('took');
-
-            const entry = group.get('entries').get(sort);
-            const entries = entry.get('list');
-            loading = entry.get('loading');
-
-            // const sort = posts.get('sort');
+            const pages = group.get('pages');
+            const scope = group.getIn(['scopes', `${sort}-${page}`]);
+            loading = scope.get('loading');
+            const list = scope.get('list');
 
             if (hits === 0) {
-                html1.push(<div key="empty" className="no-results"><FormattedMessage id="search.no-result"/></div>)
+                html.push(<div key="empty" className="no-results"><FormattedMessage id="search.no-result"/></div>)
             }
 
             if (hits > 0) {
                 const resultDetails = (
                     <FormattedHTMLMessage id="search.result-info" values={{hits: hits.toLocaleString(), took}}/>);
 
-                html1.push(<div key="info-1" className="result-details">{resultDetails}</div>);
+                html.push(<div key="info-1" className="result-details">{resultDetails}</div>);
 
                 const sortItems = SORT_CHOICES.map((f) => {
                     return <a key={f} onClick={() => {
@@ -156,37 +162,110 @@ class Search extends Component {
                         id={`search.sort-${f}`}/></a>
                 });
 
-                html1.push(<div key="tool-box" className={`search-tool-box ${loading ? 'loading' : ''}`}>{sortItems}
+                html.push(<div key="tool-box" className={`search-tool-box ${loading ? 'loading' : ''}`}>{sortItems}
                     <div className="result-details">{resultDetails}</div>
                 </div>);
 
-                const items = entries.valueSeq().map((entry, i) => {
+
+                const items = list.map((entry, i) => {
                     return <ListItem key={entry.id} entry={entry}/>
-                }).toArray();
+                });
 
-                // Insert page numbers
-                const pageNumCount = items.length / PAGE_SIZE;
-                if (pageNumCount > 1) {
-                    const range = [... new Array(pageNumCount).keys()];
-                    range.shift();
-                    const pagePositions = range.map((x) => {
-                        return x * PAGE_SIZE;
-                    });
+                html.push(<div key="entries" className="entry-list">{items}</div>);
 
-                    pagePositions.map((p, i) => {
-                        items.splice((p + i), 0, <p className="page-num" key={`page-num-${p}`}><span className="line"/> <span className="num">{i + 2}</span></p>);
-                    });
-                }
+                const pageItems = [...new Array(pages).keys()].map((a) => {
+                    const p = (a + 1);
+                    return <a onClick={(e) => {
+                        this.changePage(p)
+                    }} className={`item ${p === page ? 'active' : ''}`} key={`page-${a}`}>{p}</a>
+                });
 
+                html.push(<div className="pagination" key="pagination">{pageItems}</div>);
 
-                html1.push(<div key="entries" className="entry-list">{items}</div>);
 
             }
 
             if (loading) {
-                html1.push(<LinearProgress key="loading"/>);
+                html.push(<LinearProgress key="loading"/>);
             }
+
+
+            /*
+             console.log(hits);
+             console.log(took);
+             console.log(pages);
+             console.log(loading);
+             console.log(list)
+             */
+
+
         }
+
+
+        /*
+
+
+         const groupKey = resultGroupKey(query);
+
+         //const group = results.get(groupKey);
+
+         let loading = false;
+         let html1 = [];
+
+
+
+         if (group) {
+         const hits = group.get('hits');
+         const took = group.get('took');
+
+         const entry = group.get('entries').get(sort);
+         const entries = entry.get('list');
+         const pages = entry.get('pages');
+
+         loading = entry.get('loading');
+
+         // const sort = posts.get('sort');
+
+         if (hits === 0) {
+         html1.push(<div key="empty" className="no-results"><FormattedMessage id="search.no-result"/></div>)
+         }
+
+         if (hits > 0) {
+         const resultDetails = (
+         <FormattedHTMLMessage id="search.result-info" values={{hits: hits.toLocaleString(), took}}/>);
+
+         html1.push(<div key="info-1" className="result-details">{resultDetails}</div>);
+
+         const sortItems = SORT_CHOICES.map((f) => {
+         return <a key={f} onClick={() => {
+         this.changeSort(f)
+         }} className={`sort-opt ${sort === f ? 'selected' : ''}`}><FormattedMessage
+         id={`search.sort-${f}`}/></a>
+         });
+
+         html1.push(<div key="tool-box" className={`search-tool-box ${loading ? 'loading' : ''}`}>{sortItems}
+         <div className="result-details">{resultDetails}</div>
+         </div>);
+
+         const items = entries.valueSeq().map((entry, i) => {
+         return <ListItem key={entry.id} entry={entry}/>
+         }).toArray();
+
+
+         html1.push(<div key="entries" className="entry-list">{items}</div>);
+
+         const pageItems = [...new Array(pages).keys()].map((a) => {
+         return <a key={`page-${a}`}>{a + 1}</a>
+         });
+
+         html1.push(<div key="pagination">{pageItems}</div>);
+         }
+
+         if (loading) {
+         html1.push(<LinearProgress key="loading"/>);
+         }
+         }
+         */
 
         return (
             <div className="search-page">
@@ -206,9 +285,7 @@ class Search extends Component {
                                 if (e.key === 'Enter') {
                                     this.submit()
                                 }
-                            }} value={searchText} onChange={(e) => {
-                                this.searchInputChanged(e)
-                            }}/>
+                            }} defaultValue={query}/>
                         </div>
                         <div className="submit">
                             <Button type="primary" disabled={loading} onClick={e => this.submit()}><i className="mi">search</i><strong
@@ -217,7 +294,7 @@ class Search extends Component {
                         </div>
                     </div>
 
-                    {html1}
+                    {html}
 
                 </div>
             </div>

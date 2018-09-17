@@ -50,19 +50,15 @@ def __endpoint_setup():
     def search():
         query = request.form.get('q')
         sort = request.form.get('so')
+        page = request.form.get('pa')
 
-        if not query or not sort:
+        if not query or not sort or not page:
             abort(400)
 
-        scroll_id = request.form.get('si')
-
         headers = {'Content-Type': 'application/json', 'Authorization': API_TOKEN}
-        payload = {'q': query, 'sort': sort}
+        payload = {'q': query, 'sort': sort, 'page': page}
 
-        if scroll_id:
-            payload['scroll_id'] = scroll_id
-
-        resp = requests.post('{}/search'.format(API_URL), data=json.dumps(payload), headers=headers, timeout=6)
+        resp = requests.post('{}/search-paged'.format(API_URL), data=json.dumps(payload), headers=headers, timeout=6)
 
         if resp.status_code != 200:
             abort(500)
