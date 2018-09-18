@@ -115,22 +115,22 @@ export const invalidateGroup = (query) => {
 };
 
 /* Action creators */
-const fetchBegin = (query, sort, page) => ({
+export const fetchBegin = (query, sort, page) => ({
     type: POSTS_FETCH_BEGIN,
     payload: {query, sort, page}
 });
 
-const fetchOk = (query, sort, page, data) => ({
+export const fetchOk = (query, sort, page, data) => ({
     type: POSTS_FETCH_OK,
     payload: {query, sort, page, data}
 });
 
-const fetchError = (query, sort, page) => ({
+export const fetchError = (query, sort, page) => ({
     type: POSTS_FETCH_ERROR,
     payload: {query, sort, page}
 });
 
-const invalidate = (query) => ({
+export const invalidate = (query) => ({
     type: POSTS_INVALIDATE,
     payload: {query}
 });
