@@ -27,5 +27,5 @@ WORKDIR ${APP_DIR}
 
 EXPOSE 5001
 
-CMD ["gunicorn",  "app:app", "-b", "127.0.0.1:5001"]
+CMD ["gunicorn",  "app:app", "-b", "0.0.0.0:5001"]
 
