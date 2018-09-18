@@ -78,7 +78,10 @@ def __endpoint_setup():
 
     @app.route('/api/count', methods=['GET'])
     def count():
-        c = int(r.get('doc_count'))
+        try:
+            c = int(r.get('doc_count'))
+        except TypeError:
+            c = 0
         return jsonify(c)
 
 
