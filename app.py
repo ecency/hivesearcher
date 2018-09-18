@@ -1,12 +1,14 @@
+import json
 import os
+
+import redis
+import requests
 from flask import Flask, send_from_directory, render_template
+from flask import request, jsonify, abort
+from flask_cors import CORS
+from werkzeug.contrib.cache import RedisCache
 from werkzeug.contrib.fixers import ProxyFix
 from xonfig import get_option
-import requests
-from flask import request, jsonify, abort
-import json
-from flask_cors import CORS
-import redis
 
 REDIS_HOST = get_option('REDIS', 'HOST')
 REDIS_PORT = get_option('REDIS', 'PORT')
@@ -18,10 +20,11 @@ API_URL = get_option('ESEARCH_API', 'URL')
 API_TOKEN = get_option('ESEARCH_API', 'TOKEN')
 
 app = None
+cache = None
 
 
 def __flask_setup():
-    global app
+    global app, cache
 
     app = Flask(__name__, static_folder='react_app/build', template_folder='react_app/build')
     app.wsgi_app = ProxyFix(app.wsgi_app)
@@ -31,6 +34,8 @@ def __flask_setup():
 
     CORS(app)
 
+    cache = RedisCache(REDIS_HOST, REDIS_PORT, REDIS_PASS)
+
 
 def __endpoint_setup():
     @app.route('/', defaults={'path': ''})
@@ -39,7 +44,7 @@ def __endpoint_setup():
         if path != "" and os.path.exists("react_app/build/" + path):
             return send_from_directory('react_app/build', path)
         else:
-            return render_template('index.html')
+            return send_from_directory('react_app/build', 'index.html')
 
     @app.route('/api/search', methods=['POST', 'OPTIONS'])
     def search():
@@ -50,17 +55,24 @@ def __endpoint_setup():
         if not query or not sort or not page:
             abort(400)
 
-        headers = {'Content-Type': 'application/json', 'Authorization': API_TOKEN}
-        payload = {'q': query, 'sort': sort, 'page': page}
+        # endpoint cached to redis with small timeout in order to make less busy elastic search
+        cache_key = '{}-{}-{}'.format(query, sort, page)
+        rv = cache.get(cache_key)
+        if rv is None:
+            headers = {'Content-Type': 'application/json', 'Authorization': API_TOKEN}
+            payload = {'q': query, 'sort': sort, 'page': page}
 
-        resp = requests.post('{}/search-paged'.format(API_URL), data=json.dumps(payload), headers=headers, timeout=6)
+            resp = requests.post('{}/search-paged'.format(API_URL), data=json.dumps(payload), headers=headers,
+                                 timeout=6)
 
-        if resp.status_code != 200:
-            abort(500)
+            if resp.status_code != 200:
+                abort(500)
 
-        resp_data = resp.json()
+            resp_data = resp.json()
+            rv = json.dumps(resp_data)
+            cache.set(cache_key, rv, timeout=5)
 
-        return json.dumps(resp_data)
+        return app.response_class(response=rv, status=200, mimetype='application/json')
 
     @app.route('/api/count', methods=['GET'])
     def count():
