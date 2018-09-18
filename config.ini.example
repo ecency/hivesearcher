@@ -11,6 +11,6 @@ CACHE_TIMEOUT = 5
 
 
 [REDIS]
-HOST = 'localhost'
+HOST = localhost
 PORT = 6379
-PASS = ''
+PASS =
