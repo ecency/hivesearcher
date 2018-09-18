@@ -145,7 +145,7 @@
 
       &.loading {
         border-bottom: 0;
-        height: 29px;
+        height: 28px;
         margin-bottom: 0;
 
         .sort-opt {
@@ -158,38 +158,6 @@
 
     .entry-list {
       padding: 0 10px 0 10px;
-
-      .page-num {
-        margin: 0;
-        opacity: 0.5;
-        position: relative;
-
-        .num {
-          align-items: center;
-          background: $dark-sky-blue;
-          border-radius: 50%;
-          color: $white;
-          display: flex;
-          font-size: 20px;
-          font-weight: 500;
-          height: 50px;
-          justify-content: center;
-          margin: auto;
-          position: relative;
-          width: 50px;
-          z-index: 2;
-        }
-
-        .line {
-          background: $dark-sky-blue;
-          display: block;
-          height: 1px;
-          left: 0;
-          position: absolute;
-          top: calc(50% - 1px);
-          width: 100%;
-        }
-      }
     }
   }
 }
