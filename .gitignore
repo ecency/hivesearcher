@@ -6,3 +6,6 @@ venv
 
 config.development.ini
 config.ini
+
+web.log
+web.sock

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+PWD_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+BASE_DIR="$PWD_DIR/../"
+VENVDIR="$PWD_DIR/../venv"
+
+cd $VENVDIR
+source bin/activate
+
+export PYTHONPATH=$BASE_DIR
+
+cd "$BASE_DIR/"
+
+NAME="web"
+SOCKFILE="$BASE_DIR/web.sock"
+ERROR_LOG_FILE="$BASE_DIR/web.log"
+
+# Create the run directory if it doesn't exist
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+NUM_WORKERS=8
+TIMEOUT=10
+
+# Start your unicorn
+exec gunicorn app:app  -b 127.0.0.1:5001 \
+  --name $NAME \
+  --workers $NUM_WORKERS \
+  --error-logfile $ERROR_LOG_FILE \
+  --bind=unix:$SOCKFILE
