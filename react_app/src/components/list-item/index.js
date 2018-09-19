@@ -8,6 +8,7 @@ import proxifyImageSrc from "../../utils/proxify-image-src";
 import linkify from "../../utils/linkify";
 import noImg from "../../img/noimage.png";
 import fallBackImg from "../../img/fallback.png";
+import commentImg from '../../img/comment.png';
 import markedHtml from "../../utils/marked-html";
 
 class ListItem extends Component {
@@ -16,15 +17,17 @@ class ListItem extends Component {
 
         const {entry} = this.props;
 
+        const isComment = entry.depth > 0;
+
         const authorRep = parseFloat(entry.author_rep).toFixed(0);
-        const img = entry.img_url ? proxifyImageSrc(entry.img_url) : noImg;
+        const img = isComment ? commentImg : ( entry.img_url ? proxifyImageSrc(entry.img_url) : noImg);
         const title = entry.title_marked ? ReactHtmlParser(markedHtml(entry.title_marked)) : markedHtml(entry.title);
         const body = entry.body_marked ? ReactHtmlParser(markedHtml(entry.body_marked)) : markedHtml(entry.body);
         const payout = parseFloat(entry.payout);
         const postLink = linkify(entry.author, entry.permlink);
 
         return (
-            <div className="list-item">
+            <div className={`list-item ${isComment ? 'comment-item' : ''}`}>
                 <div className="item-header">
                     <div className="author-avatar">
                         <AuthorAvatar user={entry.author} size="small"/>

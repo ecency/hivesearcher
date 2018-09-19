@@ -175,4 +175,34 @@
       }
     }
   }
+
+  &.comment-item {
+    @media (min-width: $screen-md-min) {
+      .item-body {
+        .item-image {
+          width: 48px;
+          height: 48px;
+          background: $white-three;
+          img {
+            width: 30px;
+          }
+        }
+
+        .item-summary {
+          width: calc(100% - 65px);
+          .item-title {
+            display: none;
+          }
+
+          .item-body {
+            margin-bottom: 10px;
+          }
+        }
+
+        .item-controls {
+          width: calc(100% - 65px);
+        }
+      }
+    }
+  }
 }
