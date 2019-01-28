@@ -80,11 +80,12 @@ class Home extends Component {
                         <div className="add-on">
                             <Icon icon="search"/>
                         </div>
-                        <input type="text" id="txt-search" maxLength={100} onKeyPress={(e) => {
-                            if (e.key === 'Enter') {
-                                this.submit()
-                            }
-                        }} placeholder={intl.formatMessage({id: "home.search-placeholder"})}/>
+                        <input type="text" id="txt-search" maxLength={100} autoCorrect="off" autoCapitalize="none"
+                               onKeyPress={(e) => {
+                                   if (e.key === 'Enter') {
+                                       this.submit()
+                                   }
+                               }} placeholder={intl.formatMessage({id: "home.search-placeholder"})}/>
                     </div>
                     <div className="form-submit">
                         <button className="big-button" type="button" onClick={e => this.submit()}><FormattedMessage

@@ -164,9 +164,11 @@
 }
 
 .pagination {
+  @include clearfix();
   display: flex;
   justify-content: center;
-  margin: 20px 0 40px 0;
+  height: 120px;
+  align-items: center;
 
   .item {
     align-items: center;
@@ -182,7 +184,7 @@
     @media (min-width: $screen-md-min) {
       height: 30px;
       width: 30px;
-          margin: 0 4px;
+      margin: 0 4px;
     }
 
     &.active {

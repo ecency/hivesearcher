@@ -146,8 +146,9 @@ input[type=text] {
 
 #container {
   height: calc(100% - 30px);
-  overflow: auto;
   width: 100%;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
 }
 
 .main-footer {

@@ -175,11 +175,12 @@ class Search extends Component {
                             <div className="add-on">
                                 <i className="mi">search</i>
                             </div>
-                            <input type="text" id="txt-search" maxLength={100} onKeyPress={(e) => {
-                                if (e.key === 'Enter') {
-                                    this.submit()
-                                }
-                            }} defaultValue={query}/>
+                            <input type="text" id="txt-search" maxLength={100} autoCorrect="off" autoCapitalize="none"
+                                   onKeyPress={(e) => {
+                                       if (e.key === 'Enter') {
+                                           this.submit()
+                                       }
+                                   }} defaultValue={query}/>
                         </div>
                         <div className="submit">
                             <button type="button" disabled={loading} onClick={e => this.submit()}><i
