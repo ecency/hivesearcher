@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Button  from 'antd/lib/button';
 import Icon from '../../components/icon';
 import logo from '../../logo.png';
 
@@ -88,8 +87,8 @@ class Home extends Component {
                         }} placeholder={intl.formatMessage({id: "home.search-placeholder"})}/>
                     </div>
                     <div className="form-submit">
-                        <Button size="large" type="primary" onClick={e => this.submit()}><FormattedMessage
-                            id="g.search"/></Button>
+                        <button className="big-button" type="button" onClick={e => this.submit()}><FormattedMessage
+                            id="g.search"/></button>
                     </div>
                     <div className={`indexed-count ${count ? 'visible' : ''} ${countChanged ? 'changed' : ''}`}>
                         <FormattedHTMLMessage id="home.n-documents-indexed" values={{n: count.toLocaleString()}}/>

@@ -118,6 +118,7 @@
         font-size: 16px;
         height: calc(100% + 1px);
         text-align: center;
+        cursor: pointer;
 
         &.selected, &:hover {
           border-bottom: 2px solid $dark-sky-blue;
@@ -165,7 +166,7 @@
 .pagination {
   display: flex;
   justify-content: center;
-  margin: 10px 0;
+  margin: 20px 0 40px 0;
 
   .item {
     align-items: center;

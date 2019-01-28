@@ -6,7 +6,6 @@ import store, {history} from './store'
 import App from './containers/app'
 
 import 'typeface-roboto';
-import './style/antd.less';
 import './style/style.scss';
 
 render(
@@ -16,4 +15,4 @@ render(
         </ConnectedRouter>
     </Provider>,
     document.querySelector('#root')
-)
+);

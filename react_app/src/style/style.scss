@@ -18,6 +18,7 @@ body {
   color: $charcoal-grey;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
+  margin: 0;
 }
 
 body {
@@ -25,7 +26,6 @@ body {
   height: 100%;
   left: 0;
   position: absolute;
-
   top: 0;
   width: 100%;
 }
@@ -36,6 +36,60 @@ a {
   &:hover {
     color: $dark-sky-blue;
   }
+}
+
+mark {
+  background: lighten(yellow, 40);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  border: none;
+  margin: 0;
+  border-radius: 25px;
+  width: auto;
+  overflow: visible;
+  background: $dark-sky-blue;
+  color: $white-two;
+  font-size: 14px;
+  height: 30px;
+  padding: 0 10px;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);
+  outline: none;
+  transition: 0.3s;
+  font-weight: 400;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &.big-button {
+    font-size: 16px;
+    height: 40px;
+    padding: 0 15px;
+  }
+}
+
+input[type=text] {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.alert-error {
+  padding: 10px;
+  color: red;
+  background: lighten(red, 40);
+  display: inline-block;
+
+}
+
+.search-error {
+  text-align: center;
+  margin: 0 0 10px 0;
 }
 
 .search-area {

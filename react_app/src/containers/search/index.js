@@ -1,7 +1,5 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-import Button from "antd/lib/button";
-import message from "antd/lib/message";
 import logo from "../../logo.png";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -54,13 +52,6 @@ class Search extends Component {
             const {fetchResults} = this.props;
             fetchResults(query, sort, page);
         }
-
-        const {results, intl} = this.props;
-        const {query} = this.state;
-        const group = results.get(query);
-        if (group && group.get('err')) {
-            message.error(intl.formatMessage({id: "g.error-occurred"}));
-        }
     }
 
     changeSort(sort) {
@@ -106,6 +97,13 @@ class Search extends Component {
         let html = [];
 
         if (group) {
+
+            if (group && group.get('err')) {
+                html.push(<div key="search-error" className="search-error">
+                    <div className="alert-error"><FormattedMessage id="g.error-occurred"/></div>
+                </div>)
+            }
+
             const hits = group.get('hits');
             const took = group.get('took');
             const pages = group.get('pages');
@@ -184,9 +182,10 @@ class Search extends Component {
                             }} defaultValue={query}/>
                         </div>
                         <div className="submit">
-                            <Button type="primary" disabled={loading} onClick={e => this.submit()}><i className="mi">search</i><strong
+                            <button type="button" disabled={loading} onClick={e => this.submit()}><i
+                                className="mi">search</i><strong
                                 className="label"><FormattedMessage id="g.search"/></strong>
-                            </Button>
+                            </button>
                         </div>
                     </div>
                     {html}
