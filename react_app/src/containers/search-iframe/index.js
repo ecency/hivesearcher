@@ -37,6 +37,8 @@ class SearchIframe extends Component {
 
         const {fetchResults} = this.props;
         fetchResults(query, sort, page);
+
+        window.addEventListener('resize', this.windowResized);
     }
 
     componentDidUpdate(prevProps) {
@@ -51,15 +53,30 @@ class SearchIframe extends Component {
             fetchResults(query, sort, page);
         }
 
+
+        this.triggerHeightChange();
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.windowResized);
+    }
+
+    windowResized = () => {
+        this.triggerHeightChange();
+    };
+
+    getHeight = () => {
         const body = document.body;
         const html = document.documentElement;
 
-        const height = Math.max(body.scrollHeight, body.offsetHeight,
+        return Math.max(body.scrollHeight, body.offsetHeight,
             html.clientHeight, html.scrollHeight, html.offsetHeight);
+    };
 
-        console.log(height)
-
-    }
+    triggerHeightChange = () => {
+        const height = this.getHeight();
+        window.parent.postMessage({height}, '*');
+    };
 
     changeSort(sort) {
         const {history} = this.props;
