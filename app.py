@@ -34,7 +34,7 @@ def __flask_setup():
     app.config['DEVELOPMENT'] = get_option('FLASK', 'DEVELOPMENT')
     app.config['DEBUG'] = get_option('FLASK', 'DEBUG')
 
-    CORS(app)
+    CORS(app, resources={r"/search-iframe*": {"origins": "*"}})
 
     cache = RedisCache(REDIS_HOST, REDIS_PORT, REDIS_PASS)
 
