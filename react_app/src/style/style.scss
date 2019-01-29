@@ -144,7 +144,7 @@ input[type=text] {
   width: 100%;
 }
 
-#container {
+.main-container {
   height: calc(100% - 30px);
   width: 100%;
   -webkit-overflow-scrolling: touch;
@@ -179,6 +179,38 @@ input[type=text] {
   }
 }
 
+.pagination {
+  @include clearfix();
+  display: flex;
+  justify-content: center;
+  height: 120px;
+  align-items: center;
+
+  .item {
+    align-items: center;
+    background: $dark-sky-blue;
+    border-radius: 25px;
+    color: $white;
+    display: flex;
+    height: 26px;
+    justify-content: center;
+    margin: 0 2px;
+    width: 26px;
+
+    @media (min-width: $screen-md-min) {
+      height: 30px;
+      width: 30px;
+      margin: 0 4px;
+    }
+
+    &.active {
+      background: $white-four;
+      color: $steel-grey;
+      pointer-events: none;
+    }
+  }
+}
+
 @import "../components/linear-progress/style";
 @import "../components/icon/style";
 @import "../components/author-avatar/style";
@@ -186,3 +218,4 @@ input[type=text] {
 
 @import "../containers/home/style";
 @import "../containers/search/style";
+@import "../containers/search-iframe/style";

@@ -3,10 +3,10 @@ import {Route} from "react-router-dom";
 import {addLocaleData, IntlProvider} from "react-intl";
 import {flattenMessages} from "../utils/flatten-messages";
 import messages from "../locales";
-import {version} from "../../package.json";
 
 import Home from "./home";
 import Search from "./search";
+import SearchIframe from "./search-iframe";
 
 import en from "react-intl/locale-data/en";
 
@@ -19,14 +19,9 @@ export default class App extends Component {
         return (
             <IntlProvider locale={locale} messages={flattenMessages(messages[locale])}>
                 <Fragment>
-                    <div id="container">
-                        <Route exact path="/" component={Home}/>
-                        <Route exact path="/search" component={Search}/>
-                    </div>
-                    <div className="main-footer">
-                        <a className="footer-brand" href="https://esteem.app/" rel="noopener noreferrer" target="_blank">eSteem</a>
-                        <span className="ver">v{version}</span>
-                    </div>
+                    <Route exact path="/" component={Home}/>
+                    <Route exact path="/search" component={Search}/>
+                    <Route exact path="/search-iframe" component={SearchIframe}/>
                 </Fragment>
             </IntlProvider>
         );

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import Icon from '../../components/icon';
 import logo from '../../logo.png';
 
@@ -8,6 +8,8 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 
 import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl';
+
+import Footer from "../../components/footer"
 
 class Home extends Component {
 
@@ -68,34 +70,42 @@ class Home extends Component {
         const {countChanged} = this.state;
 
         return (
-            <div className="home-page">
-                <div className="index-page-content">
-                    <div className="logo">
-                        <img src={logo} alt="eSteem Search"/>
-                    </div>
-                    <div className="brand">
-                        <span>eSteem</span> Search
-                    </div>
-                    <div className="search-area">
-                        <div className="add-on">
-                            <Icon icon="search"/>
+            <Fragment>
+                <div className="main-container">
+                    <div className="home-page">
+                        <div className="index-page-content">
+                            <div className="logo">
+                                <img src={logo} alt="eSteem Search"/>
+                            </div>
+                            <div className="brand">
+                                <span>eSteem</span> Search
+                            </div>
+                            <div className="search-area">
+                                <div className="add-on">
+                                    <Icon icon="search"/>
+                                </div>
+                                <input type="text" id="txt-search" maxLength={100} autoCorrect="off"
+                                       autoCapitalize="none"
+                                       onKeyPress={(e) => {
+                                           if (e.key === 'Enter') {
+                                               this.submit()
+                                           }
+                                       }} placeholder={intl.formatMessage({id: "home.search-placeholder"})}/>
+                            </div>
+                            <div className="form-submit">
+                                <button className="big-button" type="button" onClick={e => this.submit()}>
+                                    <FormattedMessage
+                                        id="g.search"/></button>
+                            </div>
+                            <div className={`indexed-count ${count ? 'visible' : ''} ${countChanged ? 'changed' : ''}`}>
+                                <FormattedHTMLMessage id="home.n-documents-indexed"
+                                                      values={{n: count.toLocaleString()}}/>
+                            </div>
                         </div>
-                        <input type="text" id="txt-search" maxLength={100} autoCorrect="off" autoCapitalize="none"
-                               onKeyPress={(e) => {
-                                   if (e.key === 'Enter') {
-                                       this.submit()
-                                   }
-                               }} placeholder={intl.formatMessage({id: "home.search-placeholder"})}/>
-                    </div>
-                    <div className="form-submit">
-                        <button className="big-button" type="button" onClick={e => this.submit()}><FormattedMessage
-                            id="g.search"/></button>
-                    </div>
-                    <div className={`indexed-count ${count ? 'visible' : ''} ${countChanged ? 'changed' : ''}`}>
-                        <FormattedHTMLMessage id="home.n-documents-indexed" values={{n: count.toLocaleString()}}/>
                     </div>
                 </div>
-            </div>
+                <Footer />
+            </Fragment>
         )
     }
 }

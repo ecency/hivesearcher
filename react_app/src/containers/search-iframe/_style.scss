@@ -1,8 +1,8 @@
-.search-page {
+.search-page-iframe {
   height: 100%;
-  margin: 0 auto;
-  max-width: 900px;
   width: 98%;
+  margin: 0 auto;
+
 
   .search-page-content {
     padding-top: 20px;
@@ -12,46 +12,6 @@
       display: flex;
       margin: 0 auto 20px auto;
       width: 100%;
-
-      .logo {
-        align-items: center;
-        background-color: $white;
-        border: 3px solid $white-three;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        margin-right: 6px;
-        padding: 3px;
-
-        img {
-          height: 32px;
-          width: 32px;
-        }
-
-        @media (min-width: $screen-md-min) {
-          margin-right: 16px;
-
-        }
-      }
-
-      .brand {
-        color: $steel-grey;
-        display: none;
-        flex-shrink: 0;
-        font-size: 18px;
-        font-weight: 400;
-        margin-right: 6px;
-
-        span {
-          color: $peacock-blue;
-          font-weight: 700;
-        }
-
-        @media (min-width: $screen-md-min) {
-          display: block;
-          margin-right: 16px;
-        }
-      }
 
       .search-area {
         flex-grow: 1;

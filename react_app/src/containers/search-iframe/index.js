@@ -1,20 +1,16 @@
-import React, {Component, Fragment} from "react";
-import {Link} from "react-router-dom";
-import logo from "../../logo.png";
+import React, {Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import parseQuery from "../../utils/parse-query";
 import {fetchResults, invalidateGroup} from "../../modules/results";
 import ListItem from "../../components/list-item";
 import LinearProgress from "../../components/linear-progress";
-import Footer from "../../components/footer"
 
 import {DEFAULT_SORT, SORT_CHOICES} from "../../constants";
 
 import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
 
-
-class Search extends Component {
+class SearchIframe extends Component {
 
     constructor(props) {
         super(props);
@@ -54,6 +50,15 @@ class Search extends Component {
             const {fetchResults} = this.props;
             fetchResults(query, sort, page);
         }
+
+        const body = document.body;
+        const html = document.documentElement;
+
+        const height = Math.max(body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight);
+
+        console.log(height)
+
     }
 
     changeSort(sort) {
@@ -86,7 +91,7 @@ class Search extends Component {
             invalidateGroup(query);
         }
 
-        history.push(`/search?q=${q}`);
+        history.push(`/search-iframe?q=${q}`);
     }
 
     render() {
@@ -164,42 +169,30 @@ class Search extends Component {
 
 
         return (
-            <Fragment>
-                <div className="main-container">
-                    <div className="search-page">
-                        <div className="search-page-content">
-                            <div className="header">
-                                <Link to="/" className="logo">
-                                    <img src={logo} className="App-logo" alt="logo"/>
-                                </Link>
-                                <div className="brand">
-                                    <span>eSteem</span> Search
-                                </div>
-                                <div className="search-area">
-                                    <div className="add-on">
-                                        <i className="mi">search</i>
-                                    </div>
-                                    <input type="text" id="txt-search" maxLength={100} autoCorrect="off"
-                                           autoCapitalize="none"
-                                           onKeyPress={(e) => {
-                                               if (e.key === 'Enter') {
-                                                   this.submit()
-                                               }
-                                           }} defaultValue={query}/>
-                                </div>
-                                <div className="submit">
-                                    <button type="button" disabled={loading} onClick={e => this.submit()}><i
-                                        className="mi">search</i><strong
-                                        className="label"><FormattedMessage id="g.search"/></strong>
-                                    </button>
-                                </div>
+            <div className="search-page-iframe">
+                <div className="search-page-content">
+                    <div className="header">
+                        <div className="search-area">
+                            <div className="add-on">
+                                <i className="mi">search</i>
                             </div>
-                            {html}
+                            <input type="text" id="txt-search" maxLength={100} autoCorrect="off" autoCapitalize="none"
+                                   onKeyPress={(e) => {
+                                       if (e.key === 'Enter') {
+                                           this.submit()
+                                       }
+                                   }} defaultValue={query}/>
+                        </div>
+                        <div className="submit">
+                            <button type="button" disabled={loading} onClick={e => this.submit()}><i
+                                className="mi">search</i><strong
+                                className="label"><FormattedMessage id="g.search"/></strong>
+                            </button>
                         </div>
                     </div>
+                    {html}
                 </div>
-            <Footer />
-            </Fragment>
+            </div>
         );
     }
 }
@@ -220,4 +213,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(injectIntl(Search))
+)(injectIntl(SearchIframe))
