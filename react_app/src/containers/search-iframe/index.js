@@ -66,11 +66,8 @@ class SearchIframe extends Component {
     };
 
     getHeight = () => {
-        const body = document.body;
-        const html = document.documentElement;
-
-        return Math.max(body.scrollHeight, body.offsetHeight,
-            html.clientHeight, html.scrollHeight, html.offsetHeight);
+        const height = document.querySelector('.search-page-iframe').offsetHeight;
+        return parseInt(height, 10) + 100;
     };
 
     triggerHeightChange = () => {
