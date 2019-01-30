@@ -40,7 +40,9 @@ class SearchIframe extends Component {
 
         window.addEventListener('resize', this.windowResized);
 
-        document.body.style.background = 'transparent'
+        document.body.style.background = 'transparent';
+
+        this.triggerHeightChange();
     }
 
     componentDidUpdate(prevProps) {
@@ -74,23 +76,27 @@ class SearchIframe extends Component {
 
     triggerHeightChange = () => {
         const height = this.getHeight();
-        window.parent.postMessage({height}, '*');
+        window.parent.postMessage({type: 'height', height}, '*');
+    };
+
+    triggerSortChange = (sort) => {
+        window.parent.postMessage({type: 'sort', sort}, '*');
+    };
+
+    triggerQueryChange = (query) => {
+        window.parent.postMessage({type: 'query', query}, '*');
+    };
+
+    triggerPageChange = (page) => {
+        window.parent.postMessage({type: 'page', page}, '*');
     };
 
     changeSort(sort) {
-        const {history} = this.props;
-        const {query} = this.state;
-
-        const u = `?q=${query}&s=${sort}`;
-        history.push(u);
+        this.triggerSortChange(sort);
     }
 
     changePage(page) {
-        const {history} = this.props;
-        const {query, sort} = this.state;
-
-        const u = `?q=${query}&s=${sort}&p=${page}`;
-        history.push(u);
+        this.triggerPageChange(page);
     }
 
     submit() {
@@ -100,14 +106,7 @@ class SearchIframe extends Component {
             return;
         }
 
-        const {invalidateGroup, history} = this.props;
-
-        const {query} = this.state;
-        if (query === q) {
-            invalidateGroup(query);
-        }
-
-        history.push(`/search-iframe?q=${q}`);
+        this.triggerQueryChange(q)
     }
 
     render() {
