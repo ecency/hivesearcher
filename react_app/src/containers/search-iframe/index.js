@@ -39,6 +39,8 @@ class SearchIframe extends Component {
         fetchResults(query, sort, page);
 
         window.addEventListener('resize', this.windowResized);
+
+        document.body.style.background = 'transparent'
     }
 
     componentDidUpdate(prevProps) {

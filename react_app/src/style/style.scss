@@ -196,6 +196,7 @@ input[type=text] {
     justify-content: center;
     margin: 0 2px;
     width: 26px;
+    cursor: pointer;
 
     @media (min-width: $screen-md-min) {
       height: 30px;
