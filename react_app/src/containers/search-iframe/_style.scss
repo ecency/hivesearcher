@@ -119,4 +119,24 @@
       padding: 0 10px 0 10px;
     }
   }
+
+  .powered-by {
+    font-weight: 400;
+    font-size: 14px;
+    width: 240px;
+    text-align: center;
+    margin: 20px auto 0 auto;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+
+    .brand {
+      color: $steel-grey;
+
+      span {
+        font-weight: 700;
+        color: $peacock-blue;
+      }
+    }
+  }
 }

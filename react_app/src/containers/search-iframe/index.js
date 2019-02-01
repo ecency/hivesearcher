@@ -33,6 +33,11 @@ class SearchIframe extends Component {
             return;
         }
 
+        if (window.self === window.top) {
+            history.push(`/`);
+            return;
+        }
+
         this.setState({query, sort, page});
 
         const {fetchResults} = this.props;
@@ -173,6 +178,9 @@ class SearchIframe extends Component {
                         }} className={`item ${p === parseInt(page, 10) ? 'active' : ''}`} key={`page-${a}`}>{p}</a>
                     });
 
+                    html.push(<a href="https://search.esteem.app" target="_blank" rel="noopener noreferrer"
+                                 className="powered-by" key="powered">powered by <span
+                        className="brand"><span>eSteem</span> Search</span></a>);
                     html.push(<div className="pagination" key="pagination">{pageItems}</div>);
                 }
             } else {
