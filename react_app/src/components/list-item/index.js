@@ -13,6 +13,13 @@ import markedHtml from "../../utils/marked-html";
 
 class ListItem extends Component {
 
+    transform = (node) => {
+        // allow only mark tags
+        if (node.type === 'tag' && node.name !== 'mark') {
+            return null;
+        }
+    };
+
     render() {
 
         const {entry} = this.props;
@@ -20,9 +27,9 @@ class ListItem extends Component {
         const isComment = entry.depth > 0;
 
         const authorRep = parseFloat(entry.author_rep).toFixed(0);
-        const img = isComment ? commentImg : ( entry.img_url ? proxifyImageSrc(entry.img_url) : noImg);
-        const title = entry.title_marked ? ReactHtmlParser(markedHtml(entry.title_marked)) : markedHtml(entry.title);
-        const body = entry.body_marked ? ReactHtmlParser(markedHtml(entry.body_marked)) : markedHtml(entry.body);
+        const img = isComment ? commentImg : (entry.img_url ? proxifyImageSrc(entry.img_url) : noImg);
+        const title = entry.title_marked ? ReactHtmlParser(markedHtml(entry.title_marked), {transform: this.transform}) : markedHtml(entry.title);
+        const body = entry.body_marked ? ReactHtmlParser(markedHtml(entry.body_marked), {transform: this.transform}) : markedHtml(entry.body);
         const payout = parseFloat(entry.payout);
         const postLink = linkify(entry.author, entry.permlink);
 
