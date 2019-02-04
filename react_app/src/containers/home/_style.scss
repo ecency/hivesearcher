@@ -1,3 +1,13 @@
+@keyframes counterFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 .home-page {
   align-items: center;
   display: flex;
@@ -65,7 +75,7 @@
 
       &.changed {
         .count {
-          animation-name: antFadeIn;
+          animation-name: counterFadeIn;
           animation-duration: 0.5s;
           animation-iteration-count: 1;
         }
