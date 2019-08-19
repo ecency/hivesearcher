@@ -102,7 +102,7 @@ input[type=text] {
   height: 44px;
   padding-right: 10px;
 
-  .add-on {
+  .add-on, .search-tip {
     align-items: center;
     color: $steel-grey;
     display: flex;
@@ -111,6 +111,15 @@ input[type=text] {
     justify-content: center;
     width: 40px;
     user-select: none;
+  }
+
+  .search-tip {
+    text-decoration: none;
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   input[type=text] {

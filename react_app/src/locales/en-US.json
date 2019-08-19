@@ -5,7 +5,8 @@
   },
   "home": {
     "search-placeholder": "How to become a millionaire with Steem",
-    "n-documents-indexed": "<span class=\"count\">{n}</span> documents indexed"
+    "n-documents-indexed": "<span class=\"count\">{n}</span> documents indexed",
+    "search-tips": "Search Tips"
   },
   "search": {
     "result-info": "<strong>{hits} results</strong> in {took} sec.",
