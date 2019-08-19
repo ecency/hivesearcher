@@ -169,22 +169,30 @@ input[type=text] {
   justify-content: space-between;
   padding: 4px 10px;
 
-  .footer-brand {
-    float: left;
-    display: block;
+  .footer-link {
     color: $peacock-blue;
     font-weight: 500;
     opacity: 0.8;
+    flex-grow: 0;
+    margin: 0 10px;
+    text-decoration: none;
 
     &:hover {
       opacity: 1;
     }
   }
 
+  .separator{
+    color: #ccc;
+  }
+
+  .space {
+    flex-grow: 1;
+  }
+
   .ver {
     color: $steel-grey;
-    float: right;
-    display: block;
+    flex-grow: 0;
   }
 }
 
