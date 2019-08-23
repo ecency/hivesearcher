@@ -59,6 +59,7 @@
     padding-top: 20px;
     font-size: 16px;
 
+
     .doc-section {
       margin-bottom: 40px;
     }
@@ -106,6 +107,28 @@
         border: 1px solid $white-four;
         padding: 8px;
       }
+    }
+
+
+    .in-progress, .package-select, .register-response, .register-response-error {
+      text-align: center;
+    }
+
+    .package-select {
+      select {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+    }
+
+    .register-response {
+      max-width: 700px;
+      margin: auto;
+      line-height: 140%;
+    }
+
+    .register-response-error{
+      color: red;
     }
   }
 }

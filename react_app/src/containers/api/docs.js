@@ -64,7 +64,7 @@ class ApiDocs extends Component {
                                 <img src={logo} className="App-logo" alt="logo"/>
                             </Link>
                             <div className="brand">
-                                <span>eSteem</span> Search / Api Docs
+                                <span>eSteem</span> Search / Api
                             </div>
                         </div>
                         <div className="api-page-content">
@@ -74,6 +74,7 @@ class ApiDocs extends Component {
                                 <h3>/search [POST]</h3>
                                 <h4>Parameters</h4>
                                 <table className="table">
+                                    <tbody>
                                     <tr>
                                         <th>q</th>
                                         <td>Query body</td>
@@ -90,6 +91,7 @@ class ApiDocs extends Component {
                                             scroll_id for pagination. Scroll ids are alive for 5 minutes.
                                         </td>
                                     </tr>
+                                    </tbody>
                                 </table>
                                 <h4>Example Request</h4>
                                 <pre className="code">{searchRequest}</pre>
