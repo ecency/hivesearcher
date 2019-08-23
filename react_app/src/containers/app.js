@@ -8,6 +8,7 @@ import Home from "./home";
 import Search from "./search";
 import SearchIframe from "./search-iframe";
 import ApiDocs from './api/docs';
+import ApiRegister from './api/register';
 
 import en from "react-intl/locale-data/en";
 
@@ -24,6 +25,7 @@ export default class App extends Component {
                     <Route exact path="/search" component={Search}/>
                     <Route exact path="/search-iframe" component={SearchIframe}/>
                     <Route exact path="/api-docs" component={ApiDocs}/>
+                     <Route exact path="/api-register" component={ApiRegister}/>
                 </Fragment>
             </IntlProvider>
         );

@@ -57,6 +57,11 @@
 
   .api-page-content {
     padding-top: 20px;
+    font-size: 16px;
+
+    .doc-section {
+      margin-bottom: 40px;
+    }
 
     .code {
       padding: 6px 10px;
@@ -67,6 +72,22 @@
       color: $charcoal-grey;
       max-width: 100%;
       overflow-x: auto;
+    }
+
+    h2 {
+      font-size: 32px;
+    }
+
+    h3 {
+      font-size: 24px;
+    }
+
+    h4 {
+      font-size: 20px;
+    }
+
+    hr {
+      border-bottom: 1px solid #ccc;
     }
 
     .table {
