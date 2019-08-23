@@ -84,6 +84,31 @@ def __endpoint_setup():
             c = 0
         return jsonify(c)
 
+    @app.route('/api/api-packages', methods=['GET'])
+    def packages():
+        resp = requests.get('{}/packages'.format(API_URL))
+
+        return app.response_class(response=resp.content, status=200, mimetype='application/json')
+
+    @app.route('/api/register-api-key', methods=['POST'])
+    def register():
+
+        user = request.json.get('u')
+        token = request.json.get('t')
+        package = request.json.get('p')
+
+        # check steem connect token
+        headers = {'Content-Type': 'application/json', 'authorization': token}
+        sc_resp = requests.post('https://api.steemconnect.com/api/me', headers=headers)
+
+        assert sc_resp.json()['user'] == user
+
+        # create key
+        headers = {'Content-Type': 'application/json'}
+        resp = requests.post('{}/gen_key'.format(API_URL), data=json.dumps({'p': package, 'u': user}), headers=headers)
+
+        return app.response_class(response=resp.content, status=200, mimetype='application/json')
+
 
 __flask_setup()
 __endpoint_setup()
@@ -91,6 +116,8 @@ __endpoint_setup()
 
 def __run_dev_server():
     global app
+
+    CORS(app, resources={r"*": {"origins": "*"}})
 
     app.run(host='127.0.0.1', port=3002)
 
