@@ -3,11 +3,11 @@ import os
 
 import redis
 import requests
-from flask import Flask, send_from_directory, render_template
+from cachelib import RedisCache
+from flask import Flask, send_from_directory
 from flask import request, jsonify, abort
 from flask_cors import CORS
-from werkzeug.contrib.cache import RedisCache
-from werkzeug.contrib.fixers import ProxyFix
+from werkzeug.middleware.proxy_fix import ProxyFix
 from xonfig import get_option
 
 REDIS_HOST = get_option('REDIS', 'HOST')
@@ -57,7 +57,7 @@ def __endpoint_setup():
         if not query or not sort or not page:
             abort(400)
 
-        # endpoint cached to redis with small timeout in order to make less busy elastic search
+        # cache with small timeout in order to make less busy elastic search
         cache_key = '{}-{}-{}'.format(query, sort, page)
         rv = cache.get(cache_key)
         if rv is None:
