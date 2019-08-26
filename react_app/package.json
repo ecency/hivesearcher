@@ -112,5 +112,12 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "resolutions": {
+    "underscore.string": "^3.3.5",
+    "lodash": "^4.17.13",
+    "lodash.template": "^4.5.0",
+    "lodash.mergewith": "^4.6.2",
+    "lodash.merge": "^4.6.2"
   }
 }
