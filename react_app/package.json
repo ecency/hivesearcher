@@ -2,6 +2,9 @@
   "name": "search.esteem",
   "version": "0.0.1",
   "private": true,
+  "homepage": "https://search.esteem.app",
+  "author": "eSteem <info@esteem.app>",
+  "copyright": "© 2019, eSteem",
   "devDependencies": {
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
