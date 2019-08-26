@@ -61,9 +61,9 @@ class ApiRegister extends Component {
                 }).then(resp => {
                     const {data} = resp;
 
-                    if (data.error) {
+                    if (data.code && data.code === 41 ) {
                         this.setState({
-                            error: data.error
+                            error: data.message['Limit']
                         })
                     } else {
                         this.setState({
