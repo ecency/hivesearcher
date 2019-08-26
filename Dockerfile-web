@@ -19,9 +19,9 @@ WORKDIR ${APP_DIR}/react_app
 
 RUN npm rebuild node-sass
 
-RUN npm install
+RUN yarn
 
-RUN npm run build
+RUN yarn run build
 
 WORKDIR ${APP_DIR}
 
