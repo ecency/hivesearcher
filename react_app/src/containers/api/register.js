@@ -167,7 +167,7 @@ class ApiRegister extends Component {
                                     </p>
                                     }
                                     <p>
-                                        <button onClick={this.done}>Done</button>
+                                        <button onClick={this.done}>Finish</button>
                                     </p>
                                 </Fragment>
                                 }
