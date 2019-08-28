@@ -61,7 +61,7 @@ class ApiRegister extends Component {
                 }).then(resp => {
                     const {data} = resp;
 
-                    if (data.code && data.code === 41 ) {
+                    if (data.code && data.code === 41) {
                         this.setState({
                             error: data.message['Limit']
                         })
@@ -117,7 +117,7 @@ class ApiRegister extends Component {
                                 <img src={logo} className="App-logo" alt="logo"/>
                             </Link>
                             <div className="brand">
-                                <span>eSteem</span> Search / Api
+                                <span>eSteem</span> Search / API
                             </div>
                         </div>
                         <div className="api-page-content">
@@ -139,7 +139,7 @@ class ApiRegister extends Component {
                                     )}
                                 </select>
                                 <p>
-                                    <button onClick={this.login}>Get your token</button>
+                                    <button onClick={this.login}>Register your API key</button>
                                 </p>
                             </div>
                             }
@@ -152,16 +152,18 @@ class ApiRegister extends Component {
                             <div className="register-response">
                                 {done &&
                                 <Fragment>
-                                    <h3><span>🎉</span> Your api key has created </h3>
+                                    <h3><span>🎉</span> Your API key! <span>🎉</span></h3>
                                     <code className="code">{api_key}</code>
                                     {payment_key &&
                                     <p>
-                                        Note that your api key is not active yet. <br/>
-                                        When you send {price} SBD to
-                                        <a href="https://steemit.com/@esteemapp" target="_blank"
-                                           rel="noopener noreferrer">@esteemapp</a> your api key will be
-                                        activated. <br/>
-                                        If payment is not made in 30 minutes then api key will deleted.
+                                        API key is generated but NOT active yet.<br/>
+                                        To activate it, please send {price} SBD to <a href="https://steemit.com/@esteemapp"
+                                                                                 target="_blank"
+                                                                                 rel="noopener noreferrer">@esteemapp</a> with
+                                        following text <br/> <code> {payment_key}</code> <br/> in memo field.<br/>
+                                        Once payment is confirmed API key will be activated, <br/>otherwise after 30
+                                        minutes generated key will be deleted.<br/><br/>
+                                        Don't forget to Copy and Backup your API key, keep it safe!<br/><br/>
                                     </p>
                                     }
                                     <p>

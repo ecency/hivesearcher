@@ -64,7 +64,7 @@ class ApiDocs extends Component {
                                 <img src={logo} className="App-logo" alt="logo"/>
                             </Link>
                             <div className="brand">
-                                <span>eSteem</span> Search / Api
+                                <span>eSteem</span> Search / API
                             </div>
                         </div>
                         <div className="api-page-content">
