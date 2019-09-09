@@ -131,7 +131,7 @@ class ApiRegister extends Component {
                                             if (i.id === 1) {
                                                 content = `- ${i.request_limit} requests - Free`;
                                             } else {
-                                                content = `- ${i.request_limit} requests / day - ${i.price} SBD`;
+                                                content = `- ${i.request_limit} requests / day - ${i.price} SBD monthly`;
                                             }
 
                                             return <option key={i.id} value={i.id}>{i.name} {content}</option>
