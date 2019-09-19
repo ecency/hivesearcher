@@ -81,7 +81,15 @@ class ApiDocs extends Component {
                                     </tr>
                                     <tr>
                                         <th>sort</th>
-                                        <td>popularity | newest | relevance &nbsp;&nbsp;&nbsp; default: relevance</td>
+                                        <td>popularity | newest | relevance <br /> default: relevance</td>
+                                    </tr>
+                                    <tr>
+                                        <th>hide_low</th>
+                                        <td>When 1 passed, api skips results which has lower payout value than 0.05 <br /> default: 0</td>
+                                    </tr>
+                                    <tr>
+                                        <th>since</th>
+                                        <td>Allows to search result newer than a date. <br /> Datetime in iso format <small>(%Y-%m-%dT%H:%M:%S)</small>. e.g. 2019-09-19T13:11:00 <br /> default: null</td>
                                     </tr>
                                     <tr>
                                         <th>scroll_id</th>
