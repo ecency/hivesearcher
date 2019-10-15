@@ -50,7 +50,7 @@ class ListItem extends Component {
                       </span>
                 </div>
                 <div className="item-body">
-                    <a className="item-image" href={postLink} target="_blank">
+                    <a className="item-image" href={postLink}>
                         <img
                             src={img}
                             alt=""
@@ -60,8 +60,8 @@ class ListItem extends Component {
                         />
                     </a>
                     <div className="item-summary">
-                        <a className="item-title" href={postLink} target="_blank">{title}</a>
-                        <a className="item-body" href={postLink} target="_blank">{body}</a>
+                        <a className="item-title" href={postLink}>{title}</a>
+                        <a className="item-body" href={postLink}>{body}</a>
                     </div>
                     <div className="item-controls">
                         <span className={`post-total`}>
