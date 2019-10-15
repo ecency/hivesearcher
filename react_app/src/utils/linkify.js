@@ -1,1 +1,1 @@
-export default (author, permlink) => (`https://steemit.com/@${author}/${permlink}`);
+export default (author, permlink) => (`https://esteem.app/@${author}/${permlink}`);
