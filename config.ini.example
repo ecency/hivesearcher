@@ -6,7 +6,7 @@ DEBUG = False
 [ESEARCH_API]
 URL = https://api.search.esteem.app/search
 TOKEN = atokenhere
-REQUEST_TIMEOUT = 2
+REQUEST_TIMEOUT = 20
 CACHE_TIMEOUT = 5
 
 
