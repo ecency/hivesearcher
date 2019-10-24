@@ -18,7 +18,7 @@ r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASS, dec
 
 API_URL = get_option('ESEARCH_API', 'URL')
 API_TOKEN = get_option('ESEARCH_API', 'TOKEN')
-API_REQUEST_TIMEOUT = 20
+API_REQUEST_TIMEOUT = get_option('ESEARCH_API', 'REQUEST_TIMEOUT')
 API_CACHE_TIMEOUT = get_option('ESEARCH_API', 'CACHE_TIMEOUT')
 
 app = None
