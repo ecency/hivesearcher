@@ -97,7 +97,7 @@ def __endpoint_setup():
         token = request.json.get('t')
         package = request.json.get('p')
 
-        # check steem connect token
+        # check hivesigner token
         headers = {'Content-Type': 'application/json', 'authorization': token}
         sc_resp = requests.post('https://hivesigner.com/api/me', headers=headers)
 
