@@ -75,10 +75,10 @@ class Home extends Component {
                     <div className="home-page">
                         <div className="index-page-content">
                             <div className="logo">
-                                <img src={logo} alt="eSteem Search"/>
+                                <img src={logo} alt="Esteem Search"/>
                             </div>
                             <div className="brand">
-                                <span>eSteem</span> Search
+                                <span>Esteem</span> Search
                             </div>
                             <div className="search-area">
                                 <div className="add-on">
@@ -91,7 +91,7 @@ class Home extends Component {
                                                this.submit()
                                            }
                                        }} placeholder={intl.formatMessage({id: "home.search-placeholder"})}/>
-                                <a href="https://steemit.com/esteem/@esteemapp/esteem-search-tips-c42f5a640930best"
+                                <a href="https://esteem.app/esteem/@esteemapp/esteem-search-tips-c42f5a640930best"
                                    target="_blank" rel="noopener noreferrer" className="search-tip"
                                    title={intl.formatMessage({id: "home.search-tips"})}>
                                     <Icon icon="info"/>

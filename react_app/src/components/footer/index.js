@@ -8,7 +8,7 @@ export default class Footer extends Component {
         return (
             <div className="main-footer">
                 <a className="footer-link" href="https://esteem.app/" rel="noopener noreferrer"
-                   target="_blank">eSteem</a>
+                   target="_blank">Esteem</a>
                 <span className="separator">|</span>
                 <Link to="/api-docs" className="footer-link">API</Link>
                 <span className="space"/>

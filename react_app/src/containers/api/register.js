@@ -12,7 +12,7 @@ import Footer from "../../components/footer"
 import {injectIntl} from "react-intl";
 import {API_URL} from '../../config';
 
-import steemconnect from 'steemconnect';
+import hivesigner from 'hivesigner';
 
 
 class ApiRegister extends Component {
@@ -48,7 +48,7 @@ class ApiRegister extends Component {
 
         this.setState({pack: packNum});
 
-        const client = new steemconnect.Client({
+        const client = new hivesigner.Client({
           accessToken: token
         });
 
@@ -84,7 +84,7 @@ class ApiRegister extends Component {
   fetchPackages = () => axios.get(`${API_URL}api/api-packages`).then(resp => resp.data);
 
   login = () => {
-    const client = new steemconnect.Client({
+    const client = new hivesigner.Client({
       app: 'esteemapp',
       callbackURL: `${window.location.origin}/api-register`,
       scope: ['login']
@@ -120,7 +120,7 @@ class ApiRegister extends Component {
                 <img src={logo} className="App-logo" alt="logo"/>
               </Link>
               <div className="brand">
-                <span>eSteem</span> Search / API
+                <span>Esteem</span> Search / API
               </div>
             </div>
             <div className="api-page-content">
@@ -160,7 +160,7 @@ class ApiRegister extends Component {
                   {payment_key &&
                   <p>
                     API key is generated but NOT active yet.<br/>
-                    To activate it, please send {price} SBD or {price_steem} STEEM to <a href="https://steemit.com/@esteemapp"
+                    To activate it, please send {price} HBD or {price_steem} HIVE to <a href="https://esteem.app/@esteemapp"
                                                                   target="_blank"
                                                                   rel="noopener noreferrer">@esteemapp</a> with
                     following text <br/> <code> {payment_key}</code> <br/> in memo field.<br/>

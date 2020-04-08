@@ -180,7 +180,7 @@ class SearchIframe extends Component {
 
                     html.push(<a href="https://search.esteem.app" target="_blank" rel="noopener noreferrer"
                                  className="powered-by" key="powered">powered by <span
-                        className="brand"><span>eSteem</span> Search</span></a>);
+                        className="brand"><span>Esteem</span> Search</span></a>);
                     html.push(<div className="pagination" key="pagination">{pageItems}</div>);
                 }
             } else {

@@ -1755,6 +1755,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
 cross-fetch@^3.0.1:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.0.4.tgz#7bef7020207e684a7638ef5f2f698e24d9eb283c"
+  integrity sha512-MSHgpjQqgbT/94D4CyADeNoYh52zMkCX4pcJvPP5WqPsLFMKjr2TCMg381ox5qI0ii2dPwaLx/00477knXqXVw==
   dependencies:
     node-fetch "2.6.0"
     whatwg-fetch "3.0.0"
@@ -3229,6 +3230,20 @@ history@^4.7.2:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
     value-equal "^0.4.0"
+
+hive-uri@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/hive-uri/-/hive-uri-0.2.2.tgz#60d57a77a2c7a6394471f700e436f3f9822c737d"
+  integrity sha512-95XH50GsJ+ZuWsLQaNcqYiZ6lmoVDawjG+BCgERqOkoy57b+OgHeNDPeYYY9qkNIi0ThcaYRi6RHVcLbI5EfBw==
+
+hivesigner@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/hivesigner/-/hivesigner-3.1.5.tgz#8226d0634e6a024602a97679dd20f6402edbc271"
+  integrity sha512-amg6YNUA6zZvbQp6y4L7l0aPClvMCuA3QMiinyhWMfM5WsvUQOQT+w88bwImHOQPhXMN35QnIcipbr1EdhC94w==
+  dependencies:
+    babel-runtime "^6.26.0"
+    cross-fetch "^3.0.1"
+    hive-uri "^0.2.2"
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -4783,6 +4798,7 @@ no-case@^2.2.0:
 node-fetch@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
+  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
 
 node-forge@0.7.5:
   version "0.7.5"
@@ -6659,18 +6675,6 @@ stdout-stream@^1.4.0:
   dependencies:
     readable-stream "^2.0.1"
 
-steem-uri@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/steem-uri/-/steem-uri-0.1.1.tgz#20da6f713809398b5f77d251def0eeed92cf966b"
-
-steemconnect@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/steemconnect/-/steemconnect-3.0.4.tgz#a5c33060cb10a1e525e47714158ad85d73d3dea9"
-  dependencies:
-    babel-runtime "^6.26.0"
-    cross-fetch "^3.0.1"
-    steem-uri "^0.1.1"
-
 stream-browserify@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/stream-browserify/-/stream-browserify-2.0.2.tgz#87521d38a44aa7ee91ce1cd2a47df0cb49dd660b"
@@ -7419,6 +7423,7 @@ whatwg-fetch@2.0.3:
 whatwg-fetch@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
+  integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
 
 whatwg-url@^4.3.0:
   version "4.8.0"

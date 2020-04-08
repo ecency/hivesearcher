@@ -99,7 +99,7 @@ def __endpoint_setup():
 
         # check steem connect token
         headers = {'Content-Type': 'application/json', 'authorization': token}
-        sc_resp = requests.post('https://api.steemconnect.com/api/me', headers=headers)
+        sc_resp = requests.post('https://hivesigner.com/api/me', headers=headers)
 
         assert sc_resp.json()['user'] == user
 

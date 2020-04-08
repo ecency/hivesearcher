@@ -21,7 +21,7 @@ const searchResponse = `{
             "category": "esteem",
             "children": 29,
             "author_rep": 67.07,
-            "title": "eSteem Search - The best app to dig out Steem content",
+            "title": "Esteem Search - The best app to dig out Steem content",
             "title_marked": "&lt;mark&gt;Marked&lt;/mark&gt; title of the post or comment",
             "body": "Full body text",
             "body_marked": "&lt;mark&gt;Marked&lt;/mark&gt; body of the post or comment",
@@ -64,7 +64,7 @@ class ApiDocs extends Component {
                                 <img src={logo} className="App-logo" alt="logo"/>
                             </Link>
                             <div className="brand">
-                                <span>eSteem</span> Search / API
+                                <span>Esteem</span> Search / API
                             </div>
                         </div>
                         <div className="api-page-content">
@@ -122,7 +122,7 @@ class ApiDocs extends Component {
                                 <code className="code">"esteem surfer" -"monthly digest" -giveaway author:good-karma
                                     tag:esteem,wallet type:post</code>
                                 <p>The query above searchs for posts from @good-karma with two tags together #esteem and
-                                    #wallet having exact match of "eSteem Surfer" phrase there but excluding posts about
+                                    #wallet having exact match of "Esteem Surfer" phrase there but excluding posts about
                                     monthly digests or giveaways.</p>
                             </div>
                         </div>
