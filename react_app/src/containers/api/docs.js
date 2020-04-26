@@ -68,7 +68,10 @@ class ApiDocs extends Component {
                             </div>
                         </div>
                         <div className="api-page-content">
-                            <Link to="/api-register">Get your API key</Link>
+                            <div className="doc-section">
+                                <h2>API Key</h2>
+                                <Link to="/api-register">GET YOUR API KEY</Link>
+                            </div>
                             <div className="doc-section">
                                 <h2>Endpoints</h2>
                                 <h3>/search [POST]</h3>

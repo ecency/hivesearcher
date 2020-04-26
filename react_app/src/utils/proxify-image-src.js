@@ -3,7 +3,7 @@ export default url => {
     return '';
   }
 
-  const prefix = 'https://steemitimages.com/0x0/';
+  const prefix = 'https://images.esteem.app/0x0/';
 
   if (url.startsWith(prefix)) return url;
 
