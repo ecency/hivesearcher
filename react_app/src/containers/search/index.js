@@ -173,7 +173,7 @@ class Search extends Component {
                                     <img src={logo} className="App-logo" alt="logo"/>
                                 </Link>
                                 <div className="brand">
-                                    <span>Esteem</span> Search
+                                    <span>Hive</span> Searcher
                                 </div>
                                 <div className="search-area">
                                     <div className="add-on">

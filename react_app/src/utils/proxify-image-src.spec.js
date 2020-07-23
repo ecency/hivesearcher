@@ -10,7 +10,7 @@ describe('Proxify image src', () => {
   });
 
   it('(2) should not proxify if already proxified', () => {
-    const input = `https://images.esteem.app/0x0/https://steemitimages.com/DQmWK9ACVoywHPBJQdoTuJpoTSoaubBSKSAdZaJtw1cfLb9/adsactlywitness.gif`;
+    const input = `https://images.ecency.com/0x0/https://steemitimages.com/DQmWK9ACVoywHPBJQdoTuJpoTSoaubBSKSAdZaJtw1cfLb9/adsactlywitness.gif`;
 
     expect(proxifyImageSrc(input)).toMatchSnapshot();
   });

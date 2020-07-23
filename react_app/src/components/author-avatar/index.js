@@ -12,7 +12,7 @@ class AuthorAvatar extends Component {
             <span
                 className={cls}
                 style={{
-                    backgroundImage: `url('https://images.esteem.app/u/${user}/avatar/${imgSize}')`
+                    backgroundImage: `url('https://images.ecency.com/u/${user}/avatar/${imgSize}')`
                 }}
             />
         );

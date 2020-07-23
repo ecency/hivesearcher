@@ -1,4 +1,4 @@
-# eSteem Search
+# Hivesearcher
 
 Make sure you have redis and python 3 installed, configured on hosting machine
 

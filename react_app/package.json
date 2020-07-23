@@ -1,10 +1,10 @@
 {
   "name": "search.esteem",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "homepage": "https://search.esteem.app",
-  "author": "Esteem <info@esteem.app>",
-  "copyright": "© 2019, Esteem",
+  "author": "Ecency <info@ecency.com>",
+  "copyright": "© 2020, Ecency",
   "devDependencies": {
     "less": "^3.8.1",
     "less-loader": "^4.1.0",

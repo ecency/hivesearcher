@@ -120,7 +120,7 @@ class ApiRegister extends Component {
                 <img src={logo} className="App-logo" alt="logo"/>
               </Link>
               <div className="brand">
-                <span>Esteem</span> Search / API
+                <span>Hive</span> searcher / API
               </div>
             </div>
             <div className="api-page-content">
@@ -160,7 +160,7 @@ class ApiRegister extends Component {
                   {payment_key &&
                   <p>
                     API key is generated but NOT active yet.<br/>
-                    To activate it, please send {price} HBD or {price_steem} HIVE to <a href="https://esteem.app/@esteemapp"
+                    To activate it, please send {price} HBD or {price_steem} HIVE to <a href="https://ecency.com/@esteemapp"
                                                                   target="_blank"
                                                                   rel="noopener noreferrer">@esteemapp</a> with
                     following text <br/> <code> {payment_key}</code> <br/> in memo field.<br/>
