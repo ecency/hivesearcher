@@ -10,9 +10,9 @@
   },
   "search": {
     "result-info": "<strong>{hits} results</strong> in {took} sec.",
-    "sort-popularity": "Best",
+    "sort-popularity": "Popular",
     "sort-relevance": "Relevance",
-    "sort-newest": "Date",
+    "sort-newest": "Recent",
     "no-result": "Nothing Found"
   }
 }
