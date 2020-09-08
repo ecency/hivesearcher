@@ -63,6 +63,7 @@ button, .button {
   outline: none;
   transition: 0.3s;
   font-weight: 400;
+  cursor: pointer;
 
   &:hover {
     opacity: 0.6;

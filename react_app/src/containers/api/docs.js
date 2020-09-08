@@ -1,11 +1,14 @@
 import React, {Component, Fragment} from "react";
-import {Link} from "react-router-dom";
-import logo from "../../logo.png";
 
-import Footer from "../../components/footer"
+import {Link} from "react-router-dom";
+
+import hivesigner from "hivesigner";
 
 import {injectIntl} from "react-intl";
 
+import Footer from "../../components/footer";
+
+import logo from "../../logo.png";
 
 const searchRequest = `curl https://api.search.esteem.app/search -d '{"q":"esteem", "sort": "newest"}' -H "Content-Type: application/json" -H "Authorization: YOUR_ACCESS_TOKEN" -X POST`;
 
@@ -54,6 +57,18 @@ const stateResponse = `{
 
 
 class ApiDocs extends Component {
+
+    login = () => {
+        const client = new hivesigner.Client({
+            app: 'ecency.app',
+            callbackURL: `${window.location.origin}/api-register`,
+            scope: ['login']
+        });
+
+
+        window.location.href = client.getLoginURL();
+    };
+
     render() {
         return (
             <Fragment>
@@ -70,7 +85,7 @@ class ApiDocs extends Component {
                         <div className="api-page-content">
                             <div className="doc-section">
                                 <h2>API Key</h2>
-                                <Link to="/api-register">GET YOUR API KEY</Link>
+                                <button onClick={this.login}>GET YOUR API KEY</button>
                             </div>
                             <div className="doc-section">
                                 <h2>Endpoints</h2>
@@ -84,15 +99,17 @@ class ApiDocs extends Component {
                                     </tr>
                                     <tr>
                                         <th>sort</th>
-                                        <td>popularity | newest | relevance <br /> default: relevance</td>
+                                        <td>popularity | newest | relevance <br/> default: relevance</td>
                                     </tr>
                                     <tr>
                                         <th>hide_low</th>
-                                        <td>When 1 passed, api skips results which has lower payout value than 0.05 <br /> default: 0</td>
+                                        <td>When 1 passed, api skips results which has lower payout value than 0.05 <br/> default: 0</td>
                                     </tr>
                                     <tr>
                                         <th>since</th>
-                                        <td>Allows to search result newer than a date. <br /> Datetime in iso format <small>(%Y-%m-%dT%H:%M:%S)</small>. e.g. 2019-09-19T13:11:00 <br /> default: null</td>
+                                        <td>Allows to search result newer than a date. <br/> Datetime in iso format <small>(%Y-%m-%dT%H:%M:%S)</small>. e.g.
+                                            2019-09-19T13:11:00 <br/> default: null
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>scroll_id</th>
