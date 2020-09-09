@@ -7,7 +7,7 @@ import Footer from "../../components/footer"
 import {injectIntl} from "react-intl";
 
 
-const searchRequest = `curl https://api.search.esteem.app/search -d '{"q":"esteem", "sort": "newest"}' -H "Content-Type: application/json" -H "Authorization: YOUR_ACCESS_TOKEN" -X POST`;
+const searchRequest = `curl https://api.hivesearcher.com/search -d '{"q":"esteem", "sort": "newest"}' -H "Content-Type: application/json" -H "Authorization: YOUR_ACCESS_TOKEN" -X POST`;
 
 const searchResponse = `{
     "took": 0.031,
@@ -45,11 +45,11 @@ const searchResponse = `{
 }`;
 
 
-const stateRequest = `curl https://api.search.esteem.app/state -H "Authorization: YOUR_ACCESS_TOKEN"`;
+const stateRequest = `curl https://api.hivesearcher.com/state -H "Authorization: YOUR_ACCESS_TOKEN"`;
 
 const stateResponse = `{
     "request_count": 3,    // request count that made in the day
-    "request_limit": 5000  // daily total request limit
+    "request_limit": 3000  // daily total request limit
 }`;
 
 
@@ -122,10 +122,10 @@ class ApiDocs extends Component {
                                     exact
                                     matching and term excluding.</p>
                                 <h3>Complex query body example</h3>
-                                <code className="code">"esteem surfer" -"monthly digest" -giveaway author:good-karma
-                                    tag:esteem,wallet type:post</code>
-                                <p>The query above searchs for posts from @good-karma with two tags together #esteem and
-                                    #wallet having exact match of "Esteem Surfer" phrase there but excluding posts about
+                                <code className="code">"desktop app" -"monthly digest" -giveaway author:good-karma
+                                    tag:desktop,wallet type:post</code>
+                                <p>The query above searchs for posts from @good-karma with two tags together #desktop and
+                                    #wallet having exact match of "desktop app" phrase there but excluding posts about
                                     monthly digests or giveaways.</p>
                             </div>
                         </div>

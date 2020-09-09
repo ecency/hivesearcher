@@ -4,7 +4,7 @@ DEVELOPMENT = False
 DEBUG = False
 
 [ESEARCH_API]
-URL = https://api.search.esteem.app/search
+URL = https://api.hivesearcher.com/search
 TOKEN = atokenhere
 REQUEST_TIMEOUT = 2
 CACHE_TIMEOUT = 5
