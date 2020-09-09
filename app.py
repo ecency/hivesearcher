@@ -92,10 +92,8 @@ def __endpoint_setup():
 
     @app.route('/api/register-api-key', methods=['POST'])
     def register():
-
         user = request.json.get('u')
         token = request.json.get('t')
-        package = request.json.get('p')
 
         # check hivesigner token
         headers = {'Content-Type': 'application/json', 'authorization': token}
@@ -105,7 +103,7 @@ def __endpoint_setup():
 
         # create key
         headers = {'Content-Type': 'application/json'}
-        resp = requests.post('{}/gen_key'.format(API_URL), data=json.dumps({'p': package, 'u': user}), headers=headers)
+        resp = requests.post('{}/gen_key'.format(API_URL), data=json.dumps({'u': user}), headers=headers)
 
         return app.response_class(response=resp.content, status=200, mimetype='application/json')
 
