@@ -99,7 +99,8 @@ class ApiRegister extends Component {
                             {(done && !inProgress) &&
                             <div className="register-response">
                                 <h3><span>🎉</span> Your API key! <span>🎉</span></h3>
-                                <code className="code">{api_key}</code>
+                                <p><code className="code">{api_key}</code></p>
+                                <p>Don't forget to Copy and Backup your API key, keep it safe!</p>
                                 <p>
                                     <button onClick={this.done}>Finish</button>
                                 </p>
