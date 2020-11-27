@@ -10,7 +10,7 @@ import Footer from "../../components/footer";
 
 import logo from "../../logo.png";
 
-const searchRequest = `curl https://api.hivesearcher.com/search -d '{"q":"esteem", "sort": "newest"}' -H "Content-Type: application/json" -H "Authorization: YOUR_ACCESS_TOKEN" -X POST`;
+const searchRequest = `curl https://api.hivesearcher.com/search -d '{"q":"ecency", "sort": "newest"}' -H "Content-Type: application/json" -H "Authorization: YOUR_ACCESS_TOKEN" -X POST`;
 
 const searchResponse = `{
     "took": 0.031,
@@ -19,12 +19,12 @@ const searchResponse = `{
     "results": [
         {
             "id": 64697517,
-            "author": "esteemapp",
-            "permlink": "esteem-search-the-best-app-to-dig-out-steem-content-f19a641976f06est",
-            "category": "esteem",
+            "author": "ecency",
+            "permlink": "ecency-the-best-and-fastest-app-on-hive-f19a641976f06est",
+            "category": "ecency",
             "children": 29,
             "author_rep": 67.07,
-            "title": "Esteem Search - The best app to dig out Steem content",
+            "title": "Ecency - The best and fastest app on Hive",
             "title_marked": "&lt;mark&gt;Marked&lt;/mark&gt; title of the post or comment",
             "body": "Full body text",
             "body_marked": "&lt;mark&gt;Marked&lt;/mark&gt; body of the post or comment",
@@ -34,13 +34,13 @@ const searchResponse = `{
             "up_votes": 419,
             "created_at": "2018-10-22T06:47:15+00:00",
             "tags": [
-                "esteem",
-                "steem",
-                "steem-dev",
-                "esteem-search",
+                "ecency",
+                "hive",
+                "hive-dev",
+                "hivesearcher",
                 "search-engine"
             ],
-            "app": "esteem/1.1.12-surfer",
+            "app": "ecency/3.0.10-vision",
             "depth": 0
         },
         ...

@@ -178,7 +178,7 @@ class SearchIframe extends Component {
                         }} className={`item ${p === parseInt(page, 10) ? 'active' : ''}`} key={`page-${a}`}>{p}</a>
                     });
 
-                    html.push(<a href="https://search.esteem.app" target="_blank" rel="noopener noreferrer"
+                    html.push(<a href="https://hivesearcher.com" target="_blank" rel="noopener noreferrer"
                                  className="powered-by" key="powered">powered by <span
                         className="brand"><span>Hive</span> Searcher</span></a>);
                     html.push(<div className="pagination" key="pagination">{pageItems}</div>);
