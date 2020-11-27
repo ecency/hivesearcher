@@ -141,9 +141,23 @@ class ApiDocs extends Component {
                                 <h3>Complex query body example</h3>
                                 <code className="code">"desktop app" -"monthly digest" -giveaway author:good-karma
                                     tag:desktop,wallet type:post</code>
-                                <p>The query above searchs for posts from @good-karma with two tags together #desktop and
+                                <p>The query above searches for posts from @good-karma with two tags together #desktop and
                                     #wallet having exact match of "desktop app" phrase there but excluding posts about
                                     monthly digests or giveaways.</p>
+                            </div>
+                            <div className="doc-section">
+                                <h2>Community search</h2>
+                                <p>Hivesearcher could also be used for custom search within communities.</p>
+                                <h3>Search within community</h3>
+                                <code className="code">books category:hive-125125 type:post</code>
+                                <p>The query above searches for posts with books keyword from hive-125125 (Ecency) community.</p>
+                            </div>
+                            <div className="doc-section">
+                                <h2>Custom feeds</h2>
+                                <p>Hivesearcher could also be used for creating custom feed, filter with certain dates, filter with certain keywords, etc.</p>
+                                <h3>Finding latest mentions of "good-karma" and creating feed out of it.</h3>
+                                <code className="code">"q":"good-karma", "sort": "newest"</code>
+                                <p>The query above searches for content with mention of "good-karma" and sorts with newest filter.</p>
                             </div>
                         </div>
                     </div>
