@@ -55,6 +55,30 @@ const stateResponse = `{
     "request_limit": 3000  // daily total request limit
 }`;
 
+const searchAccountRequest = `curl https://api.hivesearcher.com/search-account -d '{"q":"ecency", "random": 1}' -H "Authorization: YOUR_ACCESS_TOKEN"`;
+
+const searchAccountResponse = `[
+    {
+        "name":"ecency",
+        "full_name":"Ecency",
+        "about":"Aspire to decency, aspire to greatness! Join immutable, uncensored, rewarding communities! https://ecency.com",
+        "reputation":70.94
+    },
+    {
+        "name":"victoria-bella",
+        "full_name":"Bot",
+        "about":"Daily Ecency Curation",
+        "reputation":65.48
+    }
+]`;
+
+const searchTagRequest = `curl https://api.hivesearcher.com/search-tag -d '{"q":"ecency", "random": 0, "limit": 10}' -H "Authorization: YOUR_ACCESS_TOKEN"`;
+const searchTagResponse = `[
+    {
+        "tag":"ecency",
+        "repeat":1032
+    }
+]`;
 
 class ApiDocs extends Component {
 
@@ -125,6 +149,18 @@ class ApiDocs extends Component {
                                 <pre className="code">{searchRequest}</pre>
                                 <h4>Example Response</h4>
                                 <pre className="code">{searchResponse}</pre>
+                                <h3>/search-account [GET]</h3>
+                                <p>Finding account, searching uses username, display name and description of account so you can easily find anyone with similar interest or name.</p>
+                                <h4>Example Request </h4>
+                                <code className="code">{searchAccountRequest}</code>
+                                <h4>Example Response</h4>
+                                <pre className="code">{searchAccountResponse}</pre>
+                                <h3>/search-tag [GET]</h3>
+                                <p>Finding topics and hashtags.</p>
+                                <h4>Example Request </h4>
+                                <code className="code">{searchTagRequest}</code>
+                                <h4>Example Response</h4>
+                                <pre className="code">{searchTagResponse}</pre>
                                 <h3>/state [GET]</h3>
                                 <p>Returns usage statistics of the api key.</p>
                                 <h4>Example Request </h4>
