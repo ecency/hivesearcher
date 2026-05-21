@@ -134,7 +134,10 @@ class ApiDocs extends Component {
                                     </tr>
                                     <tr>
                                         <th>hide_low</th>
-                                        <td>When 1 passed, api skips results with payout below 0.5 or author reputation below 25 <br/> default: 0</td>
+                                        <td>
+                                            When 1 passed, api skips results with payout below 0.5 or author reputation below 25 <br/> default: 0
+                                            <br/><small>Note: author reputation is a snapshot taken at indexing time and is not re-synced when an author's reputation later changes.</small>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>include_nsfw</th>
