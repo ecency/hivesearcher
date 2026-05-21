@@ -123,11 +123,29 @@ class ApiDocs extends Component {
                                     </tr>
                                     <tr>
                                         <th>sort</th>
-                                        <td>popularity | newest | relevance <br/> default: relevance</td>
+                                        <td>
+                                            popularity | newest | relevance <br/> default: relevance
+                                            <ul>
+                                                <li><strong>relevance</strong> — BM25 text scoring with title and tags weighted higher than body.</li>
+                                                <li><strong>popularity</strong> — favors recent posts with high payout (payout combined with a 30-day recency decay).</li>
+                                                <li><strong>newest</strong> — most recently created first.</li>
+                                            </ul>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>hide_low</th>
-                                        <td>When 1 passed, api skips results which has lower payout value than 0.05 <br/> default: 0</td>
+                                        <td>
+                                            When 1 passed, api skips results with payout below 0.5 or author reputation below 25 <br/> default: 0
+                                            <br/><small>Note: author reputation is a snapshot taken at indexing time and is not re-synced when an author's reputation later changes.</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>include_nsfw</th>
+                                        <td>When 1 passed, NSFW results are included in the response. NSFW is detected via the <code>is_nsfw</code> flag or a <code>nsfw</code> tag. <br/> default: 0</td>
+                                    </tr>
+                                    <tr>
+                                        <th>votes</th>
+                                        <td>Minimum total vote count. Results with fewer votes are excluded. <br/> default: null</td>
                                     </tr>
                                     <tr>
                                         <th>since</th>
@@ -180,6 +198,15 @@ class ApiDocs extends Component {
                                 <p>The query above searches for posts from @good-karma with two tags together #desktop and
                                     #wallet having exact match of "desktop app" phrase there but excluding posts about
                                     monthly digests or giveaways.</p>
+                            </div>
+                            <div className="doc-section">
+                                <h2>Default filters</h2>
+                                <p>To keep results useful, the following are excluded by default on every query:</p>
+                                <ul>
+                                    <li>Posts marked grayed by the network (downvoted below display threshold).</li>
+                                    <li>Posts with a flag weight of 3 or more.</li>
+                                    <li>NSFW content (detected via the <code>is_nsfw</code> flag or an <code>nsfw</code> tag) — opt in with <code>include_nsfw: 1</code>.</li>
+                                </ul>
                             </div>
                             <div className="doc-section">
                                 <h2>Community search</h2>

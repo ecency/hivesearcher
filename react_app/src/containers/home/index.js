@@ -91,7 +91,7 @@ class Home extends Component {
                                                this.submit()
                                            }
                                        }} placeholder={intl.formatMessage({id: "home.search-placeholder"})}/>
-                                <a href="https://ecency.com/esteem/@esteemapp/esteem-search-tips-c42f5a640930best"
+                                <a href="https://ecency.com/@esteemapp/esteem-search-tips-c42f5a640930best"
                                    target="_blank" rel="noopener noreferrer" className="search-tip"
                                    title={intl.formatMessage({id: "home.search-tips"})}>
                                     <Icon icon="info"/>
