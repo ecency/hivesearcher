@@ -1,1 +1,1 @@
-export default (author, permlink) => (`https://ecency.com/post/@${author}/${permlink}`);
+export default (author, permlink) => (`https://ecency.com/@${author}/${permlink}`);
