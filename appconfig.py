@@ -25,8 +25,16 @@ class _Interpolation(configparser.Interpolation):
         return _literal_eval(value)
 
 
+# The app's config sections. Seeding them up front lets __ENV__ overrides
+# resolve section names that contain underscores (e.g. ESEARCH_API) even when
+# no config file is present, i.e. for env-only deployments — see
+# _split_section_option().
+_KNOWN_SECTIONS = ('FLASK', 'ESEARCH_API', 'REDIS')
+
 _config = configparser.ConfigParser(interpolation=_Interpolation())
 _config.optionxform = str
+for _section in _KNOWN_SECTIONS:
+    _config.add_section(_section)
 
 
 def _lookup_dirs():
