@@ -55,30 +55,36 @@ const stateResponse = `{
     "request_limit": 3000  // daily total request limit
 }`;
 
-const searchAccountRequest = `curl https://api.hivesearcher.com/search-account -d '{"q":"ecency", "random": 1}' -H "Authorization: YOUR_ACCESS_TOKEN"`;
+const similarRequest = `curl https://api.hivesearcher.com/similar -d '{"author":"good-karma", "permlink":"introducing-ecency", "title":"Introducing Ecency", "tags":["ecency","hive"], "body":"Post body text used for matching..."}' -H "Content-Type: application/json" -H "Authorization: YOUR_ACCESS_TOKEN" -X POST`;
 
-const searchAccountResponse = `[
-    {
-        "name":"ecency",
-        "full_name":"Ecency",
-        "about":"Aspire to decency, aspire to greatness! Join immutable, uncensored, rewarding communities! https://ecency.com",
-        "reputation":70.94
-    },
-    {
-        "name":"victoria-bella",
-        "full_name":"Bot",
-        "about":"Daily Ecency Curation",
-        "reputation":65.48
-    }
-]`;
-
-const searchTagRequest = `curl https://api.hivesearcher.com/search-tag -d '{"q":"ecency", "random": 0, "limit": 10}' -H "Authorization: YOUR_ACCESS_TOKEN"`;
-const searchTagResponse = `[
-    {
-        "tag":"ecency",
-        "repeat":1032
-    }
-]`;
+const similarResponse = `{
+    "took": 0.042,
+    "hits": 18,
+    "results": [
+        {
+            "id": 64697517,
+            "author": "ecency",
+            "permlink": "ecency-the-best-and-fastest-app-on-hive-f19a641976f06est",
+            "category": "ecency",
+            "children": 29,
+            "author_rep": 67.07,
+            "title": "Ecency - The best and fastest app on Hive",
+            "body": "Full body text",
+            "img_url": "https://image.ibb.co/j1zzgL/header.png",
+            "payout": 34.876,
+            "total_votes": 419,
+            "up_votes": 419,
+            "created_at": "2018-10-22T06:47:15+00:00",
+            "tags": [
+                "ecency",
+                "hive"
+            ],
+            "app": "ecency/3.0.10-vision",
+            "depth": 0
+        },
+        ...
+    ]
+}`;
 
 class ApiDocs extends Component {
 
@@ -167,18 +173,46 @@ class ApiDocs extends Component {
                                 <pre className="code">{searchRequest}</pre>
                                 <h4>Example Response</h4>
                                 <pre className="code">{searchResponse}</pre>
-                                <h3>/search-account [GET]</h3>
-                                <p>Finding account, searching uses username, display name and description of account so you can easily find anyone with similar interest or name.</p>
-                                <h4>Example Request </h4>
-                                <code className="code">{searchAccountRequest}</code>
+                                <h3>/similar [POST]</h3>
+                                <p>Returns posts related to a given post — the "Read next" / related-content recommendations. Matching is content-based, using the post's title, body and tags together rather than a simple shared-tag lookup. The source post and its own author are excluded so recommendations span other authors.</p>
+                                <h4>Parameters</h4>
+                                <table className="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>author</th>
+                                        <td><strong>Required.</strong> Author of the source post.</td>
+                                    </tr>
+                                    <tr>
+                                        <th>permlink</th>
+                                        <td><strong>Required.</strong> Permlink of the source post.</td>
+                                    </tr>
+                                    <tr>
+                                        <th>title</th>
+                                        <td>Title of the source post, used as a matching signal. <br/> default: ""</td>
+                                    </tr>
+                                    <tr>
+                                        <th>body</th>
+                                        <td>Body text of the source post, used as a matching signal (long bodies are truncated). <br/> default: ""</td>
+                                    </tr>
+                                    <tr>
+                                        <th>tags</th>
+                                        <td>Array of the source post's tags, used as a matching signal. <br/> default: []</td>
+                                    </tr>
+                                    <tr>
+                                        <th>since</th>
+                                        <td>Only return posts newer than this date. Datetime in iso format <small>(%Y-%m-%dT%H:%M:%S)</small>. <br/> default: last 6 months</td>
+                                    </tr>
+                                    <tr>
+                                        <th>include_nsfw</th>
+                                        <td>When 1 passed, NSFW results are included. <br/> default: 0</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p><small>Only top-level posts are returned (no comments), and the same <a href="#default-filters">default filters</a> as <code>/search</code> apply. Pass as much of <code>title</code>, <code>body</code> and <code>tags</code> as you have — they are the matching signal, while <code>author</code> and <code>permlink</code> identify and exclude the source post.</small></p>
+                                <h4>Example Request</h4>
+                                <pre className="code">{similarRequest}</pre>
                                 <h4>Example Response</h4>
-                                <pre className="code">{searchAccountResponse}</pre>
-                                <h3>/search-tag [GET]</h3>
-                                <p>Finding topics and hashtags.</p>
-                                <h4>Example Request </h4>
-                                <code className="code">{searchTagRequest}</code>
-                                <h4>Example Response</h4>
-                                <pre className="code">{searchTagResponse}</pre>
+                                <pre className="code">{similarResponse}</pre>
                                 <h3>/state [GET]</h3>
                                 <p>Returns usage statistics of the api key.</p>
                                 <h4>Example Request </h4>
@@ -199,7 +233,7 @@ class ApiDocs extends Component {
                                     #wallet having exact match of "desktop app" phrase there but excluding posts about
                                     monthly digests or giveaways.</p>
                             </div>
-                            <div className="doc-section">
+                            <div className="doc-section" id="default-filters">
                                 <h2>Default filters</h2>
                                 <p>To keep results useful, the following are excluded by default on every query:</p>
                                 <ul>
