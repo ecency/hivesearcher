@@ -8,7 +8,7 @@ from flask import Flask, send_from_directory
 from flask import request, jsonify, abort
 from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
-from xonfig import get_option
+from appconfig import get_option
 
 REDIS_HOST = get_option('REDIS', 'HOST')
 REDIS_PORT = get_option('REDIS', 'PORT')

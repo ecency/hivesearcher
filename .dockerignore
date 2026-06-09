@@ -1,0 +1,12 @@
+.git
+**/node_modules
+**/build
+**/coverage
+venv
+*.pyc
+__pycache__
+*.egg-info
+config.ini
+config.development.ini
+web.log
+web.sock

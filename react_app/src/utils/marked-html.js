@@ -1,7 +1,8 @@
-import Remarkable from 'remarkable';
+import { Remarkable } from 'remarkable';
 import he from 'he';
 
-const md = new Remarkable({html: true, breaks: true, linkify: false});
+// linkify defaults to off in remarkable v2 (the constructor option was removed).
+const md = new Remarkable({html: true, breaks: true});
 
 export default (input, length) => {
     if (!input) {

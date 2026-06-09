@@ -1,19 +1,12 @@
-FROM ubuntu:18.04
+FROM python:3.11-slim
 
-RUN apt-get update
-RUN apt-get install -y python3-pip
+ENV APP_DIR=/deploy
+WORKDIR ${APP_DIR}
 
-RUN pip3 install --upgrade pip
-
-ENV APP_DIR /deploy
-
-RUN mkdir -p ${APP_DIR}
+COPY requirements.txt ${APP_DIR}/requirements.txt
+RUN pip3 install --no-cache-dir --upgrade pip \
+    && pip3 install --no-cache-dir -r ${APP_DIR}/requirements.txt
 
 COPY . ${APP_DIR}
 
-WORKDIR ${APP_DIR}
-
-RUN pip3 install -r ${APP_DIR}/requirements.txt
-
-CMD ["python3",  "counter/main.py"]
-
+CMD ["python3", "counter/main.py"]
