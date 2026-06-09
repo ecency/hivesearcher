@@ -5,7 +5,7 @@ import time
 
 os.sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
-from xonfig import get_option
+from appconfig import get_option
 
 API_URL = get_option('ESEARCH_API', 'URL')
 API_TOKEN = get_option('ESEARCH_API', 'TOKEN')

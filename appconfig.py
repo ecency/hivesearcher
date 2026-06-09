@@ -50,14 +50,29 @@ def _read_files():
                 break
 
 
+def _split_section_option(rest):
+    # Prefer the longest already-known section that prefixes the key, so a
+    # section name containing underscores (e.g. ESEARCH_API) is matched as a
+    # whole instead of being split at its first underscore. Falls back to the
+    # first underscore when no defined section matches.
+    for section in sorted(_config.sections(), key=len, reverse=True):
+        if rest == section:
+            return None
+        if rest.startswith(section + '_'):
+            return section, rest[len(section) + 1:]
+    if '_' in rest:
+        return tuple(rest.split('_', 1))
+    return None
+
+
 def _read_env():
     for key, value in os.environ.items():
         if not key.startswith('__ENV__') or len(key) == len('__ENV__'):
             continue
-        try:
-            section, option = key[len('__ENV__'):].split('_', 1)
-        except ValueError:
+        parsed = _split_section_option(key[len('__ENV__'):])
+        if not parsed:
             continue
+        section, option = parsed
         if not _config.has_section(section):
             _config.add_section(section)
         _config.set(section, option, value)

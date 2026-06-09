@@ -2,6 +2,23 @@ import React, {Component} from "react";
 import parse from "html-react-parser";
 
 import PropTypes from "prop-types";
+
+// markedHtml() strips tags but runs he.decode() last, which can turn escaped
+// user content (e.g. &lt;img&gt;) back into real tags. Drop everything except
+// the <mark> highlight tags when rendering, so untrusted markup can't reach the
+// DOM (matches the old ReactHtmlParser transform).
+const KEEP_ONLY_MARK = {
+    replace: (node) => {
+        // node.name is set for every element (tag/script/style), absent on text
+        // nodes — drop all elements except the <mark> highlight wrapper.
+        if (node.name && node.name !== "mark") {
+            return <React.Fragment />;
+        }
+    },
+};
+
+const renderMarked = (marked, plain) =>
+    marked ? parse(markedHtml(marked), KEEP_ONLY_MARK) : markedHtml(plain);
 import {FormattedNumber} from "react-intl";
 import {FormattedRelative} from "../../utils/intl-compat";
 import AuthorAvatar from "../author-avatar";
@@ -22,10 +39,8 @@ class ListItem extends Component {
 
         const authorRep = parseFloat(entry.author_rep).toFixed(0);
         const img = isComment ? commentImg : (entry.img_url ? proxifyImageSrc(entry.img_url) : noImg);
-        // markedHtml() already strips every tag except <mark>, so what reaches
-        // the parser is plain text with highlight markers only.
-        const title = entry.title_marked ? parse(markedHtml(entry.title_marked)) : markedHtml(entry.title);
-        const body = entry.body_marked ? parse(markedHtml(entry.body_marked)) : markedHtml(entry.body);
+        const title = renderMarked(entry.title_marked, entry.title);
+        const body = renderMarked(entry.body_marked, entry.body);
         const payout = parseFloat(entry.payout);
         const postLink = linkify(entry.author, entry.permlink);
 
