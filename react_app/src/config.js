@@ -1,2 +1,1 @@
-export const API_URL = (process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3002/' : '/');
-
+export const API_URL = import.meta.env.DEV ? 'http://127.0.0.1:3002/' : '/';

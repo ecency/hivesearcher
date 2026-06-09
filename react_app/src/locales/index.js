@@ -1,3 +1,5 @@
+import enUS from './en-US.json';
+
 export default {
-    'en-US': require('./en-US.json')
-}
+    'en-US': enUS
+};

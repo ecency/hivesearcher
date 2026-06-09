@@ -12,6 +12,8 @@ import hivesigner from "hivesigner";
 
 import {injectIntl} from "react-intl";
 
+import withRouter from "../../utils/with-router";
+
 import Footer from "../../components/footer";
 
 import {API_URL} from "../../config";
@@ -116,4 +118,4 @@ class ApiRegister extends Component {
 }
 
 
-export default injectIntl(ApiRegister)
+export default withRouter(injectIntl(ApiRegister))

@@ -7,7 +7,9 @@ import {fetchCount} from '../../modules/count'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 
-import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl';
+import {FormattedMessage, injectIntl} from 'react-intl';
+import {FormattedHTMLMessage} from "../../utils/intl-compat";
+import withRouter from "../../utils/with-router";
 
 import Footer from "../../components/footer"
 
@@ -127,7 +129,7 @@ const mapDispatchToProps = dispatch =>
         dispatch
     );
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(injectIntl(Home))
+)(injectIntl(Home)))

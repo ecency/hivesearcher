@@ -1,16 +1,22 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
+import {Link} from "react-router-dom";
+import logo from "../../logo.png";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import parseQuery from "../../utils/parse-query";
 import {fetchResults, invalidateGroup} from "../../modules/results";
 import ListItem from "../../components/list-item";
 import LinearProgress from "../../components/linear-progress";
+import Footer from "../../components/footer"
 
 import {DEFAULT_SORT, SORT_CHOICES} from "../../constants";
 
-import {FormattedHTMLMessage, FormattedMessage, injectIntl} from "react-intl";
+import {FormattedMessage, injectIntl} from "react-intl";
+import {FormattedHTMLMessage} from "../../utils/intl-compat";
+import withRouter from "../../utils/with-router";
 
-class SearchIframe extends Component {
+
+class Search extends Component {
 
     constructor(props) {
         super(props);
@@ -33,21 +39,10 @@ class SearchIframe extends Component {
             return;
         }
 
-        if (window.self === window.top) {
-            history.push(`/`);
-            return;
-        }
-
         this.setState({query, sort, page});
 
         const {fetchResults} = this.props;
         fetchResults(query, sort, page);
-
-        window.addEventListener('resize', this.windowResized);
-
-        document.body.style.background = 'transparent';
-
-        this.triggerHeightChange();
     }
 
     componentDidUpdate(prevProps) {
@@ -61,47 +56,22 @@ class SearchIframe extends Component {
             const {fetchResults} = this.props;
             fetchResults(query, sort, page);
         }
-
-
-        this.triggerHeightChange();
     }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.windowResized);
-    }
-
-    windowResized = () => {
-        this.triggerHeightChange();
-    };
-
-    getHeight = () => {
-        const height = document.querySelector('.search-page-iframe').offsetHeight;
-        return parseInt(height, 10) + 100;
-    };
-
-    triggerHeightChange = () => {
-        const height = this.getHeight();
-        window.parent.postMessage({type: 'height', height}, '*');
-    };
-
-    triggerSortChange = (sort) => {
-        window.parent.postMessage({type: 'sort', sort}, '*');
-    };
-
-    triggerQueryChange = (query) => {
-        window.parent.postMessage({type: 'query', query}, '*');
-    };
-
-    triggerPageChange = (page) => {
-        window.parent.postMessage({type: 'page', page}, '*');
-    };
 
     changeSort(sort) {
-        this.triggerSortChange(sort);
+        const {history} = this.props;
+        const {query} = this.state;
+
+        const u = `?q=${query}&s=${sort}`;
+        history.push(u);
     }
 
     changePage(page) {
-        this.triggerPageChange(page);
+        const {history} = this.props;
+        const {query, sort} = this.state;
+
+        const u = `?q=${query}&s=${sort}&p=${page}`;
+        history.push(u);
     }
 
     submit() {
@@ -111,7 +81,14 @@ class SearchIframe extends Component {
             return;
         }
 
-        this.triggerQueryChange(q)
+        const {invalidateGroup, history} = this.props;
+
+        const {query} = this.state;
+        if (query === q) {
+            invalidateGroup(query);
+        }
+
+        history.push(`/search?q=${q}`);
     }
 
     render() {
@@ -178,9 +155,6 @@ class SearchIframe extends Component {
                         }} className={`item ${p === parseInt(page, 10) ? 'active' : ''}`} key={`page-${a}`}>{p}</a>
                     });
 
-                    html.push(<a href="https://hivesearcher.com" target="_blank" rel="noopener noreferrer"
-                                 className="powered-by" key="powered">powered by <span
-                        className="brand"><span>Hive</span> Searcher</span></a>);
                     html.push(<div className="pagination" key="pagination">{pageItems}</div>);
                 }
             } else {
@@ -192,30 +166,42 @@ class SearchIframe extends Component {
 
 
         return (
-            <div className="search-page-iframe">
-                <div className="search-page-content">
-                    <div className="header">
-                        <div className="search-area">
-                            <div className="add-on">
-                                <i className="mi">search</i>
+            <Fragment>
+                <div className="main-container">
+                    <div className="search-page">
+                        <div className="search-page-content">
+                            <div className="header">
+                                <Link to="/" className="logo">
+                                    <img src={logo} className="App-logo" alt="logo"/>
+                                </Link>
+                                <div className="brand">
+                                    <span>Hive</span> Searcher
+                                </div>
+                                <div className="search-area">
+                                    <div className="add-on">
+                                        <i className="mi">search</i>
+                                    </div>
+                                    <input type="text" id="txt-search" maxLength={100} autoCorrect="off"
+                                           autoCapitalize="none"
+                                           onKeyPress={(e) => {
+                                               if (e.key === 'Enter') {
+                                                   this.submit()
+                                               }
+                                           }} defaultValue={query}/>
+                                </div>
+                                <div className="submit">
+                                    <button type="button" disabled={loading} onClick={e => this.submit()}><i
+                                        className="mi">search</i><strong
+                                        className="label"><FormattedMessage id="g.search"/></strong>
+                                    </button>
+                                </div>
                             </div>
-                            <input type="text" id="txt-search" maxLength={100} autoCorrect="off" autoCapitalize="none"
-                                   onKeyPress={(e) => {
-                                       if (e.key === 'Enter') {
-                                           this.submit()
-                                       }
-                                   }} defaultValue={query}/>
-                        </div>
-                        <div className="submit">
-                            <button type="button" disabled={loading} onClick={e => this.submit()}><i
-                                className="mi">search</i><strong
-                                className="label"><FormattedMessage id="g.search"/></strong>
-                            </button>
+                            {html}
                         </div>
                     </div>
-                    {html}
                 </div>
-            </div>
+            <Footer />
+            </Fragment>
         );
     }
 }
@@ -233,7 +219,7 @@ const mapDispatchToProps = dispatch =>
         dispatch
     );
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(injectIntl(SearchIframe))
+)(injectIntl(Search)))

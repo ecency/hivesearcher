@@ -1,31 +1,32 @@
-FROM node:8
+# --- Stage 1: build the React SPA ---
+FROM node:20-bookworm-slim AS web-build
 
-RUN apt-get update
-RUN apt-get install -y python3-pip
+WORKDIR /app/react_app
 
-RUN pip3 install --upgrade pip
+# Install dependencies against the committed lockfile first (better layer caching).
+# node:20 already ships yarn 1.22.x.
+COPY react_app/package.json react_app/yarn.lock ./
+RUN yarn install --frozen-lockfile --non-interactive
 
-ENV APP_DIR /deploy
+# Build the static bundle into /app/react_app/build
+COPY react_app/ ./
+RUN yarn build
 
-RUN mkdir -p ${APP_DIR}
+# --- Stage 2: Python runtime (Flask + gunicorn) ---
+FROM python:3.11-slim
+
+ENV APP_DIR=/deploy
+WORKDIR ${APP_DIR}
+
+COPY requirements.txt ${APP_DIR}/requirements.txt
+RUN pip3 install --no-cache-dir --upgrade pip \
+    && pip3 install --no-cache-dir -r ${APP_DIR}/requirements.txt
 
 COPY . ${APP_DIR}
 
-WORKDIR ${APP_DIR}
-
-RUN pip3 install -r ${APP_DIR}/requirements.txt
-
-WORKDIR ${APP_DIR}/react_app
-
-RUN npm rebuild node-sass
-
-RUN yarn
-
-RUN yarn run build
-
-WORKDIR ${APP_DIR}
+# Bring in the built SPA from the build stage (app.py serves react_app/build)
+COPY --from=web-build /app/react_app/build ${APP_DIR}/react_app/build
 
 EXPOSE 5001
 
-CMD ["gunicorn",  "app:app", "-b", "0.0.0.0:5001"]
-
+CMD ["gunicorn", "app:app", "-b", "0.0.0.0:5001"]

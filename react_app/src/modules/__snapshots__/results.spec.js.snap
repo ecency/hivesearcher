@@ -1,108 +1,105 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Results (1) New group should be created after POSTS_FETCH_BEGIN 1`] = `
+exports[`Results > (1) New group should be created after POSTS_FETCH_BEGIN 1`] = `
 Immutable.Map {
-  esteem type:post author:good-karma: Object {
-    "err": false,
+  "esteem type:post author:good-karma": Immutable.Record {
     "hits": null,
-    "pages": 0,
-    "scopes": Object {
-      "popularity-1": Object {
-        "list": Array [],
-        "loading": true,
-      },
-    },
     "took": null,
-  },
-}
-`;
-
-exports[`Results (2) Results should be loaded after POSTS_FETCH_OK 1`] = `
-Immutable.Map {
-  esteem type:post author:good-karma: Object {
     "err": false,
-    "hits": 2,
-    "pages": 1,
-    "scopes": Object {
-      "popularity-1": Object {
-        "list": Array [
-          Object {
-            "id": 1,
-            "title": "foo",
-          },
-          Object {
-            "id": 2,
-            "title": "bar",
-          },
-        ],
-        "loading": false,
-      },
-    },
-    "took": "0.012",
-  },
-}
-`;
-
-exports[`Results (3) err should be true after POSTS_FETCH_ERROR 1`] = `
-Immutable.Map {
-  esteem type:post author:good-karma: Object {
-    "err": true,
-    "hits": 2,
-    "pages": 1,
-    "scopes": Object {
-      "popularity-1": Object {
-        "list": Array [
-          Object {
-            "id": 1,
-            "title": "foo",
-          },
-          Object {
-            "id": 2,
-            "title": "bar",
-          },
-        ],
-        "loading": false,
-      },
-      "popularity-2": Object {
-        "loading": false,
-      },
-    },
-    "took": "0.012",
-  },
-}
-`;
-
-exports[`Results (4) err should be false after POSTS_FETCH_BEGIN 1`] = `
-Immutable.Map {
-  esteem type:post author:good-karma: Object {
-    "err": false,
-    "hits": 2,
-    "pages": 1,
-    "scopes": Object {
-      "popularity-1": Object {
-        "list": Array [
-          Object {
-            "id": 1,
-            "title": "foo",
-          },
-          Object {
-            "id": 2,
-            "title": "bar",
-          },
-        ],
-        "loading": false,
-      },
-      "popularity-2": Object {
-        "list": Array [],
+    "scopes": Immutable.Map {
+      "popularity-1": Immutable.Record {
         "loading": true,
+        "list": [],
       },
     },
-    "took": "0.012",
+    "pages": 0,
   },
 }
 `;
 
-exports[`Results (5) Group should be deleted after POSTS_INVALIDATE 1`] = `
+exports[`Results > (2) Results should be loaded after POSTS_FETCH_OK 1`] = `
 Immutable.Map {
+  "esteem type:post author:good-karma": Immutable.Record {
+    "hits": 2,
+    "took": "0.012",
+    "err": false,
+    "scopes": Immutable.Map {
+      "popularity-1": Immutable.Record {
+        "loading": false,
+        "list": [
+          {
+            "id": 1,
+            "title": "foo",
+          },
+          {
+            "id": 2,
+            "title": "bar",
+          },
+        ],
+      },
+    },
+    "pages": 1,
+  },
 }
 `;
+
+exports[`Results > (3) err should be true after POSTS_FETCH_ERROR 1`] = `
+Immutable.Map {
+  "esteem type:post author:good-karma": Immutable.Record {
+    "hits": 2,
+    "took": "0.012",
+    "err": true,
+    "scopes": Immutable.Map {
+      "popularity-1": Immutable.Record {
+        "loading": false,
+        "list": [
+          {
+            "id": 1,
+            "title": "foo",
+          },
+          {
+            "id": 2,
+            "title": "bar",
+          },
+        ],
+      },
+      "popularity-2": Immutable.Map {
+        "loading": false,
+      },
+    },
+    "pages": 1,
+  },
+}
+`;
+
+exports[`Results > (4) err should be false after POSTS_FETCH_BEGIN 1`] = `
+Immutable.Map {
+  "esteem type:post author:good-karma": Immutable.Record {
+    "hits": 2,
+    "took": "0.012",
+    "err": false,
+    "scopes": Immutable.Map {
+      "popularity-1": Immutable.Record {
+        "loading": false,
+        "list": [
+          {
+            "id": 1,
+            "title": "foo",
+          },
+          {
+            "id": 2,
+            "title": "bar",
+          },
+        ],
+      },
+      "popularity-2": Immutable.Record {
+        "loading": true,
+        "list": [],
+      },
+    },
+    "pages": 1,
+  },
+}
+`;
+
+exports[`Results > (5) Group should be deleted after POSTS_INVALIDATE 1`] = `Immutable.Map {}`;
